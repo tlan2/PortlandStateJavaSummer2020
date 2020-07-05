@@ -27,9 +27,26 @@ public class PhoneCallTest {
 //            "start", "end");
 //    assertThat(call.getCallee(), containsString("not implemented"));
 //  }
-  private PhoneCall callWithNoDates = new PhoneCall("Ted","305-667-3094",
-                                                    "Fred", "503-867-5309",
-                                                    "start", "end");
+
+  private PhoneCall createCallWithNoDates() {
+    return new PhoneCall("Ted", "305-667-3094",
+            "Fred", "503-867-5309",
+            "start", "end");
+  }
+
+  private PhoneCall createValidPhoneCall1() {
+    return new PhoneCall("Larry","503-755-6509",
+            "Betty", "617-703-7433",
+            "1/15/2020 19:39", "1/15/2020 20:00");
+  }
+
+  private PhoneBill createBillTed() {
+    return new PhoneBill("Ted");
+  }
+
+  private PhoneCall callWithNoDates = createCallWithNoDates();
+  private PhoneCall callValid1 = createValidPhoneCall1();
+  private PhoneBill billTed = createBillTed();
 
   @Test
   public void forProject1ItIsOkayIfGetStartTimeReturnsNull() {
@@ -38,15 +55,25 @@ public class PhoneCallTest {
 
   @Test
   public void toStringForExampleInAssignment() {
-    PhoneCall call = new PhoneCall("Ted","305-667-3094",
-            "Fred", "503-867-5309",
-            "start", "end");
     assertThat(callWithNoDates.toString(), equalTo("Phone call from Ted to Fred from start to end"));
   }
 
-//  @Test
-//  public void toString
+  @Test
+  public void onePhoneCallAddedToPhoneBill() {
+    billTed.addPhoneCall(callValid1);
+    assertThat(billTed.toString(), containsString("1 phone calls"));
+  }
 
+  @Test
+  public void multiplePhoneCallsAddedToPhoneBill() {
+   billTed.addPhoneCall(callWithNoDates);
+   billTed.addPhoneCall(callValid1);
+    assertThat(billTed.toString(), containsString("2 phone calls"));
+  }
 
-  
+  @Test
+  public void phoneBillHasCustomerName() {
+    assertThat(billTed.toString(), containsString("Ted"));
+  }
+
 }

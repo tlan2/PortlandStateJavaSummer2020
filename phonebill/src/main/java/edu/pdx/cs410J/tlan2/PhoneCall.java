@@ -3,40 +3,41 @@ package edu.pdx.cs410J.tlan2;
 import edu.pdx.cs410J.AbstractPhoneCall;
 
 public class PhoneCall extends AbstractPhoneCall {
-  private String caller;
   private String callerNumber;
-  private String callee;
   private String calleeNumber;
-  private String start;
-  private String end;
+  private String startDate;
+  private String startTime;
+  private String endDate;
+  private String endTime;
 
-  public PhoneCall(String caller, String callerNumber, String callee, String calleeNumber, String start, String end){
-    this.caller = caller;
+  public PhoneCall(String callerNumber, String calleeNumber, String startDate,
+                   String startTime, String endDate, String endTime){
     this.callerNumber = callerNumber;
-    this.callee = callee;
     this.calleeNumber = calleeNumber;
-    this.start = start;
-    this.end = end;
+    this.startDate = startDate;
+    this.startTime = startTime;
+    this.endDate = endDate;
+    this.endTime = endTime;
   }
 
   @Override
   public String getCaller() {
-    return this.caller;
+    return this.callerNumber;
   }
 
   @Override
   public String getCallee() {
-    return this.callee;
+    return this.calleeNumber;
   }
 
   @Override
   public String getStartTimeString() {
-    return this.start;
+    return this.startDate + " " + this.startTime;
   }
 
   @Override
   public String getEndTimeString() {
-    return this.end;
+    return this.endDate + " " + this.endTime;
   }
 
 }
