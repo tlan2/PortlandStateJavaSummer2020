@@ -15,7 +15,6 @@ public class PhoneBill extends AbstractPhoneBill<PhoneCall> {
         this.phoneCalls = new ArrayList<>();
     }
 
-
     @Override
     public String getCustomer() {
         return this.customer;
