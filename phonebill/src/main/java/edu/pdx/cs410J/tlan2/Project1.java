@@ -8,6 +8,10 @@ import java.util.Scanner;
  */
 public class Project1 {
 
+  /**
+   * This method prints the main menu on the command line interface
+   * for guidance on how to proceed in the program.
+   */
   private static void printMainMenu(){
     System.out.println("\nusage: java edu.pdx.cs410J.<login-id>.Project1 [options] <args>" +
             "\n  args are (in this order):" +
@@ -22,38 +26,48 @@ public class Project1 {
             "\n  Date and time should be in the format: mm/dd/yyyy hh:mm");
   }
 
-  public static void printTextFile(File file)
-          throws IOException {
-    BufferedReader br = new BufferedReader(new FileReader(file));
-    try { while (br.ready()) {
-        System.out.println(br.readLine());
+  /**
+   * Reads the README.txt file and prints out the program description within the file.
+   * @param file          The file you want to open and print
+   *                      to output.
+   * @throws IOException  If an input or output exception occurred.
+   */
+  public static String printReadMe() throws IOException {
+    StringBuilder readMeTxt = new StringBuilder();
+
+    try (InputStream readme = Project1.class.getResourceAsStream("README.txt")) {
+      BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
+
+      String line;
+      while ((line = reader.readLine()) != null) {
+        readMeTxt.append(line).append("\n");
+//        System.out.println(line);
       }
     } catch (IOException ex) {
-      System.err.println(ex);
-      throw ex;
-    } finally {
-      if (br != null) {
-        br.close();
-      }
+      ex.printStackTrace();
     }
+    return readMeTxt.toString();
   }
-
-
+  /**
+   *
+   * @param args
+   * All the elements needed to complete the program through
+   * the command line. This includes customer, callerNumber,
+   * calleeNumber, start of phone call date and time, and
+   * end of phone call date and time.
+   */
   public static void main(String[] args) {
     if(args.length == 0) {
       System.err.println("Missing command line arguments");
       System.exit(1);
     } else if (args[0] == "-README") {
-      File readMeFile = new File("C:\\Users\\thoma\\Documents\\6. Summer 2020" +
-              "\\1. Advanced Java\\PortlandStateJavaSummer2020" +
-              "\\phonebill\\src\\main\\resources\\edu\\pdx" +
-              "\\cs410J\\tlan2\\README.txt");
-      try {
-        printTextFile(readMeFile);
+        try{
+          printReadMe();
+        } catch(IOException ex){
+          System.err.println("Caught IOException: " +  ex.getMessage());
+        }
+
         System.exit(0);
-      } catch (IOException e) {
-        System.err.println(e);
-      }
     } else if (args[0] == "-print" && args.length == 8){
       PhoneCall call = new PhoneCall(args[2], args[3], args[4],
               args[5], args[6], args[7]);
