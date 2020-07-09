@@ -41,12 +41,18 @@ public class Project1IT extends InvokeMainTestCase {
               "Brian Griffin", "503-635-7887", "503-755-2311",
               "01/15/2020", "19:39", "01/15/2020", "21:39");
       assertThat(result.getTextWrittenToStandardOut(), containsString(printMainMenu()));
+      assertThat(result.getExitCode(), equalTo(0));
   }
 
     @Test
     public void testNoCommandLineArguments() {
         MainMethodResult result = invokeMain();
         assertThat(result.getTextWrittenToStandardError(), containsString("Missing command line arguments"));
+    }
+
+    @Test
+    public void systemExit1NoCommandLineArguments(){
+        MainMethodResult result = invokeMain();
         assertThat(result.getExitCode(), equalTo(1));
     }
 
@@ -73,7 +79,11 @@ public class Project1IT extends InvokeMainTestCase {
                                                                     "503-888-2020");
         assertThat(result.getTextWrittenToStandardError(), containsString(
                 "Missing call start date and time, and call end date and time."));
-        assertThat(result.getExitCode(), equalTo(1));
+  }
+  @Test
+    public void missingStartDatePlusExitCode(){
+      MainMethodResult result = invokeMain("Brian Griffin","503-655-9775", "503-888-2020");
+      assertThat(result.getExitCode(), equalTo(1));
   }
 
     @Test
@@ -128,4 +138,12 @@ public class Project1IT extends InvokeMainTestCase {
         assertThat(result.getTextWrittenToStandardOut(), containsString("Phone call from 111-111-1111 to 222-222-2222" +
                 " from 01/15/2020 19:39 to 01/15/2020 21:00"));
     }
+
+    @Test
+    public void correctReadMeSystemExit() {
+        MainMethodResult result = invokeMain("-README", "Brian Griffin", "111-111-1111", "222-222-2222",
+                "01/15/2020", "19:39", "01/15/2020", "21:00");
+        assertThat(result.getExitCode(),equalTo(0));
+    }
+
 }

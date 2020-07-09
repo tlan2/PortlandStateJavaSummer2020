@@ -28,8 +28,7 @@ public class Project1 {
 
   /**
    * Reads the README.txt file and prints out the program description within the file.
-   * @param file          The file you want to open and print
-   *                      to output.
+   *
    * @throws IOException  If an input or output exception occurred.
    */
   public static String printReadMe() throws IOException {
@@ -107,9 +106,7 @@ public class Project1 {
               args[4], args[5], args[6]);
         PhoneBill bill = new PhoneBill(args[0]);
         bill.addPhoneCall(call);
-    } else {
-      System.err.println("Command Line Error: Review command line arguments.");
-      System.exit(1);
+        System.exit(0);
     }
 
   }

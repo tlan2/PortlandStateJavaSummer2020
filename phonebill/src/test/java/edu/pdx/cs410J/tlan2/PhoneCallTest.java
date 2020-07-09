@@ -14,14 +14,14 @@ import static org.junit.Assert.assertThrows;
  */
 public class PhoneCallTest {
 
-  private PhoneCall createValidPhoneCall2() {
-    return new PhoneCall("305-667-3094", "503-867-5309",
-            "01/20/2020", "10:50", "1/2/2020", "11:50");
-  }
-
   private PhoneCall createValidPhoneCall1() {
     return new PhoneCall("503-755-6509", "617-703-7433",
             "1/15/2020", "19:39", "1/15/2020", "20:00");
+  }
+
+  private PhoneCall createValidPhoneCall2() {
+    return new PhoneCall("305-667-3094", "503-867-5309",
+            "01/20/2020", "10:50", "1/2/2020", "11:50");
   }
 
   private PhoneBill createBillTed() {
@@ -35,6 +35,16 @@ public class PhoneCallTest {
   @Test
   public void forProject1ItIsOkayIfGetStartTimeReturnsNull() {
     assertThat(callValid2.getStartTime(), is(nullValue()));
+  }
+
+  @Test
+  public void getCaller(){
+    assertThat(callValid1.getCaller(), containsString("503-755-6509"));
+  }
+
+  @Test
+  public void getCallee(){
+    assertThat(callValid1.getCallee(), containsString("617-703-7433"));
   }
 
   @Test
@@ -80,6 +90,16 @@ public class PhoneCallTest {
             "10:30", "1/1/2020", "10:45");
   }
 
+  @Test
+  public void singleDigitMonthDate(){
+    assertThat(callValid1.toString(), containsString("1/15/2020"));
+  }
+
+  @Test
+  public void singleDigitDayDate(){
+    assertThat(callValid2.toString(), containsString("1/2/2020"));
+  }
+
   @Test (expected = IllegalArgumentException.class)
   public void invalidEndDate() {
     PhoneCall newCall = new PhoneCall("123-334-576", "503-635-2807", "01/01/20",
@@ -97,5 +117,6 @@ public class PhoneCallTest {
     PhoneCall newCall = new PhoneCall("123-334-576", "503-635-2807", "01/01/20",
             "1:30", "1/1/20", "aa:45");
   }
+
 
 }
