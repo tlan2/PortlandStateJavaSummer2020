@@ -1,6 +1,7 @@
 package edu.pdx.cs410J.tlan2;
 
 import edu.pdx.cs410J.InvokeMainTestCase;
+import org.hamcrest.Matcher;
 import org.junit.Test;
 
 import java.io.BufferedReader;
@@ -20,16 +21,21 @@ public class Project1Test {
 
   @Test
   public void readmeCanBeReadAsResource() throws IOException {
+    StringBuilder readMeTxt = new StringBuilder();
     try (
       InputStream readme = Project1.class.getResourceAsStream("README.txt")
     ) {
       assertThat(readme, not(nullValue()));
       BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
-      String line = reader.readLine();
-      assertThat(line, containsString("Tom Lancaster - Project 1\n" +
+      String line;
+      while ((line = reader.readLine()) != null) {
+        readMeTxt.append(line).append("\n");
+      }
+      assertThat(readMeTxt.toString(), containsString("Tom Lancaster - Project 1\n" +
               "A program that inputs a customer's call log\n" +
               "(phone numbers, start and end date and time)\n" +
               "into a billing format."));
     }
   }
+
 }
