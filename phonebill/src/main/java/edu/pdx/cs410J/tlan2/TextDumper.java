@@ -16,18 +16,16 @@ public class TextDumper implements PhoneBillDumper<PhoneBill> {
             "\\test\\java\\edu\\pdx\\cs410J\\tlan2\\testFiles\\";
 
     @Override
-    public void dump(PhoneBill bill) {
+    public void dump(PhoneBill bill) throws IOException{
         String customer = bill.getCustomer();
         String filePath = path + customer + ".txt";
         Collection<PhoneCall> phoneCalls = bill.getPhoneCalls();
         ArrayList<PhoneCall> calls = (ArrayList<PhoneCall>) phoneCalls;
-        File file = new File(filePath);
+        File file;
         boolean append = false;
 
-        if (file.exists())
+        if ((file = new File(filePath)).isFile())
         {
-            try
-            {
                 append = true;
                 FileWriter fw = new FileWriter(file, append);
                 BufferedWriter bw = new BufferedWriter(fw);
@@ -40,30 +38,20 @@ public class TextDumper implements PhoneBillDumper<PhoneBill> {
                 }
                 bw.flush();
                 bw.close();
-            } catch (IOException ex)
-            {
-                System.err.println("\nError: Could not write to file.");
-                ex.printStackTrace();
-            }
-
-        } else {
-            try {
-                FileWriter fw = new FileWriter(file, append);
-                BufferedWriter bw = new BufferedWriter(fw);
-                bw.write(customer);
+        } else if (!(file = new File(filePath)).isFile()) {
+            file.createNewFile();
+            FileWriter fw = new FileWriter(file, append);
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(customer);
+            bw.write("\n");
+            for (PhoneCall call : calls) {
+                String callInfo = call.getCaller() + " " + call.getCallee() + " " +
+                        call.getStartTimeString() + " " + call.getEndTimeString();
+                bw.write(callInfo);
                 bw.write("\n");
-                for (PhoneCall call : calls) {
-                    String callInfo = call.getCaller() + " " + call.getCallee() + " " +
-                            call.getStartTimeString() + " " + call.getEndTimeString();
-                    bw.write(callInfo);
-                    bw.write("\n");
-                }
-                bw.flush();
-                bw.close();
-            } catch (IOException e) {
-                System.err.println("Error: Could not write to file.");
-                e.printStackTrace();
             }
+            bw.flush();
+            bw.close();
         }
     }
 }

@@ -34,17 +34,13 @@ public class Project1 {
   public static String printReadMe() throws IOException {
     StringBuilder readMeTxt = new StringBuilder();
 
-    try (InputStream readme = Project1.class.getResourceAsStream("README.txt")) {
-      BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
-
-      String line;
+    InputStream readme = Project1.class.getResourceAsStream("README.txt");
+    BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
+    String line;
       while ((line = reader.readLine()) != null) {
         readMeTxt.append(line).append("\n");
-//        System.out.println(line);
       }
-    } catch (IOException ex) {
-      ex.printStackTrace();
-    }
+
     return readMeTxt.toString();
   }
   /**

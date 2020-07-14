@@ -73,9 +73,9 @@ public class TextDumperTest {
 
         TextDumper td = new TextDumper();
         td.dump(bill);
-        File newFile = new File(PATH + "newFile.txt");
+        File newFile;
 
-        assertThat(newFile.exists(), equalTo(true));
+        assertThat((newFile = new File(PATH + "newFile.txt")).isFile(), equalTo(true));
     }
 
     @Test
