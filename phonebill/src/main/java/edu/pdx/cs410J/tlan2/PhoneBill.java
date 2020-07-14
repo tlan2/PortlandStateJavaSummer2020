@@ -3,6 +3,8 @@ package edu.pdx.cs410J.tlan2;
 import edu.pdx.cs410J.AbstractPhoneBill;
 import edu.pdx.cs410J.AbstractPhoneCall;
 
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -16,6 +18,11 @@ public class PhoneBill extends AbstractPhoneBill<PhoneCall> {
     private String customer;
     private ArrayList<PhoneCall> phoneCalls;
 
+
+    public PhoneBill(){
+        this.customer = new String();
+        this.phoneCalls = new ArrayList<>();
+    }
     /**
      * Creates a new <code>PhoneBill</code>
      *
@@ -27,9 +34,12 @@ public class PhoneBill extends AbstractPhoneBill<PhoneCall> {
 
     public PhoneBill(String customer) {
         this.customer = customer;
-        this.phoneCalls = new ArrayList<>();
+        this.phoneCalls = new ArrayList<PhoneCall>();
     }
 
+    public void addCustomer(String customer) {
+        this.customer = customer;
+    }
     /**
      * @return the customer on the phone bill's name.
      */
@@ -40,16 +50,15 @@ public class PhoneBill extends AbstractPhoneBill<PhoneCall> {
 
     /**
      * This method adds a phone call object to the related customer's bill.
-     * @param phoneCall
+     * @param call
      *          The PhoneCall object containing the caller's
      *          phone number, the callee's phone number, the phone
      *          call's start date and time, and the phone call's end date
      *          and time.
      */
-
     @Override
-    public void addPhoneCall(PhoneCall phoneCall) {
-        phoneCalls.add(phoneCall);
+    public void addPhoneCall(PhoneCall call) {
+        phoneCalls.add(call);
     }
 
     /**

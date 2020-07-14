@@ -1,6 +1,7 @@
 package edu.pdx.cs410J.tlan2;
 
 import org.junit.Test;
+import org.w3c.dom.Text;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -9,8 +10,6 @@ import static org.junit.Assert.assertThrows;
 
 /**
  * Unit tests for the {@link PhoneCall} class.
- *
- * You'll need to update these unit tests as you build out you program.
  */
 public class PhoneCallTest {
 
@@ -24,13 +23,8 @@ public class PhoneCallTest {
             "01/20/2020", "10:50", "1/2/2020", "11:50");
   }
 
-  private PhoneBill createBillTed() {
-    return new PhoneBill("Ted");
-  }
-
-  private PhoneCall callValid2 = createValidPhoneCall2();
   private PhoneCall callValid1 = createValidPhoneCall1();
-  private PhoneBill billTed = createBillTed();
+  private PhoneCall callValid2 = createValidPhoneCall2();
 
   @Test
   public void forProject1ItIsOkayIfGetStartTimeReturnsNull() {
@@ -52,24 +46,6 @@ public class PhoneCallTest {
     assertThat(callValid2.toString(), equalTo("Phone call from 305-667-3094 " +
                                                             "to 503-867-5309 from 01/20/2020 10:50 " +
                                                             "to 1/2/2020 11:50"));
-  }
-
-  @Test
-  public void onePhoneCallAddedToPhoneBill() {
-    billTed.addPhoneCall(callValid1);
-    assertThat(billTed.toString(), containsString("1 phone calls"));
-  }
-
-  @Test
-  public void multiplePhoneCallsAddedToPhoneBill() {
-   billTed.addPhoneCall(callValid2);
-   billTed.addPhoneCall(callValid1);
-    assertThat(billTed.toString(), containsString("2 phone calls"));
-  }
-
-  @Test
-  public void phoneBillHasCustomerName() {
-    assertThat(billTed.toString(), containsString("Ted"));
   }
 
   @Test (expected = IllegalArgumentException.class)
@@ -117,6 +93,5 @@ public class PhoneCallTest {
     PhoneCall newCall = new PhoneCall("123-334-576", "503-635-2807", "01/01/20",
             "1:30", "1/1/20", "aa:45");
   }
-
 
 }
