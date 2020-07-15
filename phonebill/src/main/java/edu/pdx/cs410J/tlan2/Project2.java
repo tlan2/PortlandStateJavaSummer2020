@@ -137,8 +137,6 @@ public class Project2 {
             }
 
             String customerOnFile = newBill.getCustomer();
-            System.out.println(customerOnFile);
-            System.out.println(args[3]);
 
             if(!customerOnFile.equals(args[3])){
                 System.err.println("\nError: Customer name inputted does not match " +
@@ -179,10 +177,128 @@ public class Project2 {
         System.exit(0);
     } else if(args[0] == "-textFile" && args[2] == "-print")
     {
-       // Fill code here
-    } else if (args[0] == "-textFile")
+        // -print process
+        PhoneCall newCall = new PhoneCall(args[4], args[5], args[6],
+                args[7], args[8], args[9]);
+        System.out.println(newCall.toString());
+        PhoneBill newBill = new PhoneBill();
+
+        // -textfile process
+        String fileName = args[1];
+        File file = new File(fileName);
+
+        //Parse existing file
+        if(file.exists()){
+            TextParser tp = new TextParser(file);
+
+            try
+            {
+                newBill = tp.parse();
+            } catch (ParserException ex)
+            {
+                ex.printStackTrace();
+            }
+
+            String customerOnFile = newBill.getCustomer();
+
+            if(!customerOnFile.equals(args[3])){
+                System.err.println("\nError: Customer name inputted does not match " +
+                        "customer name on file.");
+                System.exit(1);
+            }
+
+            newBill.addPhoneCall(newCall);
+            TextDumper td = new TextDumper(fileName);
+            try
+            {
+                td.dump(newBill);
+            } catch (IOException ex)
+            {
+                ex.printStackTrace();
+            }
+        } else
+        {
+            try
+            {
+                file.createNewFile();
+            } catch (IOException ex)
+            {
+                ex.printStackTrace();
+            }
+//            PhoneBill newBill = new PhoneBill(args[3]);
+            newBill.addCustomer(args[3]);
+            newBill.addPhoneCall(newCall);
+            TextDumper td = new TextDumper(fileName);
+            try
+            {
+                td.dump(newBill);
+            } catch (IOException ex)
+            {
+                ex.printStackTrace();
+            }
+        }
+        System.exit(0);
+    } else if (args[0].equals("-textFile") && args.length == 9)
     {
-        //Fill code here
+        PhoneCall newCall = new PhoneCall(args[3], args[4], args[5],
+                args[6], args[7], args[8]);
+        PhoneBill newBill = new PhoneBill();
+
+        // -textfile process
+        String fileName = args[1];
+        File file = new File(fileName);
+
+        //Parse existing file
+        if(file.exists()){
+            TextParser tp = new TextParser(file);
+
+            try
+            {
+                newBill = tp.parse();
+            } catch (ParserException ex)
+            {
+                ex.printStackTrace();
+            }
+
+            String customerOnFile = newBill.getCustomer();
+
+            if(!customerOnFile.equals(args[2])){
+                System.err.println("\nError: Customer name inputted does not match " +
+                        "customer name on file.");
+                System.exit(1);
+            }
+
+            newBill.addPhoneCall(newCall);
+            TextDumper td = new TextDumper(fileName);
+            try
+            {
+                td.dump(newBill);
+            } catch (IOException ex)
+            {
+                ex.printStackTrace();
+            }
+        } else
+        {
+            try
+            {
+                file.createNewFile();
+            } catch (IOException ex)
+            {
+                ex.printStackTrace();
+            }
+//            PhoneBill newBill = new PhoneBill(args[3]);
+            newBill.addCustomer(args[2]);
+            newBill.addPhoneCall(newCall);
+            TextDumper td = new TextDumper(fileName);
+            try
+            {
+                td.dump(newBill);
+            } catch (IOException ex)
+            {
+                ex.printStackTrace();
+            }
+        }
+        System.exit(0);
     } else
     {
         System.err.println("\n\nError: Program Error. Please try again.");
