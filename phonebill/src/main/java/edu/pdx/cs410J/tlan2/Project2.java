@@ -136,20 +136,18 @@ public class Project2 {
                 ex.printStackTrace();
             }
 
-//            String customerOnFile = newBill.getCustomer();
+            String customerOnFile = newBill.getCustomer();
+            System.out.println(customerOnFile);
+            System.out.println(args[3]);
 
-//            System.out.println(customerOnFile);
-
-//            if(customerOnFile != args[3]){
-//                System.err.println("\nError: Customer name inputted does not match " +
-//                        "customer name on file.");
-//                System.exit(1);
-//            }
-
+            if(!customerOnFile.equals(args[3])){
+                System.err.println("\nError: Customer name inputted does not match " +
+                        "customer name on file.");
+                System.exit(1);
+            }
 
             newBill.addPhoneCall(newCall);
             TextDumper td = new TextDumper(fileName);
-
             try
             {
                 td.dump(newBill);

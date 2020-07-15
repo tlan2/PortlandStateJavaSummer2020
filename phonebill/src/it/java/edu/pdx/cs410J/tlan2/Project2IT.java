@@ -91,20 +91,20 @@ public class Project2IT extends InvokeMainTestCase {
                 "\n755-733-2222 000-111-3333 12/31/2020 11:00 12/31/2020 12:00" +
                 "\n755-733-2222 444-555-6666 12/31/2020 13:00 12/31/2020 14:00" +
                 "\n234-567-8901 123-456-7890 01/01/2020 00:00 01/01/2020 01:00\n"));
-//        assertThat(file.exists(), equalTo(true));
+        assertThat(file.exists(), equalTo(true));
         assertThat(result.getExitCode(), equalTo(0));
     }
 
-//    @Test
-//    public void FileNameDoesNotMatchCustomerNameArgument(){
-//        MainMethodResult result = invokeMain("-print", "-textFile", PATH + "Will.txt",
-//                "Bob", "234-567-8901", "123-456-7890", "01/01/2020","00:00",
-//                "01/01/2020", "01:00");
-//
-//        assertThat(result.getTextWrittenToStandardError(), containsString("\nError: Customer name inputted does not match " +
-//                "customer name on file."));
-//        assertThat(result.getExitCode(), equalTo(1));
-//    }
+    @Test
+    public void FileNameDoesNotMatchCustomerNameArgument(){
+        MainMethodResult result = invokeMain("-print", "-textFile", PATH + "Will.txt",
+                "Bob", "234-567-8901", "123-456-7890", "01/01/2020","00:00",
+                "01/01/2020", "01:00");
+
+        assertThat(result.getTextWrittenToStandardError(), containsString("\nError: Customer name inputted does not match " +
+                "customer name on file."));
+        assertThat(result.getExitCode(), equalTo(1));
+    }
 
     @Test
     public void printCommandLineInterface(){
