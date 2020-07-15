@@ -52,25 +52,42 @@ public class Project2IT extends InvokeMainTestCase {
             "\\src\\test\\java\\edu\\pdx\\cs410J\\tlan2\\testFiles\\";
 
 // =========== TESTS ===================
+    @Test
+    public void WritePhoneCallToNewFile(){
+        MainMethodResult result = invokeMain("-print", "-textFile", PATH + "Bob.txt",
+                "Bob", "234-567-8901", "123-456-7890", "01/01/2020","00:00",
+                "01/01/2020", "01:00");
+        File file = new File(PATH + "Bob.txt");
+        assertThat(result.getTextWrittenToStandardOut(), containsString("Phone call " +
+                "from 234-567-8901 to 123-456-7890 from 01/01/2020 00:00 to 01/01/2020 01:00"));
+        assertThat(file.exists(), equalTo(true));
+        assertThat(file.length() > 0, equalTo(true));
+        assertThat(result.getExitCode(), equalTo(0));
+    }
+
 //    @Test
-//    public void WriteNewCallToPhoneBillText(){
-//        MainMethodResult result = invokeMain("-print", "-textFile", "Bob.txt",
+//    public void WritePhoneCallToExistingFile(){
+//        MainMethodResult result = invokeMain("-print", "-textFile", PATH + "Bob.txt",
 //                "Bob", "234-567-8901", "123-456-7890", "01/01/2020","00:00",
 //                "01/01/2020", "01:00");
-//        File file = new File("Bob.txt");
-//        assertThat(file.exists(), equalTo(true));
+//        File file = new File(PATH + "Bob.txt");
+//        assertThat(result.getTextWrittenToStandardOut(), containsString("Phone call " +
+//                "from 234-567-8901 to 123-456-7890 from 01/01/2020 00:00 to 01/01/2020 01:00"));
+//        assertThat(file.exists(), equalTo(false));
 //        assertThat(result.getExitCode(), equalTo(0));
 //    }
 //
-//    @Test
-//    public void printNewCallAndWritePhoneBillToText(){
-//        MainMethodResult result = invokeMain("-textfile", "Bob", "-print",
-//                "Bob", "234-567-8901", "123-456-7890", "01/01/2020","00:00",
-//                "01/01/2020", "01:00");
-//        assertThat(result.getTextWrittenToStandardOut(), containsString("Phone call " +
-//                "from 234-567-8901 to 123-456-7890 from 01/01/2020 00:00 to 01/01/2020 01:00"));
-//        assertThat(result.getExitCode(), equalTo(0));
-//    }
+    @Test
+    public void printNewCallAndWritePhoneBillToText(){
+        MainMethodResult result = invokeMain("-textFile", PATH + "Bob.txt", "-print",
+                "Bob", "234-567-8901", "123-456-7890", "01/01/2020","00:00",
+                "01/01/2020", "01:00");
+        File file = new File(PATH + "Bob.txt");
+        assertThat(result.getTextWrittenToStandardOut(), containsString("Phone call " +
+                "from 234-567-8901 to 123-456-7890 from 01/01/2020 00:00 to 01/01/2020 01:00"));
+        assertThat(file.exists(), equalTo(true));
+        assertThat(result.getExitCode(), equalTo(0));
+    }
 
     @Test
     public void printCommandLineInterface(){

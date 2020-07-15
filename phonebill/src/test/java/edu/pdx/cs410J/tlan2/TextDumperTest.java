@@ -42,7 +42,7 @@ public class TextDumperTest {
         bill.addPhoneCall(call2);
         bill.addPhoneCall(call3);
 
-        TextDumper td = new TextDumper();
+        TextDumper td = new TextDumper(PATH + "Will.txt");
         td.dump(bill);
 
         StringBuilder fromFile = new StringBuilder();
@@ -71,7 +71,7 @@ public class TextDumperTest {
         bill.addPhoneCall(call2);
         bill.addPhoneCall(call3);
 
-        TextDumper td = new TextDumper();
+        TextDumper td = new TextDumper(PATH + "newFile.txt");
         td.dump(bill);
         File newFile;
 
@@ -88,7 +88,7 @@ public class TextDumperTest {
         bill.addPhoneCall(call2);
         bill.addPhoneCall(call3);
 
-        TextDumper td = new TextDumper();
+        TextDumper td = new TextDumper(PATH + "fileContainsContent.txt");
         td.dump(bill);
         File fileContainsContent = new File(PATH + "fileContainsContent.txt");
 

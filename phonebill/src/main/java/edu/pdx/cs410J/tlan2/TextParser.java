@@ -18,17 +18,16 @@ public class TextParser implements PhoneBillParser {
 
   private final File newFile;
 
-  public TextParser(String fileName){
-    this.newFile = new File(fileName);
-  }
+  public TextParser(String fileName){ this.newFile = new File(fileName); }
 
-  public TextParser(File fileName){
-    this.newFile = fileName;
+  public TextParser(File file){
+    this.newFile = file;
   }
 
     @Override
     public PhoneBill parse() throws ParserException {
       PhoneBill newBill = new PhoneBill();
+
       try {
         Scanner sc = new Scanner(this.newFile);
         newBill.addCustomer(sc.nextLine());
