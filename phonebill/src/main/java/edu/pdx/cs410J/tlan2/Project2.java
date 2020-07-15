@@ -101,6 +101,7 @@ public class Project2 {
         System.exit(1);
     }  else if (args.length == 7)
     {
+        //Valid Command Line Entry with no options
         PhoneCall call = new PhoneCall(args[1], args[2], args[3],
                 args[4], args[5], args[6]);
         PhoneBill bill = new PhoneBill(args[0]);
@@ -112,6 +113,7 @@ public class Project2 {
         argument = argument.trim();
     }
 
+    // Prints the phone call entered and inputs it into a customer's text file
     if (args[0] == "-print" && args[1] == "-textFile") // OPTIONAL ARGUMENTS
     {
         // -print process
@@ -175,6 +177,8 @@ public class Project2 {
             }
         }
         System.exit(0);
+
+        //Another option order possibility
     } else if(args[0] == "-textFile" && args[2] == "-print")
     {
         // -print process
@@ -238,6 +242,8 @@ public class Project2 {
             }
         }
         System.exit(0);
+
+        //Valid command line with the -textFile option
     } else if (args[0].equals("-textFile") && args.length == 9)
     {
         PhoneCall newCall = new PhoneCall(args[3], args[4], args[5],
@@ -299,6 +305,8 @@ public class Project2 {
             }
         }
         System.exit(0);
+
+        // Catch All Possibility
     } else
     {
         System.err.println("\n\nError: Program Error. Please try again.");

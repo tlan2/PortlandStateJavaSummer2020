@@ -6,6 +6,11 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * This class represents a <code>TextDumper</code>.
+ * Contains a dump method that takes a PhoneBill object and "dumps"
+ * the contents into a customer's text file.
+ */
 public class TextDumper implements PhoneBillDumper<PhoneBill> {
 
     String path = "C:\\Users\\thoma\\Documents" +
@@ -15,8 +20,22 @@ public class TextDumper implements PhoneBillDumper<PhoneBill> {
 
     private String fileName;
 
+    /**
+     * Creates a new <code>TextDumper</code>.
+     *
+     * @param nameOfFile
+     * The file name to be located and "dumped" into a PhoneBill object.
+     */
     public TextDumper(String nameOfFile){ this.fileName = nameOfFile; }
 
+    /**
+     * Takes a PhoneBill object and places its contents into a new text file every time.
+     *
+     * @param bill
+     * The phone bill to be processed and entered into the customer's text file.
+     *
+     * @throws IOException
+     */
     @Override
     public void dump(PhoneBill bill) throws IOException{
         Collection<PhoneCall> phoneCalls = bill.getPhoneCalls();
@@ -26,9 +45,6 @@ public class TextDumper implements PhoneBillDumper<PhoneBill> {
         file.delete();
         file.createNewFile();
         BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-//        FileWriter fw = new FileWriter(file); //writes new file with all contents
-//        fw.write(customer);
-//        fw.write("\n");
         writer.write(bill.getCustomer());
         writer.write("\n");
         for (PhoneCall call : phoneCalls) {

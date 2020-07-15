@@ -10,7 +10,7 @@ import java.util.Collection;
 
 /**
  * This class represents a <code>PhoneBill</code>.
- * Has an access method to get the customer's name and a
+ * Has an access method to get the customer's name, phone call information, and a
  * method to add PhoneCall objects.
  */
 
@@ -18,7 +18,9 @@ public class PhoneBill extends AbstractPhoneBill<PhoneCall> {
     private String customer;
     private ArrayList<PhoneCall> phoneCalls;
 
-
+    /**
+     * Creates a new empty <code>PhoneBill</code>
+     */
     public PhoneBill(){
         this.customer = new String();
         this.phoneCalls = new ArrayList<>();
@@ -36,7 +38,11 @@ public class PhoneBill extends AbstractPhoneBill<PhoneCall> {
         this.customer = customer;
         this.phoneCalls = new ArrayList<PhoneCall>();
     }
-
+    /**
+     * This method adds a customer to the PhoneBill object.
+     * @param customer
+     *          Contains the customer's name.
+     */
     public void addCustomer(String customer) {
         this.customer = customer;
     }

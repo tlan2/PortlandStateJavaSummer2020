@@ -94,7 +94,6 @@ public class PhoneCall extends AbstractPhoneCall {
       throw new IllegalArgumentException(
               "Invalid time format. Correct format is nn:nn or n:nn");
     }
-
   }
 
   /**
@@ -130,6 +129,9 @@ public class PhoneCall extends AbstractPhoneCall {
     return this.endDate + " " + this.endTime;
   }
 
+  /**
+   * @return all the information of a call into text file/command line format.
+   */
   public String getAllCallInfo() {
     return this.getCaller() + " " + this.getCallee() +
             " " + this.getStartTimeString() + " " + this.getEndTimeString();
