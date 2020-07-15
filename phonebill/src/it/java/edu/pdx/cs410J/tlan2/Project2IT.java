@@ -52,25 +52,25 @@ public class Project2IT extends InvokeMainTestCase {
             "\\src\\test\\java\\edu\\pdx\\cs410J\\tlan2\\testFiles\\";
 
 // =========== TESTS ===================
-    @Test
-    public void WriteNewCallToPhoneBillText(){
-        MainMethodResult result = invokeMain("-textfile", "Bob",
-                "Bob", "234-567-8901", "123-456-7890", "01/01/2020","00:00",
-                "01/01/2020", "01:00");
-        File file = new File(PATH + "Bob.txt");
-        assertThat(file.exists(), equalTo(true));
-        assertThat(result.getExitCode(), equalTo(0));
-    }
-
-    @Test
-    public void printNewCallAndWritePhoneBillToText(){
-        MainMethodResult result = invokeMain("-textfile", "Bob", "-print",
-                "Bob", "234-567-8901", "123-456-7890", "01/01/2020","00:00",
-                "01/01/2020", "01:00");
-        assertThat(result.getTextWrittenToStandardOut(), containsString("Phone call " +
-                "from 234-567-8901 to 123-456-7890 from 01/01/2020 00:00 to 01/01/2020 01:00"));
-        assertThat(result.getExitCode(), equalTo(0));
-    }
+//    @Test
+//    public void WriteNewCallToPhoneBillText(){
+//        MainMethodResult result = invokeMain("-print", "-textFile", "Bob.txt",
+//                "Bob", "234-567-8901", "123-456-7890", "01/01/2020","00:00",
+//                "01/01/2020", "01:00");
+//        File file = new File("Bob.txt");
+//        assertThat(file.exists(), equalTo(true));
+//        assertThat(result.getExitCode(), equalTo(0));
+//    }
+//
+//    @Test
+//    public void printNewCallAndWritePhoneBillToText(){
+//        MainMethodResult result = invokeMain("-textfile", "Bob", "-print",
+//                "Bob", "234-567-8901", "123-456-7890", "01/01/2020","00:00",
+//                "01/01/2020", "01:00");
+//        assertThat(result.getTextWrittenToStandardOut(), containsString("Phone call " +
+//                "from 234-567-8901 to 123-456-7890 from 01/01/2020 00:00 to 01/01/2020 01:00"));
+//        assertThat(result.getExitCode(), equalTo(0));
+//    }
 
     @Test
     public void printCommandLineInterface(){

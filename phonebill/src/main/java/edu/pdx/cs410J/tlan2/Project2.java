@@ -50,6 +50,7 @@ public class Project2 {
               "\n\t-README\t\t\t\tPrints a README for this project and exits" +
               "\n  Date and time should be in the format: mm/dd/yyyy hh:mm");
 
+      // No Command Line Arguments
     if (args.length == 0) {
       System.err.println("\nMissing command line arguments");
       System.exit(1);
@@ -67,11 +68,12 @@ public class Project2 {
       }
     }
 
+    // Too Many Arguments
     if (args.length > 9)
     {
       System.err.println("\nToo many command line arguments.");
       System.exit(1);
-    } else if (args[0] == "-print" && args[1] == "-textFile") // Print New Call Information & Exit
+    } else if (args[0] == "-print" && args[1] == "-textFile")
     {
         // -print process
         PhoneCall newCall = new PhoneCall(args[4], args[5], args[6],
@@ -81,23 +83,44 @@ public class Project2 {
         // -textfile process
         String fileName = args[2];
         File file = new File(fileName);
-        TextParser tp = new TextParser(fileName);
-        PhoneBill newBill = new PhoneBill();
-        try
+        if(file.exists()){
+            TextParser tp = new TextParser(fileName);
+            PhoneBill newBill = new PhoneBill();
+            try
+            {
+                newBill = tp.parse();
+            } catch (ParserException ex)
+            {
+                ex.printStackTrace();
+            }
+            TextDumper td = new TextDumper();
+            newBill.addPhoneCall(newCall);
+            try
+            {
+                td.dump(newBill);
+            } catch (IOException ex)
+            {
+                ex.printStackTrace();
+            }
+        } else
         {
-            newBill = tp.parse();
-        } catch (ParserException ex)
-        {
-            ex.printStackTrace();
-        }
-        TextDumper td = new TextDumper();
-        newBill.addPhoneCall(newCall);
-        try
-        {
-            td.dump(newBill);
-        } catch (IOException ex)
-        {
-            ex.printStackTrace();
+            try
+            {
+                file.createNewFile();
+            } catch (IOException ex)
+            {
+                ex.printStackTrace();
+            }
+            PhoneBill newBill = new PhoneBill();
+            TextDumper td = new TextDumper();
+            newBill.addPhoneCall(newCall);
+            try
+            {
+                td.dump(newBill);
+            } catch (IOException ex)
+            {
+                ex.printStackTrace();
+            }
         }
       System.exit(0);
     } else if(args[0] == "-textFile" && args[2] == "-print")

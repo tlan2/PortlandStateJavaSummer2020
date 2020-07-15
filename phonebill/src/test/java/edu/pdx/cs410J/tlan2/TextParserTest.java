@@ -28,7 +28,7 @@ public class TextParserTest {
 
     @Test
     public void phoneBillFromTextFileContainsCustomerName() throws ParserException {
-        TextParser tp = new TextParser("PhoneBillWithCustomer.txt");
+        TextParser tp = new TextParser(PATH + "PhoneBillWithCustomer.txt");
         PhoneBill newBill = tp.parse();
 
         assertThat(newBill.getCustomer(), equalTo("Customer"));
@@ -36,7 +36,7 @@ public class TextParserTest {
 
     @Test
     public void phoneBillFromTextFileContainsPhoneCallCallee() throws ParserException {
-        TextParser tp = new TextParser("PhoneBillWithCustomer.txt");
+        TextParser tp = new TextParser(PATH + "PhoneBillWithCustomer.txt");
         PhoneBill newBill = tp.parse();
         ArrayList<PhoneCall> phoneCalls = (ArrayList<PhoneCall>) newBill.getPhoneCalls();
         PhoneCall firstCall = phoneCalls.get(0);
@@ -46,7 +46,7 @@ public class TextParserTest {
 
     @Test
     public void phoneBillFromTextFileContainsPhoneCallStartInfo() throws ParserException {
-        TextParser tp = new TextParser("PhoneBillWithCustomer.txt");
+        TextParser tp = new TextParser(PATH + "PhoneBillWithCustomer.txt");
         PhoneBill newBill = tp.parse();
         ArrayList<PhoneCall> phoneCalls = (ArrayList<PhoneCall>) newBill.getPhoneCalls();
         PhoneCall firstCall = phoneCalls.get(0);
@@ -56,7 +56,7 @@ public class TextParserTest {
 
     @Test
     public void phoneBillFromTextFileContainsPhoneCallEndInfo() throws ParserException {
-        TextParser tp = new TextParser("PhoneBillWithCustomer.txt");
+        TextParser tp = new TextParser(PATH + "PhoneBillWithCustomer.txt");
         PhoneBill newBill = tp.parse();
         ArrayList<PhoneCall> phoneCalls = (ArrayList<PhoneCall>) newBill.getPhoneCalls();
         PhoneCall firstCall = phoneCalls.get(0);
@@ -66,7 +66,7 @@ public class TextParserTest {
 
     @Test
     public void phoneBillFromTextFileContainsAllCallInfo() throws ParserException {
-        TextParser tp = new TextParser("PhoneBillWithCustomer.txt");
+        TextParser tp = new TextParser(PATH + "PhoneBillWithCustomer.txt");
         PhoneBill newBill = tp.parse();
         ArrayList<PhoneCall> phoneCalls = (ArrayList<PhoneCall>) newBill.getPhoneCalls();
         PhoneCall firstCall = phoneCalls.get(0);

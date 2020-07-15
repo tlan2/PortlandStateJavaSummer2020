@@ -18,13 +18,13 @@ public class TextDumper implements PhoneBillDumper<PhoneBill> {
     @Override
     public void dump(PhoneBill bill) throws IOException{
         String customer = bill.getCustomer();
-        String filePath = path + customer + ".txt";
+        String fileName = customer;
         Collection<PhoneCall> phoneCalls = bill.getPhoneCalls();
         ArrayList<PhoneCall> calls = (ArrayList<PhoneCall>) phoneCalls;
-        File file;
+        File file = new File(fileName);
         boolean append = false;
 
-        if ((file = new File(filePath)).isFile())
+        if (file.exists())
         {
                 append = true;
                 FileWriter fw = new FileWriter(file, append);
@@ -38,8 +38,7 @@ public class TextDumper implements PhoneBillDumper<PhoneBill> {
                 }
                 bw.flush();
                 bw.close();
-        } else if (!(file = new File(filePath)).isFile()) {
-            file.createNewFile();
+        } else if (file.length() == 0) {
             FileWriter fw = new FileWriter(file, append);
             BufferedWriter bw = new BufferedWriter(fw);
             bw.write(customer);
