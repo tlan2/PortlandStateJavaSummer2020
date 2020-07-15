@@ -75,9 +75,9 @@ public class TextParserTest {
                 "from 1/1/2020 9:00 to 1/1/2020 10:00"));
     }
 
-//    @Test (expected = FileNotFoundException.class)
-//    public void parseMethodFileNotFoundException() throws ParserException {
-//        TextParser tp = new TextParser("fileDoesNotExist.txt");
-//        tp.parse();
-//    }
+    @Test (expected = ParserException.class)
+    public void parseMethodFileNotFoundException() throws ParserException {
+        TextParser tp = new TextParser(PATH + "fileDoesNotExist.txt");
+        tp.parse();
+    }
 }

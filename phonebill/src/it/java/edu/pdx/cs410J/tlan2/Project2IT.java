@@ -3,6 +3,8 @@ package edu.pdx.cs410J.tlan2;
 import edu.pdx.cs410J.InvokeMainTestCase;
 import org.junit.Test;
 
+import java.io.File;
+
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -45,9 +47,33 @@ public class Project2IT extends InvokeMainTestCase {
                 "01/15/2020", "19:39", "01/15/2020", "21:00");
     }
 
+    String PATH = "C:\\Users\\thoma\\Documents\\6. Summer 2020" +
+            "\\1. Advanced Java\\PortlandStateJavaSummer2020\\phonebill" +
+            "\\src\\test\\java\\edu\\pdx\\cs410J\\tlan2\\testFiles\\";
+
 // =========== TESTS ===================
     @Test
-    public void printCorrectCommandLineInterface(){
+    public void WriteNewCallToPhoneBillText(){
+        MainMethodResult result = invokeMain("-textfile", "Bob",
+                "Bob", "234-567-8901", "123-456-7890", "01/01/2020","00:00",
+                "01/01/2020", "01:00");
+        File file = new File(PATH + "Bob.txt");
+        assertThat(file.exists(), equalTo(true));
+        assertThat(result.getExitCode(), equalTo(0));
+    }
+
+    @Test
+    public void printNewCallAndWritePhoneBillToText(){
+        MainMethodResult result = invokeMain("-textfile", "Bob", "-print",
+                "Bob", "234-567-8901", "123-456-7890", "01/01/2020","00:00",
+                "01/01/2020", "01:00");
+        assertThat(result.getTextWrittenToStandardOut(), containsString("Phone call " +
+                "from 234-567-8901 to 123-456-7890 from 01/01/2020 00:00 to 01/01/2020 01:00"));
+        assertThat(result.getExitCode(), equalTo(0));
+    }
+
+    @Test
+    public void printCommandLineInterface(){
         MainMethodResult result = validCLIWithNoOptions();
         assertThat(result.getTextWrittenToStandardOut(), containsString(printMainMenu()));
         assertThat(result.getExitCode(), equalTo(0));
@@ -61,10 +87,19 @@ public class Project2IT extends InvokeMainTestCase {
     }
 
     @Test
+    public void tooManyCommandLineArguments(){
+        MainMethodResult result = invokeMain("-textFile", "fileName", "-print","Brian Griffin", "103-675-7827", "503-755-2311",
+                "01/15/2020", "19:39", "01/15/2020", "21:39", "extraCommand1");
+        assertThat(result.getTextWrittenToStandardError(), containsString("Too many command line arguments."));
+        assertThat(result.getExitCode(), equalTo(1));
+    }
+
+    @Test
     public void printsPhoneCallDetails(){
         MainMethodResult result = validPrintNoTextFile();
-        assertThat(result.getTextWrittenToStandardOut(), containsString("Phone call from 111-111-1111 to 222-222-2222" +
-                " from 01/15/2020 19:39 to 01/15/2020 21:00"));
+        assertThat(result.getTextWrittenToStandardOut(), containsString("Phone call " +
+                "from 111-111-1111 to 222-222-2222 from 01/15/2020 19:39 to 01/15/2020 21:00"));
+        assertThat(result.getExitCode(), equalTo(0));
     }
 
 
@@ -135,13 +170,7 @@ public class Project2IT extends InvokeMainTestCase {
         assertThat(result.getExitCode(), equalTo(1));
     }
 
-    @Test
-    public void tooManyCommandLineArguments(){
-        MainMethodResult result = invokeMain("-textFile", "fileName", "-print","Brian Griffin", "103-675-7827", "503-755-2311",
-                "01/15/2020", "19:39", "01/15/2020", "21:39", "extraCommand1", "extraCommand2");
-        assertThat(result.getTextWrittenToStandardError(), containsString("Too many command line arguments."));
-        assertThat(result.getExitCode(), equalTo(1));
-    }
+
 
 
 
