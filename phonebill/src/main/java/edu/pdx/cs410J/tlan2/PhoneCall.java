@@ -130,6 +130,11 @@ public class PhoneCall extends AbstractPhoneCall {
     return this.endDate + " " + this.endTime;
   }
 
+  public String getAllCallInfo() {
+    return this.getCaller() + " " + this.getCallee() +
+            " " + this.getStartTimeString() + " " + this.getEndTimeString();
+  }
+
   /**
    * @return            true or false
    * @param phoneNumber The phone number that is being checked

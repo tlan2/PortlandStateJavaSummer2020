@@ -4,6 +4,8 @@ import edu.pdx.cs410J.InvokeMainTestCase;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -63,31 +65,46 @@ public class Project2IT extends InvokeMainTestCase {
         assertThat(file.exists(), equalTo(true));
         assertThat(file.length() > 0, equalTo(true));
         assertThat(result.getExitCode(), equalTo(0));
+        file.delete();
+    }
+
+    @Test
+    public void AddPhoneCallToExistingFile() throws IOException {
+        MainMethodResult result = invokeMain("-print", "-textFile", PATH + "Will.txt",
+                "Will", "234-567-8901", "123-456-7890", "01/01/2020","00:00",
+                "01/01/2020", "01:00");
+
+        File file = new File(PATH + "Will.txt");
+        StringBuilder fromFile = new StringBuilder();
+        Scanner myReader = new Scanner(file);
+        while (myReader.hasNextLine()) {
+            String line = myReader.nextLine();
+            fromFile.append(line);
+            fromFile.append("\n");
+        }
+        myReader.close();
+
+        assertThat(result.getTextWrittenToStandardOut(), containsString("Phone call " +
+                "from 234-567-8901 to 123-456-7890 from 01/01/2020 00:00 to 01/01/2020 01:00"));
+        assertThat(fromFile.toString(), containsString("Will" +
+                "\n755-733-2222 111-222-3333 12/31/2020 9:00 12/31/2020 10:00" +
+                "\n755-733-2222 000-111-3333 12/31/2020 11:00 12/31/2020 12:00" +
+                "\n755-733-2222 444-555-6666 12/31/2020 13:00 12/31/2020 14:00" +
+                "\n234-567-8901 123-456-7890 01/01/2020 00:00 01/01/2020 01:00\n"));
+//        assertThat(file.exists(), equalTo(true));
+        assertThat(result.getExitCode(), equalTo(0));
     }
 
 //    @Test
-//    public void WritePhoneCallToExistingFile(){
-//        MainMethodResult result = invokeMain("-print", "-textFile", PATH + "Bob.txt",
+//    public void FileNameDoesNotMatchCustomerNameArgument(){
+//        MainMethodResult result = invokeMain("-print", "-textFile", PATH + "Will.txt",
 //                "Bob", "234-567-8901", "123-456-7890", "01/01/2020","00:00",
 //                "01/01/2020", "01:00");
-//        File file = new File(PATH + "Bob.txt");
-//        assertThat(result.getTextWrittenToStandardOut(), containsString("Phone call " +
-//                "from 234-567-8901 to 123-456-7890 from 01/01/2020 00:00 to 01/01/2020 01:00"));
-//        assertThat(file.exists(), equalTo(false));
-//        assertThat(result.getExitCode(), equalTo(0));
-//    }
 //
-    @Test
-    public void printNewCallAndWritePhoneBillToText(){
-        MainMethodResult result = invokeMain("-textFile", PATH + "Bob.txt", "-print",
-                "Bob", "234-567-8901", "123-456-7890", "01/01/2020","00:00",
-                "01/01/2020", "01:00");
-        File file = new File(PATH + "Bob.txt");
-        assertThat(result.getTextWrittenToStandardOut(), containsString("Phone call " +
-                "from 234-567-8901 to 123-456-7890 from 01/01/2020 00:00 to 01/01/2020 01:00"));
-        assertThat(file.exists(), equalTo(true));
-        assertThat(result.getExitCode(), equalTo(0));
-    }
+//        assertThat(result.getTextWrittenToStandardError(), containsString("\nError: Customer name inputted does not match " +
+//                "customer name on file."));
+//        assertThat(result.getExitCode(), equalTo(1));
+//    }
 
     @Test
     public void printCommandLineInterface(){

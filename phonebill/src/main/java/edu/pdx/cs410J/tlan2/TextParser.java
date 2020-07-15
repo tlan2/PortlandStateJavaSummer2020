@@ -20,9 +20,7 @@ public class TextParser implements PhoneBillParser {
 
   public TextParser(String fileName){ this.newFile = new File(fileName); }
 
-  public TextParser(File file){
-    this.newFile = file;
-  }
+  public TextParser(File file){ this.newFile = file; }
 
     @Override
     public PhoneBill parse() throws ParserException {
@@ -38,7 +36,6 @@ public class TextParser implements PhoneBillParser {
           PhoneCall call = new PhoneCall(data[0], data[1], data[2], data[3],
                   data[4], data[5]);
           newBill.addPhoneCall(call);
-          return newBill;
         }
       } catch (FileNotFoundException ex) {
         throw new ParserException("While parsing file", ex);

@@ -19,40 +19,23 @@ public class TextDumper implements PhoneBillDumper<PhoneBill> {
 
     @Override
     public void dump(PhoneBill bill) throws IOException{
-        String customer = bill.getCustomer();
         Collection<PhoneCall> phoneCalls = bill.getPhoneCalls();
-        ArrayList<PhoneCall> calls = (ArrayList<PhoneCall>) phoneCalls;
-
         File file = new File(this.fileName);
-        boolean append = false;
 
-        if (file.length() > 0)
-        {
-                append = true;
-                FileWriter fw = new FileWriter(file, append);
-                BufferedWriter bw = new BufferedWriter(fw);
-                for(PhoneCall call:calls)
-                {
-                    String callInfo = call.getCaller() + " " + call.getCallee() + " " +
-                            call.getStartTimeString() + " " + call.getEndTimeString();
-                    bw.write(callInfo);
-                    bw.write("\n");
-                }
-                bw.flush();
-                bw.close();
-        } else {
-            FileWriter fw = new FileWriter(file, append);
-            BufferedWriter bw = new BufferedWriter(fw);
-            bw.write(customer);
-            bw.write("\n");
-            for (PhoneCall call : calls) {
-                String callInfo = call.getCaller() + " " + call.getCallee() + " " +
-                        call.getStartTimeString() + " " + call.getEndTimeString();
-                bw.write(callInfo);
-                bw.write("\n");
-            }
-            bw.flush();
-            bw.close();
+
+        file.delete();
+        file.createNewFile();
+        BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+//        FileWriter fw = new FileWriter(file); //writes new file with all contents
+//        fw.write(customer);
+//        fw.write("\n");
+        writer.write(bill.getCustomer());
+        writer.write("\n");
+        for (PhoneCall call : phoneCalls) {
+            String callInfo = call.getAllCallInfo();
+            writer.write(callInfo);
+            writer.write("\n");
         }
+        writer.close();
     }
 }

@@ -106,12 +106,19 @@ public class Project2 {
         PhoneBill bill = new PhoneBill(args[0]);
         bill.addPhoneCall(call);
         System.exit(0);
-    } else if (args[0] == "-print" && args[1] == "-textFile") // OPTIONAL ARGUMENTS
+    }
+
+    for (String argument:args){
+        argument = argument.trim();
+    }
+
+    if (args[0] == "-print" && args[1] == "-textFile") // OPTIONAL ARGUMENTS
     {
         // -print process
         PhoneCall newCall = new PhoneCall(args[4], args[5], args[6],
                 args[7], args[8], args[9]);
         System.out.println(newCall.toString());
+        PhoneBill newBill = new PhoneBill();
 
         // -textfile process
         String fileName = args[2];
@@ -120,7 +127,7 @@ public class Project2 {
         //Parse existing file
         if(file.exists()){
             TextParser tp = new TextParser(file);
-            PhoneBill newBill = new PhoneBill();
+
             try
             {
                 newBill = tp.parse();
@@ -128,8 +135,21 @@ public class Project2 {
             {
                 ex.printStackTrace();
             }
-            TextDumper td = new TextDumper(args[2]);
+
+//            String customerOnFile = newBill.getCustomer();
+
+//            System.out.println(customerOnFile);
+
+//            if(customerOnFile != args[3]){
+//                System.err.println("\nError: Customer name inputted does not match " +
+//                        "customer name on file.");
+//                System.exit(1);
+//            }
+
+
             newBill.addPhoneCall(newCall);
+            TextDumper td = new TextDumper(fileName);
+
             try
             {
                 td.dump(newBill);
@@ -146,7 +166,8 @@ public class Project2 {
             {
                 ex.printStackTrace();
             }
-            PhoneBill newBill = new PhoneBill(args[3]);
+//            PhoneBill newBill = new PhoneBill(args[3]);
+            newBill.addCustomer(args[3]);
             newBill.addPhoneCall(newCall);
             TextDumper td = new TextDumper(args[2]);
             try
@@ -160,59 +181,13 @@ public class Project2 {
         System.exit(0);
     } else if(args[0] == "-textFile" && args[2] == "-print")
     {
-        //-textFile and -print options
-        // -print process
-        PhoneCall newCall = new PhoneCall(args[4], args[5], args[6],
-                args[7], args[8], args[9]);
-        System.out.println(newCall.toString());
-
-        // -textfile process
-        String fileName = "\\customerFiles\\" + args[1] + ".txt";
-        File file = new File(fileName);
-        TextParser tp = new TextParser(file);
-        PhoneBill newBill = new PhoneBill();
-        try
-        {
-            newBill = tp.parse();
-        } catch (ParserException ex)
-        {
-            ex.printStackTrace();
-        }
-        TextDumper td = new TextDumper(args[2]);
-        newBill.addPhoneCall(newCall);
-        try
-        {
-            td.dump(newBill);
-        } catch (IOException ex)
-        {
-            ex.printStackTrace();
-        }
-        System.exit(0);
+       // Fill code here
     } else if (args[0] == "-textFile")
     {
-        // -textFile only
-        PhoneCall newCall = new PhoneCall(args[3], args[4], args[5],
-                args[6], args[7], args[8]);
-        String fileName = "\\customerFiles\\" + args[1] + ".txt";
-        File file = new File(fileName);
-        TextParser tp = new TextParser(file);
-        PhoneBill newBill = new PhoneBill();
-        try {
-            newBill = tp.parse();
-        } catch (ParserException ex) {
-            ex.printStackTrace();
-        }
-        TextDumper td = new TextDumper(args[2]);
-        newBill.addPhoneCall(newCall);
-        try {
-            td.dump(newBill);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        System.exit(0);
+        //Fill code here
     } else
     {
-        System.err.println("\n\nDoh! Program couldn't handle your request. Please try entering your information again.");
+        System.err.println("\n\nError: Program Error. Please try again.");
         System.exit(1);
     }
   }
