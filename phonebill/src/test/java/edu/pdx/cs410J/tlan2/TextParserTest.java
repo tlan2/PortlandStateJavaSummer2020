@@ -80,4 +80,30 @@ public class TextParserTest {
         TextParser tp = new TextParser(PATH + "fileDoesNotExist.txt");
         tp.parse();
     }
+
+    @Test (expected = ParserException.class)
+    public void badFileName() throws ParserException {
+        TextParser tp = new TextParser(PATH + "badFileName.txt");
+        tp.parse();
+    }
+
+    @Test (expected = ParserException.class)
+    public void badFileNumber() throws ParserException {
+        TextParser tp = new TextParser(PATH + "badFileNumber.txt");
+        tp.parse();
+    }
+
+    @Test (expected = ParserException.class)
+    public void badFileDate() throws ParserException {
+        TextParser tp = new TextParser(PATH + "badFileNumber.txt");
+        tp.parse();
+    }
+
+    @Test (expected = ParserException.class)
+    public void badFileTime() throws ParserException {
+        TextParser tp = new TextParser(PATH + "badFileTime.txt");
+        tp.parse();
+    }
+
+
 }
