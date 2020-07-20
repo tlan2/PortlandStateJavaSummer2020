@@ -165,8 +165,8 @@ public class Project2IT extends InvokeMainTestCase {
         }
         myReader.close();
 
-        assertThat(fromFile.toString(), containsString("755-733-2222 111-222-3333 " +
-                "12/31/2020 9:00 12/31/2020 10:00"));
+        assertThat(fromFile.toString(), containsString("234-567-8901 123-456-7890 " +
+                "01/01/2020 00:00 01/01/2020 01:00"));
         assertThat(file.exists(), equalTo(true));
         assertThat(result.getExitCode(), equalTo(0));
     }
