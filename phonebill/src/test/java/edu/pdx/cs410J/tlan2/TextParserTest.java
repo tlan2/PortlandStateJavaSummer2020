@@ -28,54 +28,54 @@ public class TextParserTest {
 
     String PATH = "";
 
-    //@Test
-    public void phoneBillFromTextFileContainsCustomerName() throws ParserException {
-        TextParser tp = new TextParser(PATH + "PhoneBillWithCustomer.txt");
-        PhoneBill newBill = tp.parse();
+//    //@Test
+//    public void phoneBillFromTextFileContainsCustomerName() throws ParserException {
+//        TextParser tp = new TextParser(PATH + "PhoneBillWithCustomer.txt");
+//        PhoneBill newBill = tp.parse();
+//
+//        assertThat(newBill.getCustomer(), equalTo("Customer"));
+//    }
 
-        assertThat(newBill.getCustomer(), equalTo("Customer"));
-    }
+//    //@Test
+//    public void phoneBillFromTextFileContainsPhoneCallCallee() throws ParserException {
+//        TextParser tp = new TextParser(PATH + "PhoneBillWithCustomer.txt");
+//        PhoneBill newBill = tp.parse();
+//        ArrayList<PhoneCall> phoneCalls = (ArrayList<PhoneCall>) newBill.getPhoneCalls();
+//        PhoneCall firstCall = phoneCalls.get(0);
+//
+//        assertThat(firstCall.getCallee(), equalTo("111-222-3333"));
+//    }
 
-    //@Test
-    public void phoneBillFromTextFileContainsPhoneCallCallee() throws ParserException {
-        TextParser tp = new TextParser(PATH + "PhoneBillWithCustomer.txt");
-        PhoneBill newBill = tp.parse();
-        ArrayList<PhoneCall> phoneCalls = (ArrayList<PhoneCall>) newBill.getPhoneCalls();
-        PhoneCall firstCall = phoneCalls.get(0);
+//    //@Test
+//    public void phoneBillFromTextFileContainsPhoneCallStartInfo() throws ParserException {
+//        TextParser tp = new TextParser(PATH + "PhoneBillWithCustomer.txt");
+//        PhoneBill newBill = tp.parse();
+//        ArrayList<PhoneCall> phoneCalls = (ArrayList<PhoneCall>) newBill.getPhoneCalls();
+//        PhoneCall firstCall = phoneCalls.get(0);
+//
+//        assertThat(firstCall.getStartTimeString(), equalTo("1/1/2020 9:00"));
+//    }
 
-        assertThat(firstCall.getCallee(), equalTo("111-222-3333"));
-    }
+//    //@Test
+//    public void phoneBillFromTextFileContainsPhoneCallEndInfo() throws ParserException {
+//        TextParser tp = new TextParser(PATH + "PhoneBillWithCustomer.txt");
+//        PhoneBill newBill = tp.parse();
+//        ArrayList<PhoneCall> phoneCalls = (ArrayList<PhoneCall>) newBill.getPhoneCalls();
+//        PhoneCall firstCall = phoneCalls.get(0);
+//
+//        assertThat(firstCall.getEndTimeString(), equalTo("1/1/2020 10:00"));
+//    }
 
-    //@Test
-    public void phoneBillFromTextFileContainsPhoneCallStartInfo() throws ParserException {
-        TextParser tp = new TextParser(PATH + "PhoneBillWithCustomer.txt");
-        PhoneBill newBill = tp.parse();
-        ArrayList<PhoneCall> phoneCalls = (ArrayList<PhoneCall>) newBill.getPhoneCalls();
-        PhoneCall firstCall = phoneCalls.get(0);
-
-        assertThat(firstCall.getStartTimeString(), equalTo("1/1/2020 9:00"));
-    }
-
-    //@Test
-    public void phoneBillFromTextFileContainsPhoneCallEndInfo() throws ParserException {
-        TextParser tp = new TextParser(PATH + "PhoneBillWithCustomer.txt");
-        PhoneBill newBill = tp.parse();
-        ArrayList<PhoneCall> phoneCalls = (ArrayList<PhoneCall>) newBill.getPhoneCalls();
-        PhoneCall firstCall = phoneCalls.get(0);
-
-        assertThat(firstCall.getEndTimeString(), equalTo("1/1/2020 10:00"));
-    }
-
-    //@Test
-    public void phoneBillFromTextFileContainsAllCallInfo() throws ParserException {
-        TextParser tp = new TextParser(PATH + "PhoneBillWithCustomer.txt");
-        PhoneBill newBill = tp.parse();
-        ArrayList<PhoneCall> phoneCalls = (ArrayList<PhoneCall>) newBill.getPhoneCalls();
-        PhoneCall firstCall = phoneCalls.get(0);
-
-        assertThat(firstCall.toString(), equalTo("Phone call from 123-456-7890 to 111-222-3333 " +
-                "from 1/1/2020 9:00 to 1/1/2020 10:00"));
-    }
+//    //@Test
+//    public void phoneBillFromTextFileContainsAllCallInfo() throws ParserException {
+//        TextParser tp = new TextParser(PATH + "PhoneBillWithCustomer.txt");
+//        PhoneBill newBill = tp.parse();
+//        ArrayList<PhoneCall> phoneCalls = (ArrayList<PhoneCall>) newBill.getPhoneCalls();
+//        PhoneCall firstCall = phoneCalls.get(0);
+//
+//        assertThat(firstCall.toString(), equalTo("Phone call from 123-456-7890 to 111-222-3333 " +
+//                "from 1/1/2020 9:00 to 1/1/2020 10:00"));
+//    }
 
     @Test (expected = ParserException.class)
     public void parseMethodFileNotFoundException() throws ParserException {
