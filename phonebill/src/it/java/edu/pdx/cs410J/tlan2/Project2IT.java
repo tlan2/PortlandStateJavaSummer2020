@@ -175,7 +175,7 @@ public class Project2IT extends InvokeMainTestCase {
                 "01/01/2020", "01:00");
 
         assertThat(result.getTextWrittenToStandardError(), containsString("\nError: Customer name inputted does not match " +
-                "customer name on file."));
+                "customer name on file.\n\n"));
         assertThat(result.getExitCode(), equalTo(1));
     }
 

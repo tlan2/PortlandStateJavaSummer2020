@@ -139,7 +139,7 @@ public class Project2 {
 
             if(!customerOnFile.equals(args[3])){
                 System.err.println("\nError: Customer name inputted does not match " +
-                        "customer name on file.");
+                        "customer name on file.\n\n");
                 System.exit(1);
             }
 
@@ -209,7 +209,7 @@ public class Project2 {
 
             if(!customerOnFile.equals(args[3])){
                 System.err.println("\nError: Customer name inputted does not match " +
-                        "customer name on file.");
+                        "customer name on file.\n\n");
                 System.exit(1);
             }
 
@@ -278,7 +278,7 @@ public class Project2 {
 
             if(!customerOnFile.equals(args[2])){
                 System.err.println("\nError: Customer name inputted does not match " +
-                        "customer name on file.");
+                        "customer name on file.\n\n");
                 System.exit(1);
             }
 
