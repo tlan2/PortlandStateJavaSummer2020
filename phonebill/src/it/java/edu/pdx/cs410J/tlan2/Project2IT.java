@@ -272,17 +272,32 @@ public class Project2IT extends InvokeMainTestCase {
 
     @Test
     public void missingEndTime() {
-        MainMethodResult result = invokeMain("Brian Griffin",
-                "503-655-9775",
-                "503-888-2020",
-                "09/21/2020",
-                "15:13",
-                "9/21/2020");
+        MainMethodResult result = invokeMain("Brian Griffin", "503-655-9775", "503-888-2020",
+                "09/21/2020", "15:13", "9/21/2020");
         assertThat(result.getTextWrittenToStandardError(), containsString(
                 "Missing call end time."));
         assertThat(result.getExitCode(), equalTo(1));
     }
 
+    @Test
+    public void printReadMe() {
+        MainMethodResult result = invokeMain("-README", "Brian Griffin", "503-655-9775",
+                                            "503-888-2020", "09/21/2020", "15:13", "9/21/2020", "15:20");
+
+        assertThat(result.getTextWrittenToStandardOut(), containsString("\n\nTom Lancaster - Project 2\n" +
+                "A program that inputs a customer's call log\n" +
+                "(phone numbers, start and end date and time)\n" +
+                "into a billing format."));
+    }
+
+    @Test
+    public void printPhoneCall() {
+        MainMethodResult result = invokeMain("-print", "Brian Griffin",
+                "503-655-9775", "503-888-2020", "09/21/2020", "15:13", "9/21/2020", "15:20");
+        assertThat(result.getTextWrittenToStandardOut(), containsString("Phone call " +
+                "from 503-655-9775 to 503-888-2020 from 09/21/2020 15:13 to 9/21/2020 15:20"));
+        assertThat(result.getExitCode(), equalTo(0));
+    }
 
 
 

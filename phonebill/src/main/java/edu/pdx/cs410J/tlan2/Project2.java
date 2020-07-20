@@ -19,7 +19,7 @@ public class Project2 {
   public static String printReadMe() throws IOException {
       StringBuilder readMeTxt = new StringBuilder();
 
-      InputStream readme = Project1.class.getResourceAsStream("README.txt");
+      InputStream readme = Project2.class.getResourceAsStream("README.txt");
       BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
       String line;
       while ((line = reader.readLine()) != null) {
@@ -56,20 +56,19 @@ public class Project2 {
       System.exit(1);
     }
 
-//    If -README called in any argument position then print README file
-    for (String argument : args) {
-      if (argument == "-README") {
-        try {
-          printReadMe();
+    //    If -README called in any argument position then print README file
+    for(int i=0; i < args.length; i++){
+        if(args[i].equals("-README")){
+            try {
+                System.out.println("\n\n" + printReadMe());
         } catch (IOException ex) {
-          System.err.println("\nError: " + ex.getMessage());
+                System.err.println("\nError: " + ex.getMessage());
         }
         System.exit(0);
-      }
+        }
     }
 
-    // Too Many Arguments
-    if (args.length > 10)
+      if (args.length > 10)
     {
       System.err.println("\nToo many command line arguments.");
       System.exit(1);
@@ -99,22 +98,20 @@ public class Project2 {
     {
         System.err.println("\nMissing call end time.");
         System.exit(1);
-    }  else if (args.length == 7)
-    {
-        //Valid Command Line Entry with no options
-        PhoneCall call = new PhoneCall(args[1], args[2], args[3],
-                args[4], args[5], args[6]);
-        PhoneBill bill = new PhoneBill(args[0]);
-        bill.addPhoneCall(call);
-        System.exit(0);
     }
 
     for (String argument:args){
         argument = argument.trim();
     }
-
+    if (args[0].equals("-print") && args.length == 8){
+        PhoneCall newCall = new PhoneCall(args[2], args[3], args[4],
+                args[5], args[6], args[7]);
+        System.out.println(newCall.toString());
+        PhoneBill newBill = new PhoneBill();
+        System.exit(0);
+    }
     // Prints the phone call entered and inputs it into a customer's text file
-    if (args[0] == "-print" && args[1] == "-textFile") // OPTIONAL ARGUMENTS
+    else if (args[0].equals("-print") && args[1].equals("-textFile")) // OPTIONAL ARGUMENTS
     {
         // -print process
         PhoneCall newCall = new PhoneCall(args[4], args[5], args[6],
@@ -179,7 +176,7 @@ public class Project2 {
         System.exit(0);
 
         //Another option order possibility
-    } else if(args[0] == "-textFile" && args[2] == "-print")
+    } else if(args[0].equals("-textFile")  && args[2].equals("-print") )
     {
         // -print process
         PhoneCall newCall = new PhoneCall(args[4], args[5], args[6],
@@ -306,9 +303,18 @@ public class Project2 {
         }
         System.exit(0);
 
-        // Catch All Possibility
+
+    } else if (args.length == 7)
+    {
+        //Valid Command Line Entry with no options
+        PhoneCall call = new PhoneCall(args[1], args[2], args[3],
+                args[4], args[5], args[6]);
+        PhoneBill bill = new PhoneBill(args[0]);
+        bill.addPhoneCall(call);
+        System.exit(0);
     } else
     {
+        // Catch All Possibility
         System.err.println("\n\nError: Program Error. Please try again.");
         System.exit(1);
     }

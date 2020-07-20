@@ -64,11 +64,11 @@ public class TextParser implements PhoneBillParser {
           for(int i=0; i < data.length; i++){
             if(!number.matcher(data[0]).matches() || !number.matcher(data[1]).matches())
             {
-              throw new ParserException("\nError: Malformatted phone number(s) in file.");
+              throw new ParserException("\n\n\nError: Malformatted phone number(s) in file.");
             } else if(!date.matcher(data[2]).matches() || !date.matcher(data[4]).matches()){
-              throw new ParserException("\nError: Malformatted date(s) in file.");
+              throw new ParserException("\n\n\nError: Malformatted date(s) in file.");
             } else if(!time.matcher(data[3]).matches() || !time.matcher(data[5]).matches()){
-              throw new ParserException("\nError: Malformatted time(s) in file.");
+              throw new ParserException("\n\n\nError: Malformatted time(s) in file.");
             }
           }
           PhoneCall call = new PhoneCall(data[0], data[1], data[2], data[3],

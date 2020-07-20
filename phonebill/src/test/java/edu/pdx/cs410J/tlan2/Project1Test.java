@@ -19,7 +19,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class Project1Test {
 
-  @Test
+//  @Test
   public void readmeCanBeReadAsResource() throws IOException {
     StringBuilder readMeTxt = new StringBuilder();
     try (

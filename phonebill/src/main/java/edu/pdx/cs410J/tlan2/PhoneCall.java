@@ -43,7 +43,7 @@ public class PhoneCall extends AbstractPhoneCall {
       this.callerNumber = callerNumber;
     } else {
       throw new IllegalArgumentException(
-              "Invalid phone number format. Correct format is nnn-nnn-nnn.");
+              "\n\nInvalid phone number format. Correct format is nnn-nnn-nnn.");
     }
 
     /**
@@ -53,7 +53,7 @@ public class PhoneCall extends AbstractPhoneCall {
       this.calleeNumber = calleeNumber;
     } else {
       throw new IllegalArgumentException(
-              "Invalid phone number format. Correct format is nnn-nnn-nnn.");
+              "\n\nInvalid phone number format. Correct format is nnn-nnn-nnn.");
     }
 
     /**
@@ -63,7 +63,7 @@ public class PhoneCall extends AbstractPhoneCall {
       this.startDate = startDate;
     } else {
       throw new IllegalArgumentException(
-              "Invalid date format. Correct format is either nn/nn/nnnn or n/n/nnnn");
+              "\n\nInvalid date format. Correct format is either nn/nn/nnnn or n/n/nnnn");
     }
 
     /**
@@ -73,7 +73,7 @@ public class PhoneCall extends AbstractPhoneCall {
       this.endDate = endDate;
     } else {
       throw new IllegalArgumentException(
-              "Invalid date format. Correct format is either nn/nn/nnnn or n/n/nnnn");
+              "\n\nInvalid date format. Correct format is either nn/nn/nnnn or n/n/nnnn");
     }
 
     /**
@@ -83,7 +83,7 @@ public class PhoneCall extends AbstractPhoneCall {
       this.startTime = startTime;
     } else {
       throw new IllegalArgumentException(
-              "Invalid time format. Correct format is nn:nn");
+              "\n\nInvalid time format. Correct format is nn:nn");
     }
     /**
      * @throw   If an illegal argument exception occurred.
@@ -92,7 +92,7 @@ public class PhoneCall extends AbstractPhoneCall {
       this.endTime = endTime;
     } else {
       throw new IllegalArgumentException(
-              "Invalid time format. Correct format is nn:nn or n:nn");
+              "\n\nInvalid time format. Correct format is nn:nn or n:nn");
     }
   }
 
