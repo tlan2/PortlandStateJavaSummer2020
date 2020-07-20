@@ -122,11 +122,10 @@ public class Project2 {
         // -textfile process
         String fileName = args[2];
         File file = new File(fileName);
-        boolean isNewFile = false;
-
 
         //Parse existing file
-        if(!isNewFile){
+        if(file.exists()){
+            System.out.println("\nWriting to existing file.\n");
             TextParser tp = new TextParser(file);
             try
             {
@@ -155,14 +154,15 @@ public class Project2 {
             }
         } else
         {
-//            try
-//            {
-//                file.createNewFile();
-//            } catch (IOException ex)
-//            {
-//                ex.printStackTrace();
-//            }
-//            PhoneBill newBill = new PhoneBill(args[3]);
+            System.out.println("\nNew file created.\n");
+            try
+            {
+                file.getParentFile().mkdirs();
+                file.createNewFile();
+            } catch (IOException ex)
+            {
+                ex.printStackTrace();
+            }
             newBill.addCustomer(args[3]);
             newBill.addPhoneCall(newCall);
             TextDumper td = new TextDumper(args[2]);
@@ -189,18 +189,11 @@ public class Project2 {
         // -textfile process
         String fileName = args[1];
         File file = new File(fileName);
-//        boolean fileExists;
-//
-//        try{
-//             isNewFile = file.exists();
-//             System.out.println("\n\nworking\n\n");
-//        } catch (IOException ex) {
-//            ex.printStackTrace();
-//        }
 
         //Parse existing file
         if(file.exists()){
-            System.out.println("\n\nfile exists\n\n");
+            System.out.println("\nWriting to existing file.\n");
+
             TextParser tp = new TextParser(file);
 
             try
@@ -230,7 +223,7 @@ public class Project2 {
             }
         } else
         {
-            System.out.println("\n\nnew file\n\n");
+            System.out.println("\nNew file created.\n");
 
             try
             {
@@ -240,7 +233,7 @@ public class Project2 {
             {
                 ex.printStackTrace();
             }
-//            PhoneBill newBill = new PhoneBill(args[3]);
+
             newBill.addCustomer(args[3]);
             newBill.addPhoneCall(newCall);
             TextDumper td = new TextDumper(fileName);
@@ -267,6 +260,8 @@ public class Project2 {
 
         //Parse existing file
         if(file.exists()){
+            System.out.println("\nWriting to existing file.\n");
+
             TextParser tp = new TextParser(file);
 
             try
@@ -296,14 +291,17 @@ public class Project2 {
             }
         } else
         {
+            System.out.println("\nNew file created.\n");
+
             try
             {
+                file.getParentFile().mkdirs();
                 file.createNewFile();
             } catch (IOException ex)
             {
                 ex.printStackTrace();
             }
-//            PhoneBill newBill = new PhoneBill(args[3]);
+
             newBill.addCustomer(args[2]);
             newBill.addPhoneCall(newCall);
             TextDumper td = new TextDumper(fileName);
