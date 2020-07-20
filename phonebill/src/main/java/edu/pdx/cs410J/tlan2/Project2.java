@@ -125,7 +125,7 @@ public class Project2 {
 
         //Parse existing file
         if(file.exists()){
-            System.out.println("\nWriting to existing file.\n");
+
             TextParser tp = new TextParser(file);
             try
             {
@@ -142,6 +142,8 @@ public class Project2 {
                         "customer name on file.");
                 System.exit(1);
             }
+
+            System.out.println("\nWriting to existing file.\n");
 
             newBill.addPhoneCall(newCall);
             TextDumper td = new TextDumper(fileName);
@@ -192,7 +194,6 @@ public class Project2 {
 
         //Parse existing file
         if(file.exists()){
-            System.out.println("\nWriting to existing file.\n");
 
             TextParser tp = new TextParser(file);
 
@@ -211,6 +212,8 @@ public class Project2 {
                         "customer name on file.");
                 System.exit(1);
             }
+
+            System.out.println("\nWriting to existing file.\n");
 
             newBill.addPhoneCall(newCall);
             TextDumper td = new TextDumper(fileName);
@@ -260,7 +263,6 @@ public class Project2 {
 
         //Parse existing file
         if(file.exists()){
-            System.out.println("\nWriting to existing file.\n");
 
             TextParser tp = new TextParser(file);
 
@@ -279,6 +281,8 @@ public class Project2 {
                         "customer name on file.");
                 System.exit(1);
             }
+
+            System.out.println("\nWriting to existing file.\n");
 
             newBill.addPhoneCall(newCall);
             TextDumper td = new TextDumper(fileName);
