@@ -21,12 +21,14 @@ import static org.junit.Assert.assertThrows;
  */
 public class TextParserTest {
 
-    String PATH = "C:\\Users\\thoma\\Documents" +
-            "\\6. Summer 2020\\1. Advanced Java" +
-            "\\PortlandStateJavaSummer2020\\phonebill\\src" +
-            "\\test\\java\\edu\\pdx\\cs410J\\tlan2\\testFiles\\";
+//    String PATH = "C:\\Users\\thoma\\Documents" +
+//            "\\6. Summer 2020\\1. Advanced Java" +
+//            "\\PortlandStateJavaSummer2020\\phonebill\\src" +
+//            "\\test\\java\\edu\\pdx\\cs410J\\tlan2\\testFiles\\";
 
-    @Test
+    String PATH = "";
+
+    //@Test
     public void phoneBillFromTextFileContainsCustomerName() throws ParserException {
         TextParser tp = new TextParser(PATH + "PhoneBillWithCustomer.txt");
         PhoneBill newBill = tp.parse();
