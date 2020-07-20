@@ -66,7 +66,7 @@ public class Project1 {
     } else if (args[0] == "-print" && args.length == 8){
       PhoneCall call = new PhoneCall(args[2], args[3], args[4],
               args[5], args[6], args[7]);
-      System.out.println(call.toString());
+      System.out.println("\n" + call.toString());
       PhoneBill bill = new PhoneBill(args[1]);
       bill.addPhoneCall(call);
       System.exit(0);

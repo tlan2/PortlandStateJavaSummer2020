@@ -20,10 +20,6 @@ import static java.util.regex.Pattern.compile;
  * object.
  */
 public class TextParser implements PhoneBillParser {
-//  String PATH = "C:\\Users\\thoma\\Documents" +
-//          "\\6. Summer 2020\\1. Advanced Java" +
-//          "\\PortlandStateJavaSummer2020\\phonebill\\src" +
-//          "\\test\\java\\edu\\pdx\\cs410J\\tlan2\\testFiles\\";
 
   private final File newFile;
 

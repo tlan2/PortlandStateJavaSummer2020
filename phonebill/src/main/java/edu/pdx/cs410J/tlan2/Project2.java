@@ -106,7 +106,7 @@ public class Project2 {
     if (args[0].equals("-print") && args.length == 8){
         PhoneCall newCall = new PhoneCall(args[2], args[3], args[4],
                 args[5], args[6], args[7]);
-        System.out.println(newCall.toString());
+        System.out.println("\n" + newCall.toString());
         PhoneBill newBill = new PhoneBill();
         System.exit(0);
     }
@@ -116,17 +116,18 @@ public class Project2 {
         // -print process
         PhoneCall newCall = new PhoneCall(args[4], args[5], args[6],
                 args[7], args[8], args[9]);
-        System.out.println(newCall.toString());
+        System.out.println("\n" + newCall.toString());
         PhoneBill newBill = new PhoneBill();
 
         // -textfile process
         String fileName = args[2];
         File file = new File(fileName);
+        boolean isNewFile = false;
+
 
         //Parse existing file
-        if(file.exists()){
+        if(!isNewFile){
             TextParser tp = new TextParser(file);
-
             try
             {
                 newBill = tp.parse();
@@ -154,13 +155,13 @@ public class Project2 {
             }
         } else
         {
-            try
-            {
-                file.createNewFile();
-            } catch (IOException ex)
-            {
-                ex.printStackTrace();
-            }
+//            try
+//            {
+//                file.createNewFile();
+//            } catch (IOException ex)
+//            {
+//                ex.printStackTrace();
+//            }
 //            PhoneBill newBill = new PhoneBill(args[3]);
             newBill.addCustomer(args[3]);
             newBill.addPhoneCall(newCall);
@@ -181,15 +182,25 @@ public class Project2 {
         // -print process
         PhoneCall newCall = new PhoneCall(args[4], args[5], args[6],
                 args[7], args[8], args[9]);
-        System.out.println(newCall.toString());
+        System.out.println("\n" + newCall.toString());
         PhoneBill newBill = new PhoneBill();
+
 
         // -textfile process
         String fileName = args[1];
         File file = new File(fileName);
+//        boolean fileExists;
+//
+//        try{
+//             isNewFile = file.exists();
+//             System.out.println("\n\nworking\n\n");
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//        }
 
         //Parse existing file
         if(file.exists()){
+            System.out.println("\n\nfile exists\n\n");
             TextParser tp = new TextParser(file);
 
             try
@@ -219,8 +230,11 @@ public class Project2 {
             }
         } else
         {
+            System.out.println("\n\nnew file\n\n");
+
             try
             {
+                file.getParentFile().mkdirs();
                 file.createNewFile();
             } catch (IOException ex)
             {
