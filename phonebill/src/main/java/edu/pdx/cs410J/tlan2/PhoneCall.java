@@ -32,14 +32,18 @@ public class PhoneCall extends AbstractPhoneCall {
    *                      phone number.
    * @param calleeNumber  The person receiving the phone call
    *                      phone number.
+   * @param startDate     The date when the phone call started.
+   * @param startTime     The time when the phone call started.
+   * @param startAMPM     The start time am/pm indicator.
+   * @param endDate       The date when the phone call started.
+   * @param endTime       The time when the phone call started.
+   * @param endAMPM       The end time am/pm indicator.
    * @param startDateTime The start date and time in Date object format.
    * @param endDateTime   The end date and time in Date object format.
    *
    */
-//  @param startDate     The date when the phone call started.
-//          * @param startTime     The time when the phone call started.
-//          * @param endDate       The date when the phone call ended.
-//          * @param endTime       The time when the phone call ended.
+
+  // ========== CONSTRUCTOR ===========================================
 
   public PhoneCall(String callerNumber, String calleeNumber, String startDate,
                    String startTime, String startAMPM, String endDate, String endTime,
@@ -82,7 +86,7 @@ public class PhoneCall extends AbstractPhoneCall {
 //                                    (int) timeInfo[1]);
     } else {
       throw new IllegalArgumentException(
-              "\n\nInvalid date/time format. Correct format is (nn/nn/nnnn or n/n/nnnn) OR (nn:nn or n:nn)");
+              "\n\nInvalid date and/or time format. Correct format ");
     }
 
     /**

@@ -1,7 +1,5 @@
 package edu.pdx.cs410J.tlan2;
 
-import edu.pdx.cs410J.InvokeMainTestCase;
-import org.hamcrest.Matcher;
 import org.junit.Test;
 
 import java.io.BufferedReader;
