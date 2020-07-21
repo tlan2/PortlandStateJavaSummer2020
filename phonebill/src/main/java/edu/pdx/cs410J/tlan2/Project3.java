@@ -1,33 +1,13 @@
 package edu.pdx.cs410J.tlan2;
 
 import edu.pdx.cs410J.ParserException;
-import org.w3c.dom.Text;
 
 import java.io.*;
-import java.util.Scanner;
 
 /**
  * The main class for the CS410J Phone Bill Project
  */
-public class Project2 {
-
-  /**
-   * Reads the README.txt file and prints out the program description within the file.
-   *
-   * @throws IOException  If an input or output exception occurred.
-   */
-  public static String printReadMe() throws IOException {
-      StringBuilder readMeTxt = new StringBuilder();
-
-      InputStream readme = Project2.class.getResourceAsStream("README.txt");
-      BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
-      String line;
-      while ((line = reader.readLine()) != null) {
-          readMeTxt.append(line).append("\n");
-      }
-
-    return readMeTxt.toString();
-  }
+public class Project3 {
   /**
    *
    * @param args
@@ -37,18 +17,7 @@ public class Project2 {
    * end of phone call date and time.
    */
   public static void main(String[] args) {
-      System.out.println("\nusage: java edu.pdx.cs410J.<login-id>.Project2 [options] <args>" +
-              "\n  args are (in this order):" +
-              "\n\tcustomer\t\t\tPerson whose phone bill we're modeling" +
-              "\n\tcallerNumber\t\tPhone number of caller" +
-              "\n\tcalleeNumber\t\tPhone number of person who was called" +
-              "\n\tstart\t\t\t\tDate and time call began (24-hour time)"+
-              "\n\tend\t\t\t\t\tDate and time call ended (24-hour time)" +
-              "\n  options are (options may appear in any order) :" +
-              "\n\t-textFile file\t\t\tWhere to read/write the phone bill" +
-              "\n\t-print\t\t\t\tPrints a description of the new phone call" +
-              "\n\t-README\t\t\t\tPrints a README for this project and exits" +
-              "\n  Date and time should be in the format: mm/dd/yyyy hh:mm");
+      printCLI();
 
       // No Command Line Arguments
     if (args.length == 0) {
@@ -56,19 +25,10 @@ public class Project2 {
       System.exit(1);
     }
 
-    //    If -README called in any argument position then print README file
-    for(int i=0; i < args.length; i++){
-        if(args[i].equals("-README")){
-            try {
-                System.out.println("\n\n" + printReadMe());
-        } catch (IOException ex) {
-                System.err.println("\nError: " + ex.getMessage());
-        }
-        System.exit(0);
-        }
-    }
+    //  If -README called in any argument position then print README file
+    checkReadMe(args);
 
-      if (args.length > 10)
+      if (args.length > 13)
     {
       System.err.println("\nToo many command line arguments.");
       System.exit(1);
@@ -103,10 +63,10 @@ public class Project2 {
     for (String argument:args){
         argument = argument.trim();
     }
-    if (args[0].equals("-print") && args.length == 8){
+    if (args[0].equals("-print") && args.length == 10){
         PhoneCall newCall = new PhoneCall(args[2], args[3], args[4],
-                args[5], args[6], args[7]);
-        System.out.println("\n" + newCall.toString());
+                args[5], args[6], args[7], args[8], args[9]);
+        printPhoneCall(newCall);
         PhoneBill newBill = new PhoneBill();
         System.exit(0);
     }
@@ -115,8 +75,8 @@ public class Project2 {
     {
         // -print process
         PhoneCall newCall = new PhoneCall(args[4], args[5], args[6],
-                args[7], args[8], args[9]);
-        System.out.println("\n" + newCall.toString());
+                args[7], args[8], args[9], args[10], args[11]);
+        printPhoneCall(newCall);
         PhoneBill newBill = new PhoneBill();
 
         // -textfile process
@@ -183,8 +143,8 @@ public class Project2 {
     {
         // -print process
         PhoneCall newCall = new PhoneCall(args[4], args[5], args[6],
-                args[7], args[8], args[9]);
-        System.out.println("\n" + newCall.toString());
+                args[7], args[8], args[9], args[10], args[11]);
+        printPhoneCall(newCall);
         PhoneBill newBill = new PhoneBill();
 
 
@@ -251,10 +211,10 @@ public class Project2 {
         System.exit(0);
 
         //Valid command line with the -textFile option
-    } else if (args[0].equals("-textFile") && args.length == 9)
+    } else if (args[0].equals("-textFile") && args.length == 11)
     {
         PhoneCall newCall = new PhoneCall(args[3], args[4], args[5],
-                args[6], args[7], args[8]);
+                args[6], args[7], args[8], args[9], args[10]);
         PhoneBill newBill = new PhoneBill();
 
         // -textfile process
@@ -320,11 +280,11 @@ public class Project2 {
         System.exit(0);
 
 
-    } else if (args.length == 7)
+    } else if (args.length == 9)
     {
-        //Valid Command Line Entry with no options
+        // Valid Command Line Entry with no options
         PhoneCall call = new PhoneCall(args[1], args[2], args[3],
-                args[4], args[5], args[6]);
+                args[4], args[5], args[6], args[7], args[8]);
         PhoneBill bill = new PhoneBill(args[0]);
         bill.addPhoneCall(call);
         System.exit(0);
@@ -335,4 +295,62 @@ public class Project2 {
         System.exit(1);
     }
   }
+
+    private static void printPhoneCall(PhoneCall newCall) {
+        System.out.println("\n" + newCall.toString());
+    }
+
+    //============ Methods Used in Main ========================================
+    private static void printCLI() {
+        System.out.println("\n\nusage: java edu.pdx.cs410J.<login-id>.Project3 [options] <args>" +
+                "\n  args are (in this order):" +
+                "\n\tcustomer\t\t\tPerson whose phone bill we're modeling" +
+                "\n\tcallerNumber\t\tPhone number of caller" +
+                "\n\tcalleeNumber\t\tPhone number of person who was called" +
+                "\n\tstart\t\t\t\tDate and time call began (24-hour time)"+
+                "\n\tend\t\t\t\t\tDate and time call ended (24-hour time)" +
+                "\n  options are (options may appear in any order) :" +
+                "\n\t-pretty file\t\t\tPretty print the phone bill to a text file" +
+                "\n\t\t\t\t\tor standard out (file -) ." +
+                "\n\t-textFile file\t\t\tWhere to read/write the phone bill" +
+                "\n\t-print\t\t\t\tPrints a description of the new phone call" +
+                "\n\t-README\t\t\t\tPrints a README for this project and exits");
+    }
+
+    /**
+     * Reads the README.txt file and prints out the program description within the file.
+     *
+     * @throws IOException  If an input or output exception occurred.
+     */
+    public static void printReadMe() throws IOException {
+        InputStream readme = Project3.class.getResourceAsStream("README.txt");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
+
+        StringBuilder readMeTxt = new StringBuilder("\n\n");
+        String line;
+        while ((line = reader.readLine()) != null) {
+            readMeTxt.append(line).append("\n");
+        }
+
+        System.out.println(readMeTxt.toString());
+    }
+
+    /**
+     *
+     * @param args
+     */
+
+    private static void checkReadMe(String[] args) {
+
+        for(int i=0; i < args.length; i++){
+            if(args[i].equals("-README")){
+                try {
+                    printReadMe();
+                } catch (IOException ex) {
+                    System.err.println("\nError: " + ex.getMessage());
+                }
+                System.exit(0);
+            }
+        }
+    }
 }

@@ -12,7 +12,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
- * Tests the functionality in the {@link Project1} main class.
+ * Tests the functionality in the {@link Project2} main class.
  */
 public class Project2IT extends InvokeMainTestCase {
     /**

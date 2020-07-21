@@ -15,21 +15,17 @@ public class PhoneCallTest {
 
   private PhoneCall createValidPhoneCall1() {
     return new PhoneCall("503-755-6509", "617-703-7433",
-            "1/15/2020", "19:39", "1/15/2020", "20:00");
+            "1/15/2020", "7:39", "pm","1/15/2020", "8:00", "pm");
   }
 
   private PhoneCall createValidPhoneCall2() {
     return new PhoneCall("305-667-3094", "503-867-5309",
-            "01/20/2020", "10:50", "1/2/2020", "11:50");
+            "01/20/2020", "10:50", "am", "1/2/2020", "11:50", "am");
   }
 
   private PhoneCall callValid1 = createValidPhoneCall1();
   private PhoneCall callValid2 = createValidPhoneCall2();
 
-  @Test
-  public void forProject1ItIsOkayIfGetStartTimeReturnsNull() {
-    assertThat(callValid2.getStartTime(), is(nullValue()));
-  }
 
   @Test
   public void getCaller(){
@@ -41,57 +37,63 @@ public class PhoneCallTest {
     assertThat(callValid1.getCallee(), containsString("617-703-7433"));
   }
 
-  @Test
-  public void toStringForExampleInAssignment() {
-    assertThat(callValid2.toString(), equalTo("Phone call from 305-667-3094 " +
-                                                            "to 503-867-5309 from 01/20/2020 10:50 " +
-                                                            "to 1/2/2020 11:50"));
-  }
+//  @Test
+//  public void toStringForExampleInAssignment() {
+//    assertThat(callValid2.toString(), equalTo("Phone call from 305-667-3094 " +
+//                                                            "to 503-867-5309 from 01/20/2020 10:50 " +
+//                                                            "to 1/2/2020 11:50"));
+//  }
 
   @Test (expected = IllegalArgumentException.class)
   public void invalidCallerNumber() {
       PhoneCall newCall = new PhoneCall("x2x-y34-5z6", "503-635-2807", "01/01/20",
-              "10:30", "1/1/20", "10:45");
+              "10:30", "am", "1/1/20", "10:45", "am");
   }
 
   @Test (expected = IllegalArgumentException.class)
   public void invalidCalleeNumber() {
     PhoneCall newCall = new PhoneCall("123-334-576", "503-6a5-2807", "01/01/2020",
-            "10:30", "1/1/2020", "10:45");
+            "10:30", "am","1/1/2020", "10:45", "am");
   }
 
   @Test (expected = IllegalArgumentException.class)
   public void invalidStartDate() {
     PhoneCall newCall = new PhoneCall("123-334-576", "503-635-2807", "a/xx/2020",
-            "10:30", "1/1/2020", "10:45");
+            "10:30", "am", "1/1/2020", "10:45", "am");
   }
 
-  @Test
-  public void singleDigitMonthDate(){
-    assertThat(callValid1.toString(), containsString("1/15/2020"));
-  }
-
-  @Test
-  public void singleDigitDayDate(){
-    assertThat(callValid2.toString(), containsString("1/2/2020"));
-  }
+//  @Test
+//  public void singleDigitMonthDate(){
+//    assertThat(callValid1.toString(), containsString("1/15/2020"));
+//  }
+//
+//  @Test
+//  public void singleDigitDayDate(){
+//    assertThat(callValid2.toString(), containsString("1/2/2020"));
+//  }
 
   @Test (expected = IllegalArgumentException.class)
   public void invalidEndDate() {
     PhoneCall newCall = new PhoneCall("123-334-576", "503-635-2807", "01/01/20",
-            "10:30", "1/1/20", "10:45");
+            "10:30", "am", "1/1/20", "10:45", "am");
   }
 
   @Test (expected = IllegalArgumentException.class)
   public void invalidStartTime() {
     PhoneCall newCall = new PhoneCall("123-334-576", "503-635-2807", "01/01/20",
-            "xx:3x", "1/1/20", "10:45");
+            "xx:3x", "am", "1/1/20", "10:45", "am");
   }
 
   @Test (expected = IllegalArgumentException.class)
   public void invalidEndTime() {
     PhoneCall newCall = new PhoneCall("123-334-576", "503-635-2807", "01/01/20",
-            "1:30", "1/1/20", "aa:45");
+            "1:30", "pm","1/1/20", "aa:45", "PM");
   }
+
+//  @Test
+//  public void isDateType() {
+//    createValidPhoneCall2();
+//    assertThat(callValid1.getStartTime(),);
+//  }
 
 }

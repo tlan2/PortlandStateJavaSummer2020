@@ -67,9 +67,9 @@ public class TextParser implements PhoneBillParser {
               throw new ParserException("\n\n\nError: Malformatted time(s) in file.");
             }
           }
-          PhoneCall call = new PhoneCall(data[0], data[1], data[2], data[3],
-                  data[4], data[5]);
-          newBill.addPhoneCall(call);
+//          PhoneCall call = new PhoneCall(data[0], data[1], data[2], data[3],
+//                  data[4], data[5]);
+//          newBill.addPhoneCall(call);
         }
       } catch (FileNotFoundException ex) {
         throw new ParserException("While parsing file", ex);

@@ -16,12 +16,12 @@ public class PhoneBillTest {
 
     private PhoneCall createValidPhoneCall1() {
         return new PhoneCall("503-755-6509", "617-703-7433",
-                "1/15/2020", "19:39", "1/15/2020", "20:00");
+                "1/15/2020", "19:39","am", "1/15/2020", "20:00", "pm");
     }
 
     private PhoneCall createValidPhoneCall2() {
         return new PhoneCall("305-667-3094", "503-867-5309",
-                "01/20/2020", "10:50", "1/2/2020", "11:50");
+                "01/20/2020", "10:50", "am","1/2/2020", "11:50", "am");
     }
     private PhoneCall callValid1 = createValidPhoneCall1();
     private PhoneCall callValid2 = createValidPhoneCall2();
