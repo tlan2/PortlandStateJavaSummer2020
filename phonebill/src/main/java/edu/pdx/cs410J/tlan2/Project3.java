@@ -28,60 +28,37 @@ public class Project3 {
     //  If -README called in any argument position then print README file
     checkReadMe(args);
 
-      if (args.length > 13)
-    {
+    // Too Many Arguments check
+      if (args.length > 13){
       System.err.println("\nToo many command line arguments.");
       System.exit(1);
-    } else if (args.length == 1)
-    {
-        System.err.println("\nMissing callerNumber, calleeNumber, " +
-                "call start date and time, and call end date and time.");
-        System.exit(1);
-    } else if (args.length == 2)
-    {
-        System.err.println("\nMissing calleeNumber, " +
-                "call start date and time, and call end date and time.");
-        System.exit(1);
-    } else if (args.length == 3)
-    {
-        System.err.println("\nMissing call start date and time, and call end date and time.");
-        System.exit(1);
-    } else if (args.length == 4)
-    {
-        System.err.println("\nMissing call start time, and call end date and time.");
-        System.exit(1);
-    } else if (args.length == 5)
-    {
-        System.err.println("\nMissing call end date and time.");
-        System.exit(1);
-    } else if (args.length == 6)
-    {
-        System.err.println("\nMissing call end time.");
-        System.exit(1);
     }
 
+    // Remove leading and trailing white space from arguments
     for (String argument:args){
         argument = argument.trim();
     }
+      // Print phone call and store in new phone bill
     if (args[0].equals("-print") && args.length == 10){
+
+        String customer = args[1];
         PhoneCall newCall = new PhoneCall(args[2], args[3], args[4],
                 args[5], args[6], args[7], args[8], args[9]);
         printPhoneCall(newCall);
-        PhoneBill newBill = new PhoneBill();
         System.exit(0);
     }
+    // ============== OPTIONAL ARGUMENTS ========================
     // Prints the phone call entered and inputs it into a customer's text file
-    else if (args[0].equals("-print") && args[1].equals("-textFile")) // OPTIONAL ARGUMENTS
-    {
+    else if (args[0].equals("-print") && args[1].equals("-textFile")){
         // -print process
         PhoneCall newCall = new PhoneCall(args[4], args[5], args[6],
                 args[7], args[8], args[9], args[10], args[11]);
         printPhoneCall(newCall);
-        PhoneBill newBill = new PhoneBill();
-
+        String customerName = args[3];
         // -textfile process
         String fileName = args[2];
         File file = new File(fileName);
+        PhoneBill newBill = new PhoneBill();
 
         //Parse existing file
         if(file.exists()){
@@ -97,7 +74,7 @@ public class Project3 {
 
             String customerOnFile = newBill.getCustomer();
 
-            if(!customerOnFile.equals(args[3])){
+            if(!customerOnFile.equals(customerName)){
                 System.err.println("\nError: Customer name inputted does not match " +
                         "customer name on file.\n\n");
                 System.exit(1);
@@ -125,9 +102,9 @@ public class Project3 {
             {
                 ex.printStackTrace();
             }
-            newBill.addCustomer(args[3]);
+            newBill.addCustomer(customerName);
             newBill.addPhoneCall(newCall);
-            TextDumper td = new TextDumper(args[2]);
+            TextDumper td = new TextDumper(fileName);
             try
             {
                 td.dump(newBill);
@@ -138,7 +115,7 @@ public class Project3 {
         }
         System.exit(0);
 
-        //Another option order possibility
+        //-textFile & -print
     } else if(args[0].equals("-textFile")  && args[2].equals("-print") )
     {
         // -print process
@@ -210,7 +187,7 @@ public class Project3 {
         }
         System.exit(0);
 
-        //Valid command line with the -textFile option
+        //-textFile option Only
     } else if (args[0].equals("-textFile") && args.length == 11)
     {
         PhoneCall newCall = new PhoneCall(args[3], args[4], args[5],
@@ -280,16 +257,41 @@ public class Project3 {
         System.exit(0);
 
 
-    } else if (args.length == 9)
-    {
+    } else if (args.length == 9){
         // Valid Command Line Entry with no options
         PhoneCall call = new PhoneCall(args[1], args[2], args[3],
                 args[4], args[5], args[6], args[7], args[8]);
         PhoneBill bill = new PhoneBill(args[0]);
         bill.addPhoneCall(call);
         System.exit(0);
-    } else
-    {
+    }else if (args.length == 1){
+        System.err.println("\n\nMissing callerNumber, calleeNumber, " +
+                "call start and call end date/time/AM/PM.");
+        System.exit(1);
+    } else if (args.length == 2){
+        System.err.println("\n\nMissing calleeNumber, " +
+                "call start and call end date/time/AM/PM.");
+        System.exit(1);
+    } else if (args.length == 3){
+        System.err.println("\n\nMissing call start and call end " +
+                "date/time/AM/PM.");
+        System.exit(1);
+    } else if (args.length == 4){
+        System.err.println("\n\nMissing call start time/AM/PM, and call end date/time/AM/PM.");
+        System.exit(1);
+    } else if (args.length == 5){
+        System.err.println("\n\nMissing call start AM/PM and end date/time/AM/PM.");
+        System.exit(1);
+    } else if (args.length == 6){
+        System.err.println("\n\nMissing call end date/time/AM/PM.");
+        System.exit(1);
+    } else if (args.length == 7){
+        System.err.println("\n\nMissing call end time/AM/PM.");
+        System.exit(1);
+    } else if (args.length == 8){
+        System.err.println("\n\nMissing call end AM/PM.");
+        System.exit(1);
+    }else{
         // Catch All Possibility
         System.err.println("\n\nError: Program Error. Please try again.");
         System.exit(1);

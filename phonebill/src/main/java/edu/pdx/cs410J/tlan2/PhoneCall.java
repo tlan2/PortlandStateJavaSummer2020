@@ -2,6 +2,10 @@ package edu.pdx.cs410J.tlan2;
 
 import edu.pdx.cs410J.AbstractPhoneCall;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.regex.Pattern;
 
@@ -73,33 +77,47 @@ public class PhoneCall extends AbstractPhoneCall {
      * @throw   If an illegal argument exception occurred.
      */
     if(isValidDate(startDate) && isValidTime(startTime) && isValidAMPM(startAMPM)){//      this.startDate = startDate;
-
+      System.out.println("\nStart Date and Time");
       String myDate = startDate + " " + startTime + " " + startAMPM;
-      //      this.startTime = startTime;
-//
-//      Date this.startDateTime =
-//      String[] dateInfo = startDate.split("/");
-//      String[] timeInfo = startTime.split(":");
+      SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+      Date sDate = null;
 
-//      this.startDateTime = new Date((int) dateInfo[2], (int) dateInfo[1],
-//                                    (int) dateInfo[0]), (int) timeInfo[0],
-//                                    (int) timeInfo[1]);
-    } else {
-      throw new IllegalArgumentException(
-              "\n\nInvalid date and/or time format. Correct format ");
+      try{
+        sDate = format.parse(myDate);
+      } catch(ParseException ex){
+        System.err.println("\nInvalid start date and/or time format. " +
+                            "Correct format: mm/dd/yyyy nn:nn am/pm.");
+        System.exit(1);
+      }
+
+      this.startDateTime = sDate;
+      int f = DateFormat.SHORT;
+      DateFormat df = DateFormat.getDateTimeInstance(f, f);
+      System.out.println(df.format(sDate));
     }
 
     /**
      * @throw   If an illegal argument exception occurred.
      */
-    if(isValidDate(endDate) && isValidTime(endTime) && isValidAMPM(endAMPM)){
-//      this.endDate = endDate;
-      //
-    } else {
-      throw new IllegalArgumentException(
-              "\n\nInvalid date/time format. Correct format is (nn/nn/nnnn or n/n/nnnn) OR (nn:nn am/pm or n:nn AM/PM)");
+    if(isValidDate(endDate) && isValidTime(endTime) && isValidAMPM(endAMPM)) {
+      System.out.println("\nEnd Date and Time");
+      String myDate = endDate + " " + endTime + " " + endAMPM;
+
+      SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+      Date eDate = null;
+
+      try{
+        eDate = format.parse(myDate);
+      } catch (ParseException ex) {
+        System.err.println("\n\nInvalid end date and/or time format. " +
+                "Correct format: mm/dd/yyyy nn:nn am/pm.");
+        System.exit(1);
+      }
+      this.endDateTime = eDate;
+      System.out.println("end date success");
     }
 
+//   DEPRECATE - Check time strings. Done above.
 //    /**
 //     * @throw   If an illegal argument exception occurred.
 //     */
@@ -147,8 +165,9 @@ public class PhoneCall extends AbstractPhoneCall {
    */
   @Override
   public String getStartTimeString() {
-
-    return this.startDate + " " + this.startTime;
+    int f = DateFormat.SHORT;
+    DateFormat df = DateFormat.getDateTimeInstance(f, f);
+    return df.format(this.startDateTime);
   }
 
   @Override
@@ -161,7 +180,9 @@ public class PhoneCall extends AbstractPhoneCall {
    */
   @Override
   public String getEndTimeString() {
-    return this.endDate + " " + this.endTime;
+    int f = DateFormat.SHORT;
+    DateFormat df = DateFormat.getDateTimeInstance(f, f);
+    return df.format(this.endDateTime);
   }
 
   /**
@@ -205,8 +226,8 @@ public class PhoneCall extends AbstractPhoneCall {
   }
 
   /**
-   *  @return     true or false
-   * @param time  The time of the phone call that is
+   * @return      true or false
+   * @param amPM  The time of the phone call that is
    *              being checked for correct format
    */
   public boolean isValidAMPM(String amPM){

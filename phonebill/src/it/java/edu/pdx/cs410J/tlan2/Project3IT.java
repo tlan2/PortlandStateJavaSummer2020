@@ -220,16 +220,14 @@ public class Project3IT extends InvokeMainTestCase {
     public void missingCallerNumberPlus() {
         MainMethodResult result = invokeMain("Brian Griffin");
         assertThat(result.getTextWrittenToStandardError(), containsString(
-                "Missing callerNumber, calleeNumber, " +
-                        "call start date and time, and call end date and time."));
+                "Missing callerNumber, calleeNumber, call start and call end date/time/AM/PM."));
         assertThat(result.getExitCode(), equalTo(1));
     }
     @Test
     public void missingCalleeNumberPlus() {
         MainMethodResult result = invokeMain( "Brian Griffin", "503-655-9775");
         assertThat(result.getTextWrittenToStandardError(), containsString(
-                "Missing calleeNumber, " +
-                        "call start date and time, and call end date and time."));
+                "Missing calleeNumber, call start and call end date/time/AM/PM."));
         assertThat(result.getExitCode(), equalTo(1));
     }
     @Test
@@ -238,11 +236,7 @@ public class Project3IT extends InvokeMainTestCase {
                 "503-655-9775",
                 "503-888-2020");
         assertThat(result.getTextWrittenToStandardError(), containsString(
-                "Missing call start date and time, and call end date and time."));
-    }
-    @Test
-    public void missingStartDatePlusExitCode(){
-        MainMethodResult result = invokeMain("Brian Griffin","503-655-9775", "503-888-2020");
+                "Missing call start and call end date/time/AM/PM."));
         assertThat(result.getExitCode(), equalTo(1));
     }
 
@@ -253,31 +247,50 @@ public class Project3IT extends InvokeMainTestCase {
                 "503-888-2020",
                 "09/21/2020");
         assertThat(result.getTextWrittenToStandardError(), containsString(
-                "Missing call start time, and call end date and time."));
+                "Missing call start time/AM/PM, and call end date/time/AM/PM."));
         assertThat(result.getExitCode(), equalTo(1));
     }
 
     @Test
-    public void missingEndDateAndTime() {
+    public void missingStartAMPM() {
         MainMethodResult result = invokeMain("Brian Griffin",
                 "503-655-9775",
                 "503-888-2020",
                 "09/21/2020",
                 "15:13");
         assertThat(result.getTextWrittenToStandardError(), containsString(
-                "Missing call end date and time."));
+                "Missing call start AM/PM and end date/time/AM/PM."));
         assertThat(result.getExitCode(), equalTo(1));
     }
 
 
     @Test
-    public void missingEndTime() {
+    public void missingEndDateTimeAMPM() {
         MainMethodResult result = invokeMain("Brian Griffin", "503-655-9775", "503-888-2020",
-                "09/21/2020", "15:13", "9/21/2020");
+                "09/21/2020", "15:13", "am");
         assertThat(result.getTextWrittenToStandardError(), containsString(
-                "Missing call end time."));
+                "Missing call end date/time/AM/PM."));
         assertThat(result.getExitCode(), equalTo(1));
     }
+
+    @Test
+    public void missingEndTimeAMPM() {
+        MainMethodResult result = invokeMain("Brian Griffin", "503-655-9775", "503-888-2020",
+                "09/21/2020", "15:13", "am", "09/21/2020");
+        assertThat(result.getTextWrittenToStandardError(), containsString(
+                "Missing call end time/AM/PM."));
+        assertThat(result.getExitCode(), equalTo(1));
+    }
+
+    @Test
+    public void missingEndAMPM() {
+        MainMethodResult result = invokeMain("Brian Griffin", "503-655-9775", "503-888-2020",
+                "09/21/2020", "03:13", "am", "09/21/2020", "4:13");
+        assertThat(result.getTextWrittenToStandardError(), containsString(
+                "Missing call end AM/PM."));
+        assertThat(result.getExitCode(), equalTo(1));
+    }
+
 
     @Test
     public void printReadMe() {
