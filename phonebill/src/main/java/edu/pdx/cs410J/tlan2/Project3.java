@@ -122,14 +122,23 @@ public class Project3 {
         String customerName = args[2];
         String fileName = args[1];
         File file = new File(fileName);
+        PhoneBill bill = new PhoneBill();
         PrettyPrinter pp = new PrettyPrinter(fileName);
 
         if(!fileName.equals("-") && !file.exists()){
             System.err.println("\nError: Incorrect file name for -pretty or \"-pretty -\" to print to console.\n");
             System.exit(1);
+        } else if (fileName.equals("-")){
+            bill.addCustomer(customerName);
+            bill.addPhoneCall(newCall);
+            try {
+                pp.dump(bill);
+            } catch (IOException ex){
+                ex.printStackTrace();;
+                System.exit(1);
+            }
         } else {
             TextParser tp = new TextParser(fileName);
-            PhoneBill bill = new PhoneBill();
             try {
                 bill = tp.parse();
             } catch (ParserException ex){
