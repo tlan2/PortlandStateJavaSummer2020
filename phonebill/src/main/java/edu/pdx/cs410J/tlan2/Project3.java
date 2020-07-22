@@ -121,37 +121,9 @@ public class Project3 {
                                             args[7],args[8],args[9],args[10]);
         String customerName = args[2];
         String prettyFileName = args[1];
-        File file = new File(prettyFileName);
-        PhoneBill bill = new PhoneBill();
-        PrettyPrinter pp = new PrettyPrinter(prettyFileName);
 
-        if (prettyFileName.equals("-")){
-            bill.addCustomer(customerName);
-            bill.addPhoneCall(newCall);
-            try {
-                pp.dump(bill);
-            } catch (IOException ex){
-                ex.printStackTrace();;
-                System.exit(1);
-            }
-        } else {
-//            //For -textFile option
-//            //TextParser tp = new TextParser(prettyFileName);
-//            try {
-//                bill = tp.parse();
-//            } catch (ParserException ex){
-//                ex.printStackTrace();
-//                System.exit(1);
-//            }
-            bill.addPhoneCall(newCall);
-            bill.addCustomer(customerName); //only for -pretty only
-            try {
-                pp.dump(bill);
-            } catch (IOException ex){
-                ex.printStackTrace();;
-                System.exit(1);
-            }
-        }
+        prettyPrintOnly(newCall, customerName, prettyFileName);
+        System.exit(0);
     } // -textFile only
     else if (args[0].equals("-textFile") && args.length == 11){
         String fileName = args[1];
@@ -176,7 +148,7 @@ public class Project3 {
         System.exit(0);
     }
     //-textFile & -print
-    else if(args[0].equals("-textFile")  && args[2].equals("-print") ) {
+    else if(args[0].equals("-textFile")  && args[2].equals("-print")) {
         PhoneCall newCall = new PhoneCall(args[4], args[5], args[6],
                 args[7], args[8], args[9], args[10], args[11]);
         printPhoneCall(newCall);
@@ -184,7 +156,85 @@ public class Project3 {
         String fileName = args[1];
         ReadAndWriteToFile(newCall, customerName, fileName);
         System.exit(0);
-    }  //-textFile option Only
+    } // PrettyPrint & -textfile
+    else if(args[0].equals("-pretty")  && args[2].equals("-textFile")){
+        PhoneCall newCall = new PhoneCall(args[5], args[6], args[7],
+                args[8], args[9], args[10], args[11], args[12]);
+        String customerName = args[4];
+        String prettyFileName = args[1];
+        String textFileName = args[3];
+        prettyPrintWithTextFile(newCall,customerName,prettyFileName,textFileName);
+        System.exit(0);
+    }
+    // -textFile & PrettyPrint
+    else if(args[0].equals("-textFile")  && args[2].equals("-pretty")){
+        PhoneCall newCall = new PhoneCall(args[5], args[6], args[7],
+                args[8], args[9], args[10], args[11], args[12]);
+        String customerName = args[4];
+        String prettyFileName = args[3];
+        String textFileName = args[1];
+        prettyPrintWithTextFile(newCall,customerName,prettyFileName,textFileName);
+        System.exit(0);
+    }// -print & PrettyPrint
+    else if(args[0].equals("-print")  && args[1].equals("-pretty") & args.length == 11){
+        PhoneCall newCall = new PhoneCall(args[4], args[5], args[6],
+                args[7], args[8], args[9], args[10], args[11]);
+        printPhoneCall(newCall);
+        String customerName = args[3];
+        String prettyFileName = args[2];
+        prettyPrintOnly(newCall, customerName, prettyFileName);
+        System.exit(0);
+    }// -textFile & PrettyPrint
+    else if(args[0].equals("-pretty")  && args[2].equals("-print") && args.length == 11){
+        PhoneCall newCall = new PhoneCall(args[4], args[5], args[6],
+                args[7], args[8], args[9], args[10], args[11]);
+        printPhoneCall(newCall);
+        String customerName = args[3];
+        String prettyFileName = args[1];
+        prettyPrintOnly(newCall, customerName, prettyFileName);
+        System.exit(0);
+    }// PrettyPrint, -textFile & -print
+    else if(args[0].equals("-pretty")  && args[2].equals("-textFile") && args[4].equals("-print")){
+        PhoneCall newCall = new PhoneCall(args[6], args[7], args[8],
+                args[9], args[10], args[11], args[12], args[13]);
+        printPhoneCall(newCall);
+        String customerName = args[5];
+        String prettyFileName = args[1];
+        String textFileName = args[3];
+        prettyPrintWithTextFile(newCall,customerName,prettyFileName,textFileName);
+        System.exit(0);
+
+    } // textFile, PrettyPrint & -print
+    else if (args[0].equals("-textFile")  && args[2].equals("-pretty") && args[4].equals("-print")){
+        PhoneCall newCall = new PhoneCall(args[6], args[7], args[8],
+                args[9], args[10], args[11], args[12], args[13]);
+        printPhoneCall(newCall);
+        String customerName = args[5];
+        String prettyFileName = args[3];
+        String textFileName = args[1];
+        prettyPrintWithTextFile(newCall,customerName,prettyFileName,textFileName);
+        System.exit(0);
+    } //-print, -textFile & PrettyPrint
+    else if (args[0].equals("-print")  && args[1].equals("-pretty") && args[3].equals("-textFile")){
+        PhoneCall newCall = new PhoneCall(args[6], args[7], args[8],
+                args[9], args[10], args[11], args[12], args[13]);
+        printPhoneCall(newCall);
+        String customerName = args[5];
+        String prettyFileName = args[2];
+        String textFileName = args[4];
+        prettyPrintWithTextFile(newCall,customerName,prettyFileName,textFileName);
+        System.exit(0);
+    } else if (args[0].equals("-print")  && args[1].equals("-textFile") && args[3].equals("-pretty")){
+        PhoneCall newCall = new PhoneCall(args[6], args[7], args[8],
+                args[9], args[10], args[11], args[12], args[13]);
+        printPhoneCall(newCall);
+        String customerName = args[5];
+        String prettyFileName = args[4];
+        String textFileName = args[2];
+        prettyPrintWithTextFile(newCall,customerName,prettyFileName,textFileName);
+        System.exit(0);
+    }
+    // PhoneCall Only
     else if (args.length==9){
         PhoneCall newCall = new PhoneCall(args[1], args[2], args[3],
                 args[4], args[5], args[6], args[7], args[8]);
@@ -192,16 +242,13 @@ public class Project3 {
         PhoneBill bill = new PhoneBill(customerName);
 
         System.exit(0);
-    } else {
+    }
         // Catch All Possibility
+        else {
         System.err.println("\n\nError: Program Error. Please try again.");
         System.exit(1);
     }
   }
-
-
-
-
 
 
     //============ Methods Used in Main ========================================
@@ -298,6 +345,55 @@ public class Project3 {
             } catch (IOException ex)
             {
                 ex.printStackTrace();
+            }
+        }
+    }
+
+    private static void prettyPrintOnly(PhoneCall newCall, String customerName, String fileName) {
+        PhoneBill bill = new PhoneBill();
+        PrettyPrinter pp = new PrettyPrinter(fileName);
+
+        bill.addCustomer(customerName);
+        bill.addPhoneCall(newCall);
+
+            try {
+                pp.dump(bill);
+            } catch (IOException ex){
+                ex.printStackTrace();;
+                System.exit(1);
+            }
+    }
+
+    private static void prettyPrintWithTextFile(PhoneCall newCall, String customerName, String prettyFileName,
+                                                String textFileName) {
+        File textFile = new File(textFileName);
+        PhoneBill bill = new PhoneBill();
+        PrettyPrinter pp = new PrettyPrinter(prettyFileName);
+
+        if (prettyFileName.equals("-")){
+            bill.addCustomer(customerName);
+            bill.addPhoneCall(newCall);
+            try {
+                pp.dump(bill);
+            } catch (IOException ex){
+                ex.printStackTrace();;
+                System.exit(1);
+            }
+        } else {
+            TextParser tp = new TextParser(textFile);
+            try {
+                bill = tp.parse();
+            } catch (ParserException ex){
+                ex.printStackTrace();
+                System.exit(1);
+            }
+            bill.addPhoneCall(newCall);
+            bill.addCustomer(customerName); //only for -pretty only
+            try {
+                pp.dump(bill);
+            } catch (IOException ex){
+                ex.printStackTrace();;
+                System.exit(1);
             }
         }
     }

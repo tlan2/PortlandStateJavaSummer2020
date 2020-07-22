@@ -34,36 +34,25 @@ public class PrettyPrinterTest {
                                         "11/11/2020", "2:00", "PM");
 
 
+    @Test
+    public void prettyPrintPhoneBillToFile() {
+        PhoneBill bill = new PhoneBill("PPTestCustomer");
+        bill.addPhoneCall(call1);
+        bill.addPhoneCall(call2);
+        bill.addPhoneCall(call3);
+        bill.addPhoneCall(call4);
+        bill.addPhoneCall(call5);
 
+        PrettyPrinter pp = new PrettyPrinter("tlan2/prettyTestFile.txt");
+        try {
+            pp.dump(bill);
+        } catch (IOException ex){
+            ex.printStackTrace();
+        }
 
-//    @Test
-//    public void prettyPrintPhoneBillToConsole() throws IOException {
-//        PhoneBill bill = new PhoneBill("PPTestCustomer");
-//        bill.addPhoneCall(call1);
-//        bill.addPhoneCall(call2);
-//        bill.addPhoneCall(call3);
-//        bill.addPhoneCall(call4);
-//        bill.addPhoneCall(call5);
-//
-//        PrettyPrinter pp = new PrettyPrinter("");
-//        pp.dump(bill);
-//
-////        assertThat(, containsString("Customer: PPTestCustomer"));
-//
-//    }
+        File file = new File("tlan2/prettyTestFile.txt");
 
-//    public void prettyPrintPhoneBillToFile() {
-//        PhoneBill bill = new PhoneBill("PPTestCustomer");
-//        bill.addPhoneCall(call1);
-//        bill.addPhoneCall(call2);
-//        bill.addPhoneCall(call3);
-//        bill.addPhoneCall(call4);
-//        bill.addPhoneCall(call5);
-//
-//        PrettyPrinter pp = new PrettyPrinter(true);
-//
-//
-//        assertThat(pp.dump(bill), containsString("Customer: PPTestCustomer"));
-//
-//    }
+        assertThat(file.exists(), equalTo(true));
+        assertThat(file.length() > 0, equalTo(true));
+    }
 }
