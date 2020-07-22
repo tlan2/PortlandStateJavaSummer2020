@@ -5,9 +5,11 @@ import edu.pdx.cs410J.PhoneBillDumper;
 import org.w3c.dom.Text;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Time;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.SortedSet;
@@ -26,6 +28,7 @@ public class PrettyPrinter implements PhoneBillDumper {
     @Override
     public void dump(AbstractPhoneBill abstractPhoneBill) throws IOException {
         PhoneBill bill = (PhoneBill) abstractPhoneBill;
+        File file = new File(this.fileName);
         SortedSet<PhoneCall> calls;
 
         if(this.fileName.equals("-")){
@@ -54,9 +57,6 @@ public class PrettyPrinter implements PhoneBillDumper {
                 prettyEDate = df.format(eDate);
                 duration = getDateDiff(sDate, eDate);
 
-//                System.out.println("\n\nduration of call" + i + ": " + duration);
-//                System.out.println("\n\nprettySDate of call" + i + ": " + prettySDate);
-//                System.out.println("\n\nprettyEDate of call" + i + ": " + prettyEDate);
                 System.out.println("  " + i + "\t" + c.getCaller() + "\t " + c.getCallee() + "\t    " +
                                     prettySDate + "\t" + prettyEDate  + "\t    " + duration);
                 System.out.println();
@@ -66,7 +66,56 @@ public class PrettyPrinter implements PhoneBillDumper {
 
         } else {
             //PrettyPrint to File
-            return;
+            if(file.exists()){
+                file.delete();
+            }
+
+            try
+            {
+                file.createNewFile();
+            } catch (IOException ex)
+            {
+                ex.printStackTrace();
+            }
+            System.out.println("\nNew file created.\n");
+
+            String customerName = bill.getCustomer();
+            FileWriter writer = new FileWriter(this.fileName);
+            calls = bill.sortPhoneCalls();
+
+            SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+            Date date = new Date();
+
+            writer.write("\n============================================ Phone Bill ===================" +
+                    "==================================");
+            writer.write("\n\nCustomer: " + customerName + "\n\n");
+
+            writer.write("Bill Date: " + formatter.format(date) + "\n");
+
+            writer.write("\nCall #\tCaller Number\tReceiver Number\t\t Start Date  \t\t\t\t\tEnd Date\t\t\t\tCall Duration");
+            writer.write("\n----------------------------------------------------------------------------------" +
+                    "-----------------------------");
+            for (PhoneCall c:calls){
+                int i=1;
+                Date sDate = c.getStartTime();
+                Date eDate = c.getEndTime();
+                String prettySDate;
+                String prettyEDate;
+                double duration;
+
+
+                int f = DateFormat.MEDIUM;
+                DateFormat df = DateFormat.getDateTimeInstance(f, f);
+                prettySDate = df.format(sDate);
+                prettyEDate = df.format(eDate);
+                duration = getDateDiff(sDate, eDate);
+
+                writer.write("\n  " + i + "\t\t" + c.getCaller() + "\t " + c.getCallee() + "\t " +
+                        prettySDate + "\t" + prettyEDate  + "\t\t\t" + duration + "\n");
+
+                i++;
+            }
+            writer.close();
         }
     }
 

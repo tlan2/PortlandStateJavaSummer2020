@@ -120,15 +120,12 @@ public class Project3 {
         PhoneCall newCall = new PhoneCall(args[3],args[4],args[5],args[6],
                                             args[7],args[8],args[9],args[10]);
         String customerName = args[2];
-        String fileName = args[1];
-        File file = new File(fileName);
+        String prettyFileName = args[1];
+        File file = new File(prettyFileName);
         PhoneBill bill = new PhoneBill();
-        PrettyPrinter pp = new PrettyPrinter(fileName);
+        PrettyPrinter pp = new PrettyPrinter(prettyFileName);
 
-        if(!fileName.equals("-") && !file.exists()){
-            System.err.println("\nError: Incorrect file name for -pretty or \"-pretty -\" to print to console.\n");
-            System.exit(1);
-        } else if (fileName.equals("-")){
+        if (prettyFileName.equals("-")){
             bill.addCustomer(customerName);
             bill.addPhoneCall(newCall);
             try {
@@ -138,14 +135,16 @@ public class Project3 {
                 System.exit(1);
             }
         } else {
-            TextParser tp = new TextParser(fileName);
-            try {
-                bill = tp.parse();
-            } catch (ParserException ex){
-                ex.printStackTrace();
-                System.exit(1);
-            }
+//            //For -textFile option
+//            //TextParser tp = new TextParser(prettyFileName);
+//            try {
+//                bill = tp.parse();
+//            } catch (ParserException ex){
+//                ex.printStackTrace();
+//                System.exit(1);
+//            }
             bill.addPhoneCall(newCall);
+            bill.addCustomer(customerName); //only for -pretty only
             try {
                 pp.dump(bill);
             } catch (IOException ex){

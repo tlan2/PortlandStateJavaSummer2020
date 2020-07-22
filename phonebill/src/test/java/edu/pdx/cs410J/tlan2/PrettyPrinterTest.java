@@ -36,21 +36,21 @@ public class PrettyPrinterTest {
 
 
 
-    @Test
-    public void prettyPrintPhoneBillToConsole() throws IOException {
-        PhoneBill bill = new PhoneBill("PPTestCustomer");
-        bill.addPhoneCall(call1);
-        bill.addPhoneCall(call2);
-        bill.addPhoneCall(call3);
-        bill.addPhoneCall(call4);
-        bill.addPhoneCall(call5);
-
-        PrettyPrinter pp = new PrettyPrinter("");
-        pp.dump(bill);
-
-//        assertThat(, containsString("Customer: PPTestCustomer"));
-
-    }
+//    @Test
+//    public void prettyPrintPhoneBillToConsole() throws IOException {
+//        PhoneBill bill = new PhoneBill("PPTestCustomer");
+//        bill.addPhoneCall(call1);
+//        bill.addPhoneCall(call2);
+//        bill.addPhoneCall(call3);
+//        bill.addPhoneCall(call4);
+//        bill.addPhoneCall(call5);
+//
+//        PrettyPrinter pp = new PrettyPrinter("");
+//        pp.dump(bill);
+//
+////        assertThat(, containsString("Customer: PPTestCustomer"));
+//
+//    }
 
 //    public void prettyPrintPhoneBillToFile() {
 //        PhoneBill bill = new PhoneBill("PPTestCustomer");
