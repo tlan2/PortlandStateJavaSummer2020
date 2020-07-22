@@ -89,8 +89,6 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
       }
 
       this.startDateTime = sDate;
-      int f = DateFormat.SHORT;
-      DateFormat df = DateFormat.getDateTimeInstance(f, f);
     }
 
     /**

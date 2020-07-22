@@ -84,10 +84,6 @@ public class PhoneBill extends AbstractPhoneBill<PhoneCall>  {
             set.add(c);
         }
 
-//        for (PhoneCall c:set){
-//            System.out.println(c.toString());
-//        }
-
         return set;
     }
 

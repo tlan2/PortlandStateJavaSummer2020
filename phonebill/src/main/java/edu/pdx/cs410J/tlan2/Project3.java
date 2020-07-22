@@ -3,6 +3,7 @@ package edu.pdx.cs410J.tlan2;
 import edu.pdx.cs410J.ParserException;
 
 import java.io.*;
+import java.text.ParseException;
 
 /**
  * The main class for the CS410J Phone Bill Project
@@ -13,8 +14,8 @@ public class Project3 {
    * @param args
    * All the elements needed to complete the program through
    * the command line. This includes customer, callerNumber,
-   * calleeNumber, start of phone call date and time, and
-   * end of phone call date and time.
+   * calleeNumber, start of phone call date/time/AMPM, and
+   * end of phone call date/time/AMPM.
    */
   public static void main(String[] args) {
       printCLI();
@@ -103,27 +104,138 @@ public class Project3 {
           }
       }
 
+      // ============== OPTIONAL ARGUMENTS ========================
       // Print phone call and store in new phone bill
     if (args[0].equals("-print") && args.length == 10){
-
-        String customer = args[1];
         PhoneCall newCall = new PhoneCall(args[2], args[3], args[4],
                 args[5], args[6], args[7], args[8], args[9]);
+        String customerName = args[1];
         printPhoneCall(newCall);
+        PhoneBill bill = new PhoneBill(customerName);
+
         System.exit(0);
     }
-    // ============== OPTIONAL ARGUMENTS ========================
+    // -PrettyPrint to file or console only
+    else if (args[0].equals("-pretty") && args.length == 11){
+        PhoneCall newCall = new PhoneCall(args[3],args[4],args[5],args[6],
+                                            args[7],args[8],args[9],args[10]);
+        String customerName = args[2];
+        String fileName = args[1];
+        File file = new File(fileName);
+        PrettyPrinter pp = new PrettyPrinter(fileName);
 
-    //    else if (args[0].equals("-pretty") && args)
+        if(!fileName.equals("-") && !file.exists()){
+            System.err.println("\nError: Incorrect file name for -pretty or \"-pretty -\" to print to console.\n");
+            System.exit(1);
+        } else {
+            TextParser tp = new TextParser(fileName);
+            PhoneBill bill = new PhoneBill();
+            try {
+                bill = tp.parse();
+            } catch (ParserException ex){
+                ex.printStackTrace();
+                System.exit(1);
+            }
+            bill.addPhoneCall(newCall);
+            try {
+                pp.dump(bill);
+            } catch (IOException ex){
+                ex.printStackTrace();;
+                System.exit(1);
+            }
+        }
+    } // -textFile only
+    else if (args[0].equals("-textFile") && args.length == 11){
+        String fileName = args[1];
+        String customerName = args[2];
+        PhoneCall newCall = new PhoneCall(args[3], args[4], args[5],
+                    args[6], args[7], args[8], args[9], args[10]);
+        PhoneBill newBill = new PhoneBill(customerName);
+        ReadAndWriteToFile(newCall, customerName, fileName);
+
+        System.exit(0);
+    }
     // Prints the phone call entered and inputs it into a customer's text file
     else if (args[0].equals("-print") && args[1].equals("-textFile")){
-        // -print process
+        PhoneCall newCall = new PhoneCall(args[4], args[5], args[6],
+                args[7], args[8], args[9], args[10], args[11]);
+        printPhoneCall(newCall);
+
+        String customerName = args[3];
+        String fileName = args[2];
+        ReadAndWriteToFile(newCall, customerName, fileName);
+
+        System.exit(0);
+    }
+    //-textFile & -print
+    else if(args[0].equals("-textFile")  && args[2].equals("-print") ) {
         PhoneCall newCall = new PhoneCall(args[4], args[5], args[6],
                 args[7], args[8], args[9], args[10], args[11]);
         printPhoneCall(newCall);
         String customerName = args[3];
-        // -textfile process
-        String fileName = args[2];
+        String fileName = args[1];
+        ReadAndWriteToFile(newCall, customerName, fileName);
+        System.exit(0);
+    }  //-textFile option Only
+    else if (args.length==9){
+        PhoneCall newCall = new PhoneCall(args[1], args[2], args[3],
+                args[4], args[5], args[6], args[7], args[8]);
+        String customerName = args[1];
+        PhoneBill bill = new PhoneBill(customerName);
+
+        System.exit(0);
+    } else {
+        // Catch All Possibility
+        System.err.println("\n\nError: Program Error. Please try again.");
+        System.exit(1);
+    }
+  }
+
+
+
+
+
+
+    //============ Methods Used in Main ========================================
+
+    private static void printPhoneCall(PhoneCall newCall) {
+        System.out.println("\n" + newCall.toString());
+    }
+
+    private static void printCLI() {
+        System.out.println("\n\nusage: java edu.pdx.cs410J.<login-id>.Project3 [options] <args>" +
+                "\n  args are (in this order):" +
+                "\n\tcustomer\t\t\tPerson whose phone bill we're modeling" +
+                "\n\tcallerNumber\t\tPhone number of caller" +
+                "\n\tcalleeNumber\t\tPhone number of person who was called" +
+                "\n\tstart\t\t\t\tDate and time call began (24-hour time)"+
+                "\n\tend\t\t\t\t\tDate and time call ended (24-hour time)" +
+                "\n  options are (options may appear in any order) :" +
+                "\n\t-pretty file\t\t\tPretty print the phone bill to a text file" +
+                "\n\t\t\t\t\tor standard out (file -) ." +
+                "\n\t-textFile file\t\t\tWhere to read/write the phone bill" +
+                "\n\t-print\t\t\t\tPrints a description of the new phone call" +
+                "\n\t-README\t\t\t\tPrints a README for this project and exits");
+    }
+
+    /**
+     * Reads the README.txt file and prints out the program description within the file.
+     *
+     * @throws IOException  If an input or output exception occurred.
+     */
+    public static void printReadMe() throws IOException {
+        InputStream readme = Project3.class.getResourceAsStream("README.txt");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
+
+        StringBuilder readMeTxt = new StringBuilder("\n\n");
+        String line;
+        while ((line = reader.readLine()) != null) {
+            readMeTxt.append(line).append("\n");
+        }
+        System.out.println(readMeTxt.toString());
+    }
+
+    private static void ReadAndWriteToFile(PhoneCall newCall, String customerName, String fileName) {
         File file = new File(fileName);
         PhoneBill newBill = new PhoneBill();
 
@@ -179,203 +291,7 @@ public class Project3 {
             {
                 ex.printStackTrace();
             }
-            System.exit(0);
         }
-
-        //-textFile & -print
-    } else if(args[0].equals("-textFile")  && args[2].equals("-print") )
-    {
-        // -print process
-        PhoneCall newCall = new PhoneCall(args[4], args[5], args[6],
-                args[7], args[8], args[9], args[10], args[11]);
-        printPhoneCall(newCall);
-        PhoneBill newBill = new PhoneBill();
-
-
-        // -textfile process
-        String fileName = args[1];
-        File file = new File(fileName);
-
-        //Parse existing file
-        if(file.exists()){
-
-            TextParser tp = new TextParser(file);
-
-            try
-            {
-                newBill = tp.parse();
-            } catch (ParserException ex)
-            {
-                ex.printStackTrace();
-            }
-
-            String customerOnFile = newBill.getCustomer();
-
-            if(!customerOnFile.equals(args[3])){
-                System.err.println("\nError: Customer name inputted does not match " +
-                        "customer name on file.\n\n");
-                System.exit(1);
-            }
-
-            System.out.println("\nWriting to existing file.\n");
-
-            newBill.addPhoneCall(newCall);
-            TextDumper td = new TextDumper(fileName);
-            try
-            {
-                td.dump(newBill);
-            } catch (IOException ex)
-            {
-                ex.printStackTrace();
-            }
-            System.exit(0);
-        } else
-        {
-            System.out.println("\nNew file created.\n");
-
-            try
-            {
-                file.getParentFile().mkdirs();
-                file.createNewFile();
-            } catch (IOException ex)
-            {
-                ex.printStackTrace();
-            }
-
-            newBill.addCustomer(args[3]);
-            newBill.addPhoneCall(newCall);
-            TextDumper td = new TextDumper(fileName);
-            try
-            {
-                td.dump(newBill);
-            } catch (IOException ex)
-            {
-                ex.printStackTrace();
-            }
-            System.exit(0);
-        }
-
-        //-textFile option Only
-    } else if (args[0].equals("-textFile") && args.length == 11)
-    {
-        PhoneCall newCall = new PhoneCall(args[3], args[4], args[5],
-                args[6], args[7], args[8], args[9], args[10]);
-        PhoneBill newBill = new PhoneBill();
-
-        // -textfile process
-        String fileName = args[1];
-        File file = new File(fileName);
-
-        //Parse existing file
-        if(file.exists()){
-
-            TextParser tp = new TextParser(file);
-
-            try
-            {
-                newBill = tp.parse();
-            } catch (ParserException ex)
-            {
-                ex.printStackTrace();
-            }
-
-            String customerOnFile = newBill.getCustomer();
-
-            if(!customerOnFile.equals(args[2])){
-                System.err.println("\nError: Customer name inputted does not match " +
-                        "customer name on file.\n\n");
-                System.exit(1);
-            }
-
-            System.out.println("\nWriting to existing file.\n");
-
-            newBill.addPhoneCall(newCall);
-            TextDumper td = new TextDumper(fileName);
-            try
-            {
-                td.dump(newBill);
-            } catch (IOException ex)
-            {
-                ex.printStackTrace();
-            }
-        } else
-        {
-            System.out.println("\nNew file created.\n");
-
-            try
-            {
-                file.getParentFile().mkdirs();
-                file.createNewFile();
-            } catch (IOException ex)
-            {
-                ex.printStackTrace();
-            }
-
-            newBill.addCustomer(args[2]);
-            newBill.addPhoneCall(newCall);
-            TextDumper td = new TextDumper(fileName);
-            try
-            {
-                td.dump(newBill);
-            } catch (IOException ex)
-            {
-                ex.printStackTrace();
-            }
-        }
-        System.exit(0);
-    } else if (args.length == 9){
-        // Valid Command Line Entry with no options
-        PhoneCall call = new PhoneCall(args[1], args[2], args[3],
-                args[4], args[5], args[6], args[7], args[8]);
-        PhoneBill bill = new PhoneBill(args[0]);
-        bill.addPhoneCall(call);
-        System.exit(0);
-    } else {
-        // Catch All Possibility
-        System.err.println("\n\nError: Program Error. Please try again.");
-        System.exit(1);
-    }
-  }
-
-
-
-    //============ Methods Used in Main ========================================
-
-    private static void printPhoneCall(PhoneCall newCall) {
-        System.out.println("\n" + newCall.toString());
     }
 
-    private static void printCLI() {
-        System.out.println("\n\nusage: java edu.pdx.cs410J.<login-id>.Project3 [options] <args>" +
-                "\n  args are (in this order):" +
-                "\n\tcustomer\t\t\tPerson whose phone bill we're modeling" +
-                "\n\tcallerNumber\t\tPhone number of caller" +
-                "\n\tcalleeNumber\t\tPhone number of person who was called" +
-                "\n\tstart\t\t\t\tDate and time call began (24-hour time)"+
-                "\n\tend\t\t\t\t\tDate and time call ended (24-hour time)" +
-                "\n  options are (options may appear in any order) :" +
-                "\n\t-pretty file\t\t\tPretty print the phone bill to a text file" +
-                "\n\t\t\t\t\tor standard out (file -) ." +
-                "\n\t-textFile file\t\t\tWhere to read/write the phone bill" +
-                "\n\t-print\t\t\t\tPrints a description of the new phone call" +
-                "\n\t-README\t\t\t\tPrints a README for this project and exits");
-    }
-
-    /**
-     * Reads the README.txt file and prints out the program description within the file.
-     *
-     * @throws IOException  If an input or output exception occurred.
-     */
-    public static void printReadMe() throws IOException {
-        InputStream readme = Project3.class.getResourceAsStream("README.txt");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
-
-        StringBuilder readMeTxt = new StringBuilder("\n\n");
-        String line;
-        while ((line = reader.readLine()) != null) {
-            readMeTxt.append(line).append("\n");
-        }
-
-        System.out.println(readMeTxt.toString());
-    }
 }
