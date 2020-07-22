@@ -3,6 +3,8 @@ package edu.pdx.cs410J.tlan2;
 import org.junit.Test;
 import org.w3c.dom.Text;
 
+import java.util.SortedSet;
+
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
@@ -23,6 +25,22 @@ public class PhoneBillTest {
         return new PhoneCall("305-667-3094", "503-867-5309",
                 "01/20/2020", "10:50", "am","1/2/2020", "11:50", "am");
     }
+
+    private PhoneCall createSameDate1(){
+        return new PhoneCall("123-456-7890", "234-567-8901", "1/1/2020",
+                "00:00","am", "1/1/2020", "01:00", "AM");
+    }
+
+    private PhoneCall createSameDate2(){
+        return new PhoneCall("456-789-0123", "234-567-8901", "1/1/2020",
+                "00:00","am", "1/1/2020", "01:00", "AM");
+    }
+
+    private PhoneCall createValidCall3() {
+        return new PhoneCall("503-787-9988", "503-235-7821", "1/2/2020",
+                        "01:00", "pm", "1/2/2020", "02:00", "PM");
+    }
+
     private PhoneCall callValid1 = createValidPhoneCall1();
     private PhoneCall callValid2 = createValidPhoneCall2();
 
@@ -47,6 +65,28 @@ public class PhoneBillTest {
     @Test
     public void phoneBillHasCustomerName() {
         assertThat(billTed.toString(), containsString("Ted"));
+    }
+
+    @Test
+    public void returnPhoneCallsInOrder() {
+        billTed.addPhoneCall(callValid1);
+        billTed.addPhoneCall(callValid2);
+        billTed.addPhoneCall(createValidCall3());
+        billTed.addPhoneCall(createSameDate1());
+        billTed.addPhoneCall(createSameDate2());
+
+        SortedSet<PhoneCall> calls =  billTed.sortPhoneCalls();
+        StringBuilder sb = new StringBuilder();
+
+        for (PhoneCall c: calls){
+            sb.append(c.toString());
+            sb.append("\n");
+        }
+        assertThat(sb.toString(), containsString("Phone call from 123-456-7890 to 234-567-8901 from 1/1/20, 12:00 AM to 1/1/20, 1:00 AM\n" +
+                "Phone call from 456-789-0123 to 234-567-8901 from 1/1/20, 12:00 AM to 1/1/20, 1:00 AM\n" +
+                "Phone call from 503-787-9988 to 503-235-7821 from 1/2/20, 1:00 PM to 1/2/20, 2:00 PM\n" +
+                "Phone call from 503-755-6509 to 617-703-7433 from 1/15/20, 7:39 PM to 1/16/20, 8:00 AM\n" +
+                "Phone call from 305-667-3094 to 503-867-5309 from 1/20/20, 10:50 AM to 1/2/20, 11:50 AM\n"));
     }
 
 }

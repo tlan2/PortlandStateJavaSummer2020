@@ -1,12 +1,12 @@
 package edu.pdx.cs410J.tlan2;
 
+import com.sun.source.tree.Tree;
 import edu.pdx.cs410J.AbstractPhoneBill;
 import edu.pdx.cs410J.AbstractPhoneCall;
 
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 
 /**
  * This class represents a <code>PhoneBill</code>.
@@ -14,7 +14,7 @@ import java.util.Collection;
  * method to add PhoneCall objects.
  */
 
-public class PhoneBill extends AbstractPhoneBill<PhoneCall> {
+public class PhoneBill extends AbstractPhoneBill<PhoneCall>  {
     private String customer;
     private ArrayList<PhoneCall> phoneCalls;
 
@@ -36,7 +36,7 @@ public class PhoneBill extends AbstractPhoneBill<PhoneCall> {
 
     public PhoneBill(String customer) {
         this.customer = customer;
-        this.phoneCalls = new ArrayList<PhoneCall>();
+        this.phoneCalls = new ArrayList<>();
     }
     /**
      * This method adds a customer to the PhoneBill object.
@@ -75,4 +75,21 @@ public class PhoneBill extends AbstractPhoneBill<PhoneCall> {
     public Collection<PhoneCall> getPhoneCalls() {
         return this.phoneCalls;
     }
+
+    public SortedSet<PhoneCall> sortPhoneCalls() {
+        Collection<PhoneCall> calls = this.getPhoneCalls();
+        SortedSet<PhoneCall> set = new TreeSet<PhoneCall>();
+
+        for (PhoneCall c:calls){
+            set.add(c);
+        }
+
+//        for (PhoneCall c:set){
+//            System.out.println(c.toString());
+//        }
+
+        return set;
+    }
+
+
 }
