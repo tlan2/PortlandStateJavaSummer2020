@@ -25,19 +25,84 @@ public class Project3 {
       System.exit(1);
     }
 
-    //  If -README called in any argument position then print README file
-    checkReadMe(args);
+      //  If -README called in any argument position then print README file
+      for(int i=0; i < args.length; i++){
+          if(args[i].equals("-README")){
+              try {
+                  printReadMe();
+              } catch (IOException ex) {
+                  System.err.println("\nError: " + ex.getMessage());
+              }
+              System.exit(0);
+          }
+      }
 
-    // Too Many Arguments check
-      if (args.length > 13){
+    if (args.length == 1){
+        System.err.println("\n\nMissing callerNumber, calleeNumber, " +
+                "call start and call end date/time/AM/PM.");
+        System.exit(1);
+    } else if (args.length == 2){
+        System.err.println("\n\nMissing calleeNumber, " +
+                "call start and call end date/time/AM/PM.");
+        System.exit(1);
+    } else if (args.length == 3){
+        System.err.println("\n\nMissing call start and call end " +
+                "date/time/AM/PM.");
+        System.exit(1);
+    } else if (args.length == 4){
+        System.err.println("\n\nMissing call start time/AM/PM, and call end date/time/AM/PM.");
+        System.exit(1);
+    } else if (args.length == 5){
+        System.err.println("\n\nMissing call start AM/PM and end date/time/AM/PM.");
+        System.exit(1);
+    } else if (args.length == 6){
+        System.err.println("\n\nMissing call end date/time/AM/PM.");
+        System.exit(1);
+    } else if (args.length == 7){
+        System.err.println("\n\nMissing call end time/AM/PM.");
+        System.exit(1);
+    } else if (args.length == 8){
+        System.err.println("\n\nMissing call end AM/PM.");
+        System.exit(1);
+    } // Too Many Arguments check
+    else if (args.length > 13){
       System.err.println("\nToo many command line arguments.");
       System.exit(1);
     }
 
-    // Remove leading and trailing white space from arguments
-    for (String argument:args){
+      // Remove leading and trailing white space from arguments
+      for (String argument:args){
         argument = argument.trim();
     }
+
+      // Check options in the correct positions
+      // 3 is the max position for -pretty and -textFile
+      // 4 is the max position for -print
+      int prettyArgPosition = 0;
+      int textFilePosition = 0;
+      int printArgPosition = 0;
+      for(int i=0; i < args.length; i++){
+          if(args[i].equals("-pretty")){
+              prettyArgPosition = i;
+              if(prettyArgPosition > 3){
+                  System.err.println("\n\nError: -pretty option out of position. Put in the beginning of input.\n");
+                  System.exit(1);
+              }
+          } else if(args[i].equals("-textFile")){
+              textFilePosition = i;
+              if(textFilePosition > 3){
+                  System.err.println("\n\nError: -textFile option out of position. Put in the beginning of input.\n");
+                  System.exit(1);
+              }
+          } else if(args[i].equals("-print")){
+              printArgPosition = i;
+              if(printArgPosition > 4){
+                  System.err.println("\n\nError: -print option out of position. Put in the beginning of input.\n");
+                  System.exit(1);
+              }
+          }
+      }
+
       // Print phone call and store in new phone bill
     if (args[0].equals("-print") && args.length == 10){
 
@@ -48,6 +113,8 @@ public class Project3 {
         System.exit(0);
     }
     // ============== OPTIONAL ARGUMENTS ========================
+
+    //    else if (args[0].equals("-pretty") && args)
     // Prints the phone call entered and inputs it into a customer's text file
     else if (args[0].equals("-print") && args[1].equals("-textFile")){
         // -print process
@@ -112,8 +179,8 @@ public class Project3 {
             {
                 ex.printStackTrace();
             }
+            System.exit(0);
         }
-        System.exit(0);
 
         //-textFile & -print
     } else if(args[0].equals("-textFile")  && args[2].equals("-print") )
@@ -161,6 +228,7 @@ public class Project3 {
             {
                 ex.printStackTrace();
             }
+            System.exit(0);
         } else
         {
             System.out.println("\nNew file created.\n");
@@ -184,8 +252,8 @@ public class Project3 {
             {
                 ex.printStackTrace();
             }
+            System.exit(0);
         }
-        System.exit(0);
 
         //-textFile option Only
     } else if (args[0].equals("-textFile") && args.length == 11)
@@ -255,8 +323,6 @@ public class Project3 {
             }
         }
         System.exit(0);
-
-
     } else if (args.length == 9){
         // Valid Command Line Entry with no options
         PhoneCall call = new PhoneCall(args[1], args[2], args[3],
@@ -264,45 +330,21 @@ public class Project3 {
         PhoneBill bill = new PhoneBill(args[0]);
         bill.addPhoneCall(call);
         System.exit(0);
-    }else if (args.length == 1){
-        System.err.println("\n\nMissing callerNumber, calleeNumber, " +
-                "call start and call end date/time/AM/PM.");
-        System.exit(1);
-    } else if (args.length == 2){
-        System.err.println("\n\nMissing calleeNumber, " +
-                "call start and call end date/time/AM/PM.");
-        System.exit(1);
-    } else if (args.length == 3){
-        System.err.println("\n\nMissing call start and call end " +
-                "date/time/AM/PM.");
-        System.exit(1);
-    } else if (args.length == 4){
-        System.err.println("\n\nMissing call start time/AM/PM, and call end date/time/AM/PM.");
-        System.exit(1);
-    } else if (args.length == 5){
-        System.err.println("\n\nMissing call start AM/PM and end date/time/AM/PM.");
-        System.exit(1);
-    } else if (args.length == 6){
-        System.err.println("\n\nMissing call end date/time/AM/PM.");
-        System.exit(1);
-    } else if (args.length == 7){
-        System.err.println("\n\nMissing call end time/AM/PM.");
-        System.exit(1);
-    } else if (args.length == 8){
-        System.err.println("\n\nMissing call end AM/PM.");
-        System.exit(1);
-    }else{
+    } else {
         // Catch All Possibility
         System.err.println("\n\nError: Program Error. Please try again.");
         System.exit(1);
     }
   }
 
+
+
+    //============ Methods Used in Main ========================================
+
     private static void printPhoneCall(PhoneCall newCall) {
         System.out.println("\n" + newCall.toString());
     }
 
-    //============ Methods Used in Main ========================================
     private static void printCLI() {
         System.out.println("\n\nusage: java edu.pdx.cs410J.<login-id>.Project3 [options] <args>" +
                 "\n  args are (in this order):" +
@@ -335,24 +377,5 @@ public class Project3 {
         }
 
         System.out.println(readMeTxt.toString());
-    }
-
-    /**
-     *
-     * @param args
-     */
-
-    private static void checkReadMe(String[] args) {
-
-        for(int i=0; i < args.length; i++){
-            if(args[i].equals("-README")){
-                try {
-                    printReadMe();
-                } catch (IOException ex) {
-                    System.err.println("\nError: " + ex.getMessage());
-                }
-                System.exit(0);
-            }
-        }
     }
 }

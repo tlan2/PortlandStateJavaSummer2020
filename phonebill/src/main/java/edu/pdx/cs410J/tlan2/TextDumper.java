@@ -39,9 +39,7 @@ public class TextDumper implements PhoneBillDumper<PhoneBill> {
     @Override
     public void dump(PhoneBill bill) throws IOException{
         Collection<PhoneCall> phoneCalls = bill.getPhoneCalls();
-//        File file = new File(this.fileName);
-//        file.delete();
-//        file.createNewFile();
+
         FileWriter writer = new FileWriter(this.fileName);
         writer.write(bill.getCustomer());
         writer.write("\n");
