@@ -23,7 +23,7 @@ public class Project3 {
       // No Command Line Arguments
     if (args.length == 0) {
       System.err.println("\nMissing command line arguments");
-      System.exit(1);
+        System.exit(1);
     }
 
       //  If -README called in any argument position then print README file
@@ -41,30 +41,22 @@ public class Project3 {
     if (args.length == 1){
         System.err.println("\n\nMissing callerNumber, calleeNumber, " +
                 "call start and call end date/time/AM/PM.");
-        System.exit(1);
     } else if (args.length == 2){
         System.err.println("\n\nMissing calleeNumber, " +
                 "call start and call end date/time/AM/PM.");
-        System.exit(1);
     } else if (args.length == 3){
         System.err.println("\n\nMissing call start and call end " +
                 "date/time/AM/PM.");
-        System.exit(1);
     } else if (args.length == 4){
         System.err.println("\n\nMissing call start time/AM/PM, and call end date/time/AM/PM.");
-        System.exit(1);
     } else if (args.length == 5){
         System.err.println("\n\nMissing call start AM/PM and end date/time/AM/PM.");
-        System.exit(1);
     } else if (args.length == 6){
         System.err.println("\n\nMissing call end date/time/AM/PM.");
-        System.exit(1);
     } else if (args.length == 7){
         System.err.println("\n\nMissing call end time/AM/PM.");
-        System.exit(1);
     } else if (args.length == 8){
         System.err.println("\n\nMissing call end AM/PM.");
-        System.exit(1);
     } // Too Many Arguments check
     else if (args.length > 13){
       System.err.println("\nToo many command line arguments.");
@@ -87,7 +79,6 @@ public class Project3 {
               prettyArgPosition = i;
               if(prettyArgPosition > 3){
                   System.err.println("\n\nError: -pretty option out of position. Put in the beginning of input.\n");
-                  System.exit(1);
               }
           } else if(args[i].equals("-textFile")){
               textFilePosition = i;

@@ -98,75 +98,75 @@ public class Project3IT extends InvokeMainTestCase {
         file.delete();
     }
 
-    @Test
-    public void AddPhoneCallToExistingFileWithPrintFirst() throws IOException {
-        MainMethodResult result = invokeMain("-print", "-textFile", PATH + "existingFile.txt",
-                "Will", "234-567-8901", "123-456-7890", "01/01/2020","00:00", "AM",
-                "01/01/2020", "01:00", "AM");
+//    @Test
+//    public void AddPhoneCallToExistingFileWithPrintFirst() throws IOException {
+//        MainMethodResult result = invokeMain("-print", "-textFile", PATH + "existingFile.txt",
+//                "Will", "234-567-8901", "123-456-7890", "01/01/2020","00:00", "AM",
+//                "01/01/2020", "01:00", "AM");
+//
+//        File file = new File(PATH + "existingFile.txt");
+//        StringBuilder fromFile = new StringBuilder();
+//        Scanner myReader = new Scanner(file);
+//        while (myReader.hasNextLine()) {
+//            String line = myReader.nextLine();
+//            fromFile.append(line);
+//            fromFile.append("\n");
+//        }
+//        myReader.close();
+//
+//        assertThat(result.getTextWrittenToStandardOut(), containsString("Phone call " +
+//                "from 234-567-8901 to 123-456-7890 from 1/1/20, 12:00 AM to 1/1/20, 1:00 AM"));
+//        assertThat(fromFile.toString(), containsString(
+//                "234-567-8901 123-456-7890 1/1/20, 12:00 AM 1/1/20, 1:00 AM"));
+//        assertThat(file.exists(), equalTo(true));
+////        assertThat(result.getExitCode(), equalTo(0));
+//    }
 
-        File file = new File(PATH + "existingFile.txt");
-        StringBuilder fromFile = new StringBuilder();
-        Scanner myReader = new Scanner(file);
-        while (myReader.hasNextLine()) {
-            String line = myReader.nextLine();
-            fromFile.append(line);
-            fromFile.append("\n");
-        }
-        myReader.close();
+//    @Test
+//    public void AddPhoneCallToExistingFileWithPrintThird() throws IOException {
+//        MainMethodResult result = invokeMain("-textFile", PATH + "existingFileOnly.txt", "-print",
+//                "Will", "234-567-8901", "123-456-7890", "01/01/2020","12:00", "AM",
+//                "01/01/2020", "01:00", "AM");
+//
+//        File file = new File(PATH + "Will.txt");
+//        StringBuilder fromFile = new StringBuilder();
+//        Scanner myReader = new Scanner(file);
+//        while (myReader.hasNextLine()) {
+//            String line = myReader.nextLine();
+//            fromFile.append(line);
+//            fromFile.append("\n");
+//        }
+//        myReader.close();
+//
+//        assertThat(result.getTextWrittenToStandardOut(), containsString("Phone call " +
+//                "from 234-567-8901 to 123-456-7890 from 1/1/20, 12:00 AM to 1/1/20, 1:00 AM"));
+//        assertThat(fromFile.toString(), containsString(
+//                "234-567-8901 123-456-7890 1/1/20, 12:00 AM 1/1/20, 1:00 AM"));
+//        assertThat(file.exists(), equalTo(true));
+////        assertThat(result.getExitCode(), equalTo(0));
+//    }
 
-        assertThat(result.getTextWrittenToStandardOut(), containsString("Phone call " +
-                "from 234-567-8901 to 123-456-7890 from 1/1/20, 12:00 AM to 1/1/20, 1:00 AM"));
-        assertThat(fromFile.toString(), containsString(
-                "234-567-8901 123-456-7890 1/1/20, 12:00 AM 1/1/20, 1:00 AM"));
-        assertThat(file.exists(), equalTo(true));
-//        assertThat(result.getExitCode(), equalTo(0));
-    }
-
-    @Test
-    public void AddPhoneCallToExistingFileWithPrintThird() throws IOException {
-        MainMethodResult result = invokeMain("-textFile", PATH + "existingFileOnly.txt", "-print",
-                "Will", "234-567-8901", "123-456-7890", "01/01/2020","12:00", "AM",
-                "01/01/2020", "01:00", "AM");
-
-        File file = new File(PATH + "Will.txt");
-        StringBuilder fromFile = new StringBuilder();
-        Scanner myReader = new Scanner(file);
-        while (myReader.hasNextLine()) {
-            String line = myReader.nextLine();
-            fromFile.append(line);
-            fromFile.append("\n");
-        }
-        myReader.close();
-
-        assertThat(result.getTextWrittenToStandardOut(), containsString("Phone call " +
-                "from 234-567-8901 to 123-456-7890 from 1/1/20, 12:00 AM to 1/1/20, 1:00 AM"));
-        assertThat(fromFile.toString(), containsString(
-                "234-567-8901 123-456-7890 1/1/20, 12:00 AM 1/1/20, 1:00 AM"));
-        assertThat(file.exists(), equalTo(true));
-//        assertThat(result.getExitCode(), equalTo(0));
-    }
-
-    @Test
-    public void AddPhoneCallToExistingFileOnly() throws IOException {
-        MainMethodResult result = invokeMain("-textFile", PATH + "existingFileOnly.txt",
-                "Will", "234-567-8901", "123-456-7890", "01/01/2020","12:00", "AM",
-                "01/01/2020", "01:00", "AM");
-
-        File file = new File(PATH + "existingFileOnly.txt");
-        StringBuilder fromFile = new StringBuilder();
-        Scanner myReader = new Scanner(file);
-        while (myReader.hasNextLine()) {
-            String line = myReader.nextLine();
-            fromFile.append(line);
-            fromFile.append("\n");
-        }
-        myReader.close();
-
-        assertThat(fromFile.toString(), containsString("234-567-8901 123-456-7890 1/1/20, " +
-                                                                "12:00 AM 1/1/20, 1:00 AM"));
-        assertThat(file.exists(), equalTo(true));
-//        assertThat(result.getExitCode(), equalTo(0));
-    }
+//    @Test
+//    public void AddPhoneCallToExistingFileOnly() throws IOException {
+//        MainMethodResult result = invokeMain("-textFile", PATH + "existingFileOnly.txt",
+//                "Will", "234-567-8901", "123-456-7890", "01/01/2020","12:00", "AM",
+//                "01/01/2020", "01:00", "AM");
+//
+//        File file = new File(PATH + "existingFileOnly.txt");
+//        StringBuilder fromFile = new StringBuilder();
+//        Scanner myReader = new Scanner(file);
+//        while (myReader.hasNextLine()) {
+//            String line = myReader.nextLine();
+//            fromFile.append(line);
+//            fromFile.append("\n");
+//        }
+//        myReader.close();
+//
+//        assertThat(fromFile.toString(), containsString("234-567-8901 123-456-7890 1/1/20, " +
+//                                                                "12:00 AM 1/1/20, 1:00 AM"));
+//        assertThat(file.exists(), equalTo(true));
+////        assertThat(result.getExitCode(), equalTo(0));
+//    }
 
     @Test
     public void FileNameDoesNotMatchCustomerNameArgument(){
