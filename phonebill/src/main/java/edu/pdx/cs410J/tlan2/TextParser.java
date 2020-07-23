@@ -45,8 +45,9 @@ public class TextParser implements PhoneBillParser {
         Scanner sc = new Scanner(this.newFile);
         String customerName = sc.nextLine();
         Pattern number = compile("\\d{3}-\\d{3}-\\d{4}");
-        Pattern date = compile("\\d{1,2}/\\d{1,2}/\\d{4}");
+        Pattern date = compile("\\d{1,2}/\\d{1,2}/\\d{2}");
         Pattern time = compile("\\d{1,2}:\\d{2}");
+        Pattern amPM = compile("([AaPp][Mm])");
 
         if(customerName.substring(0, 1).matches("\\d")){
           throw new ParserException("Error: Malformatted name in the file.");
@@ -57,14 +58,19 @@ public class TextParser implements PhoneBillParser {
           String callInfo = sc.nextLine();
           String[] data = callInfo.split("\\s+");
 
+          data[2] = data[2].replace(",", "");
+
+          data[5] = data[5].replace(",", "");
+
           for(int i=0; i < data.length; i++){
-            if(!number.matcher(data[0]).matches() || !number.matcher(data[1]).matches())
-            {
-              throw new ParserException("\n\n\nError: Malformatted phone number(s) in file.");
-            } else if(!date.matcher(data[2]).matches() || !date.matcher(data[4]).matches()){
-              throw new ParserException("\n\n\nError: Malformatted date(s) in file.");
-            } else if(!time.matcher(data[3]).matches() || !time.matcher(data[5]).matches()){
-              throw new ParserException("\n\n\nError: Malformatted time(s) in file.");
+            if(!number.matcher(data[0]).matches() || !number.matcher(data[1]).matches()) {
+              throw new ParserException("\n\nError: Malformatted phone number(s) in file.");
+            } else if(!date.matcher(data[2]).matches() || !date.matcher(data[5]).matches()){
+              throw new ParserException("\n\nError: Malformatted date(s) in file.");
+            } else if(!time.matcher(data[3]).matches() || !time.matcher(data[6]).matches()){
+              throw new ParserException("\n\nError: Malformatted time(s) in file.");
+            } else if(!amPM.matcher(data[4]).matches() || !amPM.matcher(data[7]).matches()){
+              throw new ParserException("\n\nError: Malformatted AM/PM(s) in file.");
             }
           }
 //          PhoneCall call = new PhoneCall(data[0], data[1], data[2], data[3],

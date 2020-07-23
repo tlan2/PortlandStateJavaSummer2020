@@ -163,6 +163,7 @@ public class Project3 {
         String customerName = args[4];
         String prettyFileName = args[1];
         String textFileName = args[3];
+        ReadAndWriteToFile(newCall,customerName,textFileName);
         prettyPrintWithTextFile(newCall,customerName,prettyFileName,textFileName);
         System.exit(0);
     }
@@ -173,10 +174,11 @@ public class Project3 {
         String customerName = args[4];
         String prettyFileName = args[3];
         String textFileName = args[1];
+        ReadAndWriteToFile(newCall, customerName, textFileName);
         prettyPrintWithTextFile(newCall,customerName,prettyFileName,textFileName);
         System.exit(0);
     }// -print & PrettyPrint
-    else if(args[0].equals("-print")  && args[1].equals("-pretty") & args.length == 11){
+    else if(args[0].equals("-print")  && args[1].equals("-pretty") & !args[3].equals("-textFile")){
         PhoneCall newCall = new PhoneCall(args[4], args[5], args[6],
                 args[7], args[8], args[9], args[10], args[11]);
         printPhoneCall(newCall);
@@ -184,8 +186,8 @@ public class Project3 {
         String prettyFileName = args[2];
         prettyPrintOnly(newCall, customerName, prettyFileName);
         System.exit(0);
-    }// -textFile & PrettyPrint
-    else if(args[0].equals("-pretty")  && args[2].equals("-print") && args.length == 11){
+    }// PrettyPrint & -print
+    else if(args[0].equals("-pretty")  && args[2].equals("-print") && !args[3].equals("-textFile")){
         PhoneCall newCall = new PhoneCall(args[4], args[5], args[6],
                 args[7], args[8], args[9], args[10], args[11]);
         printPhoneCall(newCall);
@@ -201,6 +203,7 @@ public class Project3 {
         String customerName = args[5];
         String prettyFileName = args[1];
         String textFileName = args[3];
+        ReadAndWriteToFile(newCall, customerName, textFileName);
         prettyPrintWithTextFile(newCall,customerName,prettyFileName,textFileName);
         System.exit(0);
 
@@ -212,6 +215,7 @@ public class Project3 {
         String customerName = args[5];
         String prettyFileName = args[3];
         String textFileName = args[1];
+        ReadAndWriteToFile(newCall, customerName, textFileName);
         prettyPrintWithTextFile(newCall,customerName,prettyFileName,textFileName);
         System.exit(0);
     } //-print, -textFile & PrettyPrint
@@ -222,6 +226,7 @@ public class Project3 {
         String customerName = args[5];
         String prettyFileName = args[2];
         String textFileName = args[4];
+        ReadAndWriteToFile(newCall, customerName, textFileName);
         prettyPrintWithTextFile(newCall,customerName,prettyFileName,textFileName);
         System.exit(0);
     } else if (args[0].equals("-print")  && args[1].equals("-textFile") && args[3].equals("-pretty")){
@@ -231,6 +236,7 @@ public class Project3 {
         String customerName = args[5];
         String prettyFileName = args[4];
         String textFileName = args[2];
+        ReadAndWriteToFile(newCall, customerName, textFileName);
         prettyPrintWithTextFile(newCall,customerName,prettyFileName,textFileName);
         System.exit(0);
     }
@@ -306,7 +312,7 @@ public class Project3 {
                 ex.printStackTrace();
             }
 
-            String customerOnFile = newBill.getCustomer();
+            String customerOnFile = newBill.getCustomer().trim();
 
             if(!customerOnFile.equals(customerName)){
                 System.err.println("\nError: Customer name inputted does not match " +

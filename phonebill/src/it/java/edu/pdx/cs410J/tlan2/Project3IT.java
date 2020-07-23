@@ -1,5 +1,6 @@
 package edu.pdx.cs410J.tlan2;
 
+import com.sun.tools.javac.Main;
 import edu.pdx.cs410J.InvokeMainTestCase;
 import org.junit.Test;
 
@@ -323,6 +324,91 @@ public class Project3IT extends InvokeMainTestCase {
                 "Error: -print option out of position. Put in the beginning of input."));
         assertThat(result.getExitCode(), equalTo(1));
     }
+
+    @Test
+    public void prettyToConsoleOnly(){
+      MainMethodResult result = invokeMain("-pretty", "-", "Bob", "234-567-8901",
+              "123-456-7890", "01/01/2020","12:00", "AM", "01/01/2020", "01:00", "AM");
+
+      assertThat(result.getTextWrittenToStandardOut(), containsString("Customer: Bob"));
+      assertThat(result.getExitCode(), equalTo(0));
+    }
+
+    @Test
+    public void prettyToFileOnly(){
+        MainMethodResult result = invokeMain("-pretty", "tlan2/prettyFileTestOnly.txt", "Bob", "234-567-8901",
+                "123-456-7890", "01/01/2020","12:00", "AM", "01/01/2020", "01:00", "AM");
+
+        File file = new File("tlan2/prettyFileTestOnly.txt");
+        assertThat(file.exists(), equalTo(true));
+        assertThat(file.length() > 0, equalTo(true));
+        assertThat(result.getExitCode(), equalTo(0));
+        file.delete();
+    }
+
+    @Test
+    public void prettyTextFileTest(){
+        MainMethodResult result = invokeMain("-pretty", "tlan2/prettyFileTestOnly.txt", "-textFile", "tlan2/textFile.txt",
+                "PrettyTextFile", "234-567-8901", "123-456-7890", "01/01/2020","12:00", "AM", "01/01/2020", "01:00", "AM");
+
+        File prettyFile = new File("tlan2/prettyFileTestOnly.txt");
+        File textFile = new File("tlan2/textFile.txt");
+        assertThat(prettyFile.exists(), equalTo(true));
+        assertThat(prettyFile.length() > 0, equalTo(true));
+        assertThat(textFile.exists(), equalTo(true));
+        assertThat(textFile.length() > 0, equalTo(true));
+        assertThat(result.getExitCode(), equalTo(0));
+        prettyFile.delete();
+        textFile.delete();
+    }
+
+    @Test
+    public void textFilePrettyOptionTest(){
+        MainMethodResult result = invokeMain("-textFile", "tlan2/textFile.txt", "-pretty", "tlan2/prettyFileTestOnly.txt",
+                "PrettyTextFile", "234-567-8901", "123-456-7890", "01/01/2020","12:00", "AM", "01/01/2020", "01:00", "AM");
+
+        File prettyFile = new File("tlan2/prettyFileTestOnly.txt");
+        File textFile = new File("tlan2/textFile.txt");
+        assertThat(prettyFile.exists(), equalTo(true));
+        assertThat(prettyFile.length() > 0, equalTo(true));
+        assertThat(textFile.exists(), equalTo(true));
+        assertThat(textFile.length() > 0, equalTo(true));
+        assertThat(result.getExitCode(), equalTo(0));
+        prettyFile.delete();
+        textFile.delete();
+    }
+
+    @Test
+    public void printPrettyTest(){
+        MainMethodResult result = invokeMain("-print", "-pretty", "tlan2/prettyFileTestOnly.txt",
+                "PrettyTextFile", "234-567-8901", "123-456-7890", "01/01/2020","12:00", "AM", "01/01/2020", "01:00", "AM");
+
+        File prettyFile = new File("tlan2/prettyFileTestOnly.txt");
+        assertThat(result.getTextWrittenToStandardOut(), containsString("Phone call from 234-567-8901 to " +
+                "123-456-7890 from 1/1/20, 12:00 AM to 1/1/20, 1:00 AM"));
+        assertThat(prettyFile.exists(), equalTo(true));
+        assertThat(prettyFile.length() > 0, equalTo(true));
+        assertThat(result.getExitCode(), equalTo(0));
+        prettyFile.delete();
+    }
+
+    @Test
+    public void prettyPrintTest(){
+        MainMethodResult result = invokeMain( "-pretty", "tlan2/prettyFileTestOnly.txt", "-print",
+                "PrettyTextFile", "234-567-8901", "123-456-7890", "01/01/2020","12:00", "AM", "01/01/2020", "01:00", "AM");
+
+        File prettyFile = new File("tlan2/prettyFileTestOnly.txt");
+        assertThat(result.getTextWrittenToStandardOut(), containsString("Phone call from 234-567-8901 to " +
+                "123-456-7890 from 1/1/20, 12:00 AM to 1/1/20, 1:00 AM"));
+        assertThat(prettyFile.exists(), equalTo(true));
+        assertThat(prettyFile.length() > 0, equalTo(true));
+        assertThat(result.getExitCode(), equalTo(0));
+        prettyFile.delete();
+    }
+
+
+
+
 
 //    @Test
 //    public void prettyPrintPhoneBillToConsole() throws IOException {
