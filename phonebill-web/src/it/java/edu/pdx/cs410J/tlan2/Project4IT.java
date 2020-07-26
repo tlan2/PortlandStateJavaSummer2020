@@ -4,6 +4,7 @@ import edu.pdx.cs410J.InvokeMainTestCase;
 import edu.pdx.cs410J.UncaughtExceptionInMain;
 import edu.pdx.cs410J.tlan2.PhoneBillRestClient.PhoneBillRestException;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
@@ -53,6 +54,7 @@ public class Project4IT extends InvokeMainTestCase {
         }
     }
 
+    @Ignore
     @Test
     public void test4AddDefinition() {
         String word = "WORD";

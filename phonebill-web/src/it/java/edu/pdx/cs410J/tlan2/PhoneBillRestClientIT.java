@@ -2,6 +2,7 @@ package edu.pdx.cs410J.tlan2;
 
 import edu.pdx.cs410J.web.HttpRequestHelper;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
@@ -39,6 +40,7 @@ public class PhoneBillRestClientIT {
     assertThat(dictionary.size(), equalTo(0));
   }
 
+  @Ignore
   @Test
   public void test2DefineOneWord() throws IOException {
     PhoneBillRestClient client = newPhoneBillRestClient();
@@ -54,7 +56,7 @@ public class PhoneBillRestClientIT {
   public void test4MissingRequiredParameterReturnsPreconditionFailed() throws IOException {
     PhoneBillRestClient client = newPhoneBillRestClient();
     HttpRequestHelper.Response response = client.postToMyURL(Map.of());
-    assertThat(response.getContent(), containsString(Messages.missingRequiredParameter("word")));
+    assertThat(response.getContent(), containsString(Messages.missingRequiredParameter("customer")));
     assertThat(response.getCode(), equalTo(HttpURLConnection.HTTP_PRECON_FAILED));
   }
 

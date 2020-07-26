@@ -29,9 +29,6 @@ public class PhoneBillServletTest {
 
     HttpServletRequest request = mock(HttpServletRequest.class);
     HttpServletResponse response = mock(HttpServletResponse.class);
-    PrintWriter pw = mock(PrintWriter.class);
-
-    when(response.getWriter()).thenReturn(pw);
 
     servlet.doGet(request, response);
 
@@ -50,7 +47,7 @@ public class PhoneBillServletTest {
 
     servlet.doGet(request, response);
 
-    verify(response).sendError(HttpServletResponse.SC_NOT_FOUND, Messages.noPhoneBillForCustomer("customer"));
+    verify(response).sendError(HttpServletResponse.SC_NOT_FOUND, Messages.noPhoneBillForCustomer(customerName));
   }
 
   @Test
