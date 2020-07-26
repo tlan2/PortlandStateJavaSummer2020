@@ -42,8 +42,8 @@ public class PhoneBillRestClient extends HttpRequestHelper
     /**
      * Returns the definition for the given word
      */
-    public String getDefinition(String word) throws IOException {
-      Response response = get(this.url, Map.of("word", word));
+    public String getPhoneBill(String word) throws IOException {
+      Response response = get(this.url, Map.of("customer", word));
       throwExceptionIfNotOkayHttpStatus(response);
       String content = response.getContent();
       return Messages.parseDictionaryEntry(content).getValue();
@@ -59,7 +59,7 @@ public class PhoneBillRestClient extends HttpRequestHelper
       return post(this.url, dictionaryEntries);
     }
 
-    public void removeAllDictionaryEntries() throws IOException {
+    public void removeAllPhoneBills() throws IOException {
       Response response = delete(this.url, Map.of());
       throwExceptionIfNotOkayHttpStatus(response);
     }
@@ -74,8 +74,16 @@ public class PhoneBillRestClient extends HttpRequestHelper
 
     @VisibleForTesting
     class PhoneBillRestException extends RuntimeException {
+        private final int httpStatusCode;
+
       PhoneBillRestException(int httpStatusCode) {
-        super("Got an HTTP Status Code of " + httpStatusCode);
+
+          super("Got an HTTP Status Code of " + httpStatusCode);
+          this.httpStatusCode = httpStatusCode;
+      }
+
+      public int getHttpStatusCode() {
+          return this.httpStatusCode;
       }
     }
 
