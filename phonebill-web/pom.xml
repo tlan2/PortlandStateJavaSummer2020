@@ -162,6 +162,10 @@
         <configuration>
           <archive>
             <manifest>
+              <addClasspath>true</addClasspath>
+              <classpathLayoutType>repository</classpathLayoutType>
+              <classpathPrefix>${user.home}/.m2/repository</classpathPrefix>
+              <classpathPrefix>file:///${user.home}/.m2/repository</classpathPrefix>
               <mainClass>edu.pdx.cs410J.tlan2.Project4</mainClass>
             </manifest>
           </archive>
