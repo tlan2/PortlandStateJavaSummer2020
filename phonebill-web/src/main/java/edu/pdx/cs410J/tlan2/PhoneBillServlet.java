@@ -1,7 +1,5 @@
 package edu.pdx.cs410J.tlan2;
 
-import com.google.common.annotations.VisibleForTesting;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,9 +18,9 @@ import java.util.Map;
 public class PhoneBillServlet extends HttpServlet
 {
     static final String CUSTOMER_PARAMETER = "customer";
-    static final String DEFINITION_PARAMETER = "definition";
+    static final String CALLER_NUMBER_PARAMETER = "callerNumber";
 
-    private final Map<String, String> dictionary = new HashMap<>();
+    private final Map<String, PhoneBill> phoneBills = new HashMap<>();
 
     /**
      * Handles an HTTP GET request from a client by writing the definition of the
@@ -53,23 +51,22 @@ public class PhoneBillServlet extends HttpServlet
     {
         response.setContentType( "text/plain" );
 
-        String word = getParameter(CUSTOMER_PARAMETER, request );
-        if (word == null) {
+        String customer = getParameter(CUSTOMER_PARAMETER, request );
+        if (customer == null) {
             missingRequiredParameter(response, CUSTOMER_PARAMETER);
             return;
         }
 
-        String definition = getParameter(DEFINITION_PARAMETER, request );
-        if ( definition == null) {
-            missingRequiredParameter( response, DEFINITION_PARAMETER );
+        String caller = getParameter(CALLER_NUMBER_PARAMETER, request);
+        if (caller == null) {
+            missingRequiredParameter(response, CALLER_NUMBER_PARAMETER);
             return;
         }
 
-        this.dictionary.put(word, definition);
+        PhoneBill bill = new PhoneBill(customer);
+        bill.addPhoneCall(new PhoneCall(caller));
+        this.phoneBills.put(customer, bill);
 
-        PrintWriter pw = response.getWriter();
-        pw.println(Messages.definedWordAs(word, definition));
-        pw.flush();
 
         response.setStatus( HttpServletResponse.SC_OK);
     }
@@ -83,7 +80,7 @@ public class PhoneBillServlet extends HttpServlet
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/plain");
 
-        this.dictionary.clear();
+        this.phoneBills.clear();
 
         PrintWriter pw = response.getWriter();
         pw.println(Messages.allDictionaryEntriesDeleted());
@@ -121,9 +118,7 @@ public class PhoneBillServlet extends HttpServlet
       }
     }
 
-    @VisibleForTesting
-    String getDefinition(String word) {
-        return this.dictionary.get(word);
+    public PhoneBill getPhoneBill(String customer) {
+        return this.phoneBills.get(customer);
     }
-
 }
