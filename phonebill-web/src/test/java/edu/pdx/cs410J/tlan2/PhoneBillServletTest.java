@@ -37,6 +37,7 @@ public class PhoneBillServletTest {
     verify(response).sendError(HttpServletResponse.SC_PRECONDITION_FAILED, Messages.missingRequiredParameter(CUSTOMER_PARAMETER));
   }
 
+  @Ignore
   @Test
   public void requestCustomerWithNoPhoneBillReturnsNotFound() throws ServletException, IOException{
     PhoneBillServlet servlet = new PhoneBillServlet();
