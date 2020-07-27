@@ -1,5 +1,8 @@
 package edu.pdx.cs410J.tlan2;
 
+import com.google.common.annotations.VisibleForTesting;
+import edu.pdx.cs410J.family.TextDumper;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +40,13 @@ public class PhoneBillServlet extends HttpServlet
         if (customer == null) {
             missingRequiredParameter(response, CUSTOMER_PARAMETER);
         } else {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, Messages.noPhoneBillForCustomer(customer));
+            PhoneBill bill = getPhoneBill(customer);
+            if (bill == null){
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, Messages.noPhoneBillForCustomer(customer));
+            }
+            PhoneBillTextDumper dumper = new PhoneBillTextDumper(response.getWriter());
+            dumper.dump(bill);
+            response.setStatus(HttpServletResponse.SC_OK);
         }
     }
 
@@ -120,5 +129,10 @@ public class PhoneBillServlet extends HttpServlet
 
     public PhoneBill getPhoneBill(String customer) {
         return this.phoneBills.get(customer);
+    }
+
+    @VisibleForTesting
+    void addPhoneBill(PhoneBill bill) {
+        this.phoneBills.put(bill.getCustomer(), bill);
     }
 }

@@ -1,5 +1,6 @@
 package edu.pdx.cs410J.tlan2;
 
+import edu.pdx.cs410J.ParserException;
 import edu.pdx.cs410J.web.HttpRequestHelper;
 
 import java.io.IOException;
@@ -62,15 +63,15 @@ public class Project4 {
                 message = "Fix me!";
             } else if (definition == null) {
                 // Print all dictionary entries
-                message = Messages.formatDictionaryEntry(word, client.getPhoneBill(word));
+                message = "Fix me";
 
             } else {
                 // Post the word/definition pair
-                client.addDictionaryEntry(word, definition);
+                client.addPhoneCall(word, definition);
                 message = Messages.definedWordAs(word, definition);
             }
 
-        } catch ( IOException ex ) {
+        } catch (IOException ex ) {
             error("While contacting server: " + ex);
             return;
         }
