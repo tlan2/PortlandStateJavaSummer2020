@@ -59,7 +59,6 @@ public class TextParser implements PhoneBillParser {
           String[] data = callInfo.split("\\s+");
 
           data[2] = data[2].replace(",", "");
-
           data[5] = data[5].replace(",", "");
 
           for(int i=0; i < data.length; i++){
@@ -73,9 +72,10 @@ public class TextParser implements PhoneBillParser {
               throw new ParserException("\n\nError: Malformatted AM/PM(s) in file.");
             }
           }
-//          PhoneCall call = new PhoneCall(data[0], data[1], data[2], data[3],
-//                  data[4], data[5]);
-//          newBill.addPhoneCall(call);
+
+          PhoneCall call = new PhoneCall(data[0], data[1], data[2], data[3],
+                  data[4], data[5], data[6], data[7]);
+          newBill.addPhoneCall(call);
         }
       } catch (FileNotFoundException ex) {
         throw new ParserException("While parsing file", ex);

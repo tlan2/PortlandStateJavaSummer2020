@@ -47,7 +47,8 @@ public class PrettyPrinterTest {
         try {
             pp.dump(bill);
         } catch (IOException ex){
-            ex.printStackTrace();
+            System.err.println("While dumping bill to file....");
+            System.exit(1);
         }
 
         File file = new File("tlan2/prettyTestFile.txt");

@@ -48,6 +48,8 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
    */
 
   // ========== CONSTRUCTOR ===========================================
+ public PhoneCall(String callerNumber){this.callerNumber = callerNumber;}
+
   public PhoneCall(String callerNumber, String calleeNumber, String startDate,
                    String startTime, String startAMPM, String endDate, String endTime,
                    String endAMPM) {
@@ -78,17 +80,15 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
     if (isValidDate(startDate) && isValidTime(startTime) && isValidAMPM(startAMPM)) {//      this.startDate = startDate;
       String myDate = startDate + " " + startTime + " " + startAMPM;
       SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
-      Date sDate = null;
 
       try {
-        sDate = format.parse(myDate);
+        Date sDate = format.parse(myDate);
+        this.startDateTime = sDate;
       } catch (ParseException ex) {
         System.err.println("\nInvalid start date and/or time format. " +
                 "Correct format: mm/dd/yyyy nn:nn am/pm.");
         System.exit(1);
       }
-
-      this.startDateTime = sDate;
     }
 
     /**
@@ -96,18 +96,17 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
      */
     if (isValidDate(endDate) && isValidTime(endTime) && isValidAMPM(endAMPM)) {
       String myDate = endDate + " " + endTime + " " + endAMPM;
-
       SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
-      Date eDate = null;
 
       try {
-        eDate = format.parse(myDate);
+        Date eDate = format.parse(myDate);
+        this.endDateTime = eDate;
       } catch (ParseException ex) {
         System.err.println("\n\nInvalid end date and/or time format. " +
                 "Correct format: mm/dd/yyyy nn:nn am/pm.");
         System.exit(1);
       }
-      this.endDateTime = eDate;
+
     }
 
   }
@@ -141,7 +140,11 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
   public String getStartTimeString() {
     int f = DateFormat.SHORT;
     DateFormat df = DateFormat.getDateTimeInstance(f, f);
-    return df.format(this.startDateTime);
+    String formattedDate = df.format(this.startDateTime);
+//      String formattedDate = DateFormat
+//              .getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT)
+//              .format(this.startDateTime);
+    return formattedDate;
   }
 
   @Override
@@ -156,7 +159,8 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
   public String getEndTimeString() {
     int f = DateFormat.SHORT;
     DateFormat df = DateFormat.getDateTimeInstance(f, f);
-    return df.format(this.endDateTime);
+    String date = df.format(this.endDateTime);
+    return date;
   }
 
   /**
@@ -206,7 +210,7 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
    */
 
   public boolean isValidDate(String date){
-    Pattern p = compile("\\d{1,2}/\\d{1,2}/\\d{4}");
+    Pattern p = compile("\\d{1,2}/\\d{1,2}/\\d{2,4}");
     return p.matcher(date).matches();
   }
 

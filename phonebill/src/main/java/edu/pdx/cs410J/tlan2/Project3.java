@@ -4,6 +4,9 @@ import edu.pdx.cs410J.ParserException;
 
 import java.io.*;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.SortedSet;
 
 /**
  * The main class for the CS410J Phone Bill Project
@@ -294,34 +297,40 @@ public class Project3 {
         //Parse existing file
         if(file.exists()){
 
-            TextParser tp = new TextParser(file);
             try
             {
+                TextParser tp = new TextParser(file);
                 newBill = tp.parse();
+                String customerOnFile = newBill.getCustomer().trim();
+
+                if(!customerOnFile.equals(customerName)){
+                    System.err.println("\nError: Customer name inputted does not match " +
+                            "customer name on file.\n\n");
+                    System.exit(1);
+                }
+
+                System.out.println("\nWriting to existing file.\n");
+
+                newBill.addPhoneCall(newCall);
+//                Collection<PhoneCall> allCalls = newBill.getPhoneCalls();
+
+
+
+                try {
+                    SortedSet<PhoneCall> calls = newBill.sortPhoneCalls();
+
+                    TextDumper td = new TextDumper(fileName);
+                    td.dump(newBill);
+                } catch (IOException e) {
+                    System.err.println("While dumping bill to file.....");
+                    System.exit(1);
+                }
             } catch (ParserException ex)
             {
-                ex.printStackTrace();
-            }
-
-            String customerOnFile = newBill.getCustomer().trim();
-
-            if(!customerOnFile.equals(customerName)){
-                System.err.println("\nError: Customer name inputted does not match " +
-                        "customer name on file.\n\n");
+                System.err.println("While parsing text file....");
                 System.exit(1);
             }
 
-            System.out.println("\nWriting to existing file.\n");
-
-            newBill.addPhoneCall(newCall);
-            TextDumper td = new TextDumper(fileName);
-            try
-            {
-                td.dump(newBill);
-            } catch (IOException ex)
-            {
-                ex.printStackTrace();
-            }
         } else
         {
             System.out.println("\nNew file created.\n");
@@ -331,7 +340,8 @@ public class Project3 {
                 file.createNewFile();
             } catch (IOException ex)
             {
-                ex.printStackTrace();
+                System.err.println("While creating a new file.....");
+                System.exit(1);
             }
             newBill.addCustomer(customerName);
             newBill.addPhoneCall(newCall);
@@ -341,7 +351,8 @@ public class Project3 {
                 td.dump(newBill);
             } catch (IOException ex)
             {
-                ex.printStackTrace();
+                System.err.println("While dumping bill to text file......");
+                System.exit(1);
             }
         }
     }
@@ -356,7 +367,7 @@ public class Project3 {
             try {
                 pp.dump(bill);
             } catch (IOException ex){
-                ex.printStackTrace();;
+                System.err.println("While pretty printing.......");
                 System.exit(1);
             }
     }
@@ -368,20 +379,29 @@ public class Project3 {
         PrettyPrinter pp = new PrettyPrinter(prettyFileName);
 
         if (prettyFileName.equals("-")){
-            bill.addCustomer(customerName);
-            bill.addPhoneCall(newCall);
+            TextParser tp = new TextParser(textFile);
             try {
-                pp.dump(bill);
-            } catch (IOException ex){
-                ex.printStackTrace();;
+                bill = tp.parse();
+                bill.addCustomer(customerName);
+                bill.addPhoneCall(newCall);
+                try {
+                    pp.dump(bill);
+                } catch (IOException ex){
+                    System.err.println("While pretty printing......");
+                    System.exit(1);
+                }
+            } catch (ParserException ex){
+                System.err.println("While parsing file......");
                 System.exit(1);
             }
+
+
         } else {
             TextParser tp = new TextParser(textFile);
             try {
                 bill = tp.parse();
             } catch (ParserException ex){
-                ex.printStackTrace();
+                System.err.println("While parsing file......");
                 System.exit(1);
             }
             bill.addPhoneCall(newCall);
@@ -389,7 +409,7 @@ public class Project3 {
             try {
                 pp.dump(bill);
             } catch (IOException ex){
-                ex.printStackTrace();;
+                System.err.println("While dumping bill to file....");
                 System.exit(1);
             }
         }

@@ -5,6 +5,7 @@ import edu.pdx.cs410J.PhoneBillDumper;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.SortedSet;
 
 /**
  * This class represents a <code>TextDumper</code>.
@@ -38,7 +39,7 @@ public class TextDumper implements PhoneBillDumper<PhoneBill> {
      */
     @Override
     public void dump(PhoneBill bill) throws IOException{
-        Collection<PhoneCall> phoneCalls = bill.getPhoneCalls();
+        SortedSet<PhoneCall> phoneCalls = bill.sortPhoneCalls();
 
         FileWriter writer = new FileWriter(this.fileName);
         writer.write(bill.getCustomer());

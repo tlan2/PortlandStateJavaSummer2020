@@ -3,7 +3,7 @@
 
 Customer: PPTestCustomer
 
-Bill Date: 07/22/2020
+Bill Date: 07/28/2020
 
 Call #	Caller Number	Receiver Number		 Start Date  					End Date				Call Duration
 ---------------------------------------------------------------------------------------------------------------

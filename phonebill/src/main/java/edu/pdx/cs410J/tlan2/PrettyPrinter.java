@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.SortedSet;
@@ -29,36 +30,38 @@ public class PrettyPrinter implements PhoneBillDumper {
     public void dump(AbstractPhoneBill abstractPhoneBill) throws IOException {
         PhoneBill bill = (PhoneBill) abstractPhoneBill;
         File file = new File(this.fileName);
-        SortedSet<PhoneCall> calls;
+        SortedSet<PhoneCall> calls = bill.sortPhoneCalls();
+
 
         if(this.fileName.equals("-")){
             //PrettyPrint to console
             String customerName = bill.getCustomer();
-            calls = bill.sortPhoneCalls();
 
             System.out.println("\n===================================================== Phone Bill ===================" +
-                    "=====================================================");
+                    "=================================");
             System.out.println("\nCustomer: " + customerName);
-            System.out.println("\nCall #\tCaller Number\tReceiver Number\t\tStart Date\t\t\tEnd Date\t\tCall Duration");
+            System.out.println("\nCall #\tCaller Number\tReceiver Number\t\tStart Date\t\t\tEnd Date\t\tCall Duration (hrs)");
             System.out.println("----------------------------------------------------------------------------------" +
-                    "-----------------------------------");
+                    "-----------------------------------------");
+            int i=1;
             for (PhoneCall c:calls){
-                int i=1;
                 Date sDate = c.getStartTime();
                 Date eDate = c.getEndTime();
-                String prettySDate;
-                String prettyEDate;
+
                 double duration;
 
-
-                int f = DateFormat.MEDIUM;
-                DateFormat df = DateFormat.getDateTimeInstance(f, f);
-                prettySDate = df.format(sDate);
-                prettyEDate = df.format(eDate);
+//                int long = DateFormat.LONG;
+//                int medium = DateFormat.MEDIUM;
+//                DateFormat df = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT);
+                DateFormat df = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+                String prettySDate = df.format(sDate);
+                String prettyEDate = df.format(eDate);
+                prettySDate = prettySDate.replace("0020", "2020");
+                prettyEDate = prettyEDate.replace("0020", "2020");
                 duration = getDateDiff(sDate, eDate);
 
-                System.out.println("  " + i + "\t" + c.getCaller() + "\t " + c.getCallee() + "\t    " +
-                                    prettySDate + "\t" + prettyEDate  + "\t    " + duration);
+                System.out.println("  " + i + "\t" + c.getCaller() + "\t " + c.getCallee() + "\t     " +
+                                    prettySDate + "\t  " + prettyEDate  + "\t\t    " + duration);
                 System.out.println();
 
                 i++;
@@ -75,7 +78,8 @@ public class PrettyPrinter implements PhoneBillDumper {
                 file.createNewFile();
             } catch (IOException ex)
             {
-                ex.printStackTrace();
+                System.err.println("While creating a new file");
+                System.exit(1);
             }
             System.out.println("\nNew file created.\n");
 
