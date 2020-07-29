@@ -240,6 +240,7 @@ public class Project3 {
                 args[4], args[5], args[6], args[7], args[8]);
         String customerName = args[1];
         PhoneBill bill = new PhoneBill(customerName);
+        bill.addPhoneCall(newCall);
 
         System.exit(0);
     }

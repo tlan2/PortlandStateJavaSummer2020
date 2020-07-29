@@ -91,31 +91,30 @@ public class PrettyPrinter implements PhoneBillDumper {
             Date date = new Date();
 
             writer.write("\n============================================ Phone Bill ===================" +
-                    "==================================");
+                    "====================================");
             writer.write("\n\nCustomer: " + customerName + "\n\n");
 
             writer.write("Bill Date: " + formatter.format(date) + "\n");
 
             writer.write("\nCall #\tCaller Number\tReceiver Number\t\t Start Date  \t\t\t\t\tEnd Date\t\t\t\tCall Duration");
-            writer.write("\n----------------------------------------------------------------------------------" +
+            writer.write("\n-------------------------------------------------------------------------------------" +
                     "-----------------------------");
+            int i=1;
             for (PhoneCall c:calls){
-                int i=1;
                 Date sDate = c.getStartTime();
                 Date eDate = c.getEndTime();
-                String prettySDate;
-                String prettyEDate;
                 double duration;
-
 
                 int f = DateFormat.MEDIUM;
                 DateFormat df = DateFormat.getDateTimeInstance(f, f);
-                prettySDate = df.format(sDate);
-                prettyEDate = df.format(eDate);
+                String prettySDate = df.format(sDate);
+                String prettyEDate = df.format(eDate);
+                prettySDate = prettySDate.replace(" 20,", " 2020,");
+                prettyEDate = prettyEDate.replace(" 20,", " 2020,");
                 duration = getDateDiff(sDate, eDate);
 
-                writer.write("\n  " + i + "\t\t" + c.getCaller() + "\t " + c.getCallee() + "\t " +
-                        prettySDate + "\t" + prettyEDate  + "\t\t\t" + duration + "\n");
+                writer.write("\n  " + i + "\t\t" + c.getCaller() + "\t " + c.getCallee() + "\t\t" +
+                        prettySDate + "\t\t" + prettyEDate  + "\t\t" + duration + "\n");
 
                 i++;
             }

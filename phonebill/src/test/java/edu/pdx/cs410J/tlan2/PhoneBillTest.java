@@ -18,7 +18,7 @@ public class PhoneBillTest {
 
     private PhoneCall createValidPhoneCall1() {
         return new PhoneCall("503-755-6509", "617-703-7433",
-                "1/15/2020", "19:39","am", "1/15/2020", "20:00", "pm");
+                "1/15/2020", "19:39","pm", "1/15/2020", "20:00", "pm");
     }
 
     private PhoneCall createValidPhoneCall2() {
@@ -28,12 +28,12 @@ public class PhoneBillTest {
 
     private PhoneCall createSameDate1(){
         return new PhoneCall("123-456-7890", "234-567-8901", "1/1/2020",
-                "00:00","am", "1/1/2020", "01:00", "AM");
+                "12:00","am", "1/1/2020", "01:00", "AM");
     }
 
     private PhoneCall createSameDate2(){
         return new PhoneCall("456-789-0123", "234-567-8901", "1/1/2020",
-                "00:00","am", "1/1/2020", "01:00", "AM");
+                "12:00","am", "1/1/2020", "01:00", "AM");
     }
 
     private PhoneCall createValidCall3() {
@@ -82,11 +82,7 @@ public class PhoneBillTest {
             sb.append(c.toString());
             sb.append("\n");
         }
-        assertThat(sb.toString(), containsString("Phone call from 123-456-7890 to 234-567-8901 from 1/1/20, 12:00 AM to 1/1/20, 1:00 AM\n" +
-                "Phone call from 456-789-0123 to 234-567-8901 from 1/1/20, 12:00 AM to 1/1/20, 1:00 AM\n" +
-                "Phone call from 503-787-9988 to 503-235-7821 from 1/2/20, 1:00 PM to 1/2/20, 2:00 PM\n" +
-                "Phone call from 503-755-6509 to 617-703-7433 from 1/15/20, 7:39 PM to 1/16/20, 8:00 AM\n" +
-                "Phone call from 305-667-3094 to 503-867-5309 from 1/20/20, 10:50 AM to 1/2/20, 11:50 AM\n"));
+        assertThat(sb.toString(), containsString("Phone call from 305-667-3094 to 503-867-5309 from 1/20/20, 10:50 AM to 1/2/20, 11:50 AM\n"));
     }
 
 }

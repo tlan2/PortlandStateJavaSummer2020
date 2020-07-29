@@ -58,7 +58,7 @@ public class Project3IT extends InvokeMainTestCase {
             "\\src\\test\\java\\edu\\pdx\\cs410J\\tlan2\\testFiles\\";
 
 // =========== TESTS ===================
-    @Ignore
+
     @Test
     public void WritePhoneCallToNewFileWithPrintFirst(){
         MainMethodResult result = invokeMain("-print", "-textFile", PATH + "Bob.txt",
@@ -69,11 +69,9 @@ public class Project3IT extends InvokeMainTestCase {
                 "from 234-567-8901 to 123-456-7890 from 1/1/20, 12:00 AM to 1/1/20, 1:00 AM"));
         assertThat(file.exists(), equalTo(true));
         assertThat(file.length() > 0, equalTo(true));
-//        assertThat(result.getExitCode(), equalTo(0));
         file.delete();
     }
 
-    @Ignore
     @Test
     public void WritePhoneCallToNewFileWithPrintThird(){
         MainMethodResult result = invokeMain("-textFile", PATH + "Bob.txt", "-print",
@@ -84,11 +82,9 @@ public class Project3IT extends InvokeMainTestCase {
                 "from 234-567-8901 to 123-456-7890 from 1/1/20, 12:00 AM to 1/1/20, 1:00 AM"));
         assertThat(file.exists(), equalTo(true));
         assertThat(file.length() > 0, equalTo(true));
-//        assertThat(result.getExitCode(), equalTo(0));
         file.delete();
     }
 
-    @Ignore
     @Test
     public void WritePhoneCallToNewFileOnly(){
         MainMethodResult result = invokeMain("-textFile", PATH + "Bob.txt", "-print",
@@ -98,11 +94,9 @@ public class Project3IT extends InvokeMainTestCase {
 
         assertThat(file.exists(), equalTo(true));
         assertThat(file.length() > 0, equalTo(true));
-//        assertThat(result.getExitCode(), equalTo(0));
         file.delete();
     }
 
-    @Ignore
     @Test
     public void AddPhoneCallToExistingFileWithPrintFirst() throws IOException {
         MainMethodResult result = invokeMain("-print", "-textFile", PATH + "existingFile.txt",
@@ -124,10 +118,9 @@ public class Project3IT extends InvokeMainTestCase {
         assertThat(fromFile.toString(), containsString(
                 "234-567-8901 123-456-7890 1/1/20, 12:00 AM 1/1/20, 1:00 AM"));
         assertThat(file.exists(), equalTo(true));
-//        assertThat(result.getExitCode(), equalTo(0));
     }
 
-    @Ignore
+
     @Test
     public void AddPhoneCallToExistingFileWithPrintThird() throws IOException {
         MainMethodResult result = invokeMain("-textFile", PATH + "existingFileOnly.txt", "-print",
@@ -149,10 +142,8 @@ public class Project3IT extends InvokeMainTestCase {
         assertThat(fromFile.toString(), containsString(
                 "234-567-8901 123-456-7890 1/1/20, 12:00 AM 1/1/20, 1:00 AM"));
         assertThat(file.exists(), equalTo(true));
-//        assertThat(result.getExitCode(), equalTo(0));
     }
 
-    @Ignore
     @Test
     public void AddPhoneCallToExistingFileOnly() throws IOException {
         MainMethodResult result = invokeMain("-textFile", PATH + "existingFileOnly.txt",
@@ -172,7 +163,6 @@ public class Project3IT extends InvokeMainTestCase {
         assertThat(fromFile.toString(), containsString("234-567-8901 123-456-7890 1/1/20, " +
                                                                 "12:00 AM 1/1/20, 1:00 AM"));
         assertThat(file.exists(), equalTo(true));
-//        assertThat(result.getExitCode(), equalTo(0));
     }
 
     @Test
@@ -220,7 +210,6 @@ public class Project3IT extends InvokeMainTestCase {
         assertThat(result.getExitCode(), equalTo(0));
     }
 
-
     @Test
     public void missingCallerNumberPlus() {
         MainMethodResult result = invokeMain("Brian Griffin");
@@ -228,6 +217,7 @@ public class Project3IT extends InvokeMainTestCase {
                 "Missing callerNumber, calleeNumber, call start and call end date/time/AM/PM."));
         assertThat(result.getExitCode(), equalTo(1));
     }
+
     @Test
     public void missingCalleeNumberPlus() {
         MainMethodResult result = invokeMain( "Brian Griffin", "503-655-9775");
@@ -235,6 +225,7 @@ public class Project3IT extends InvokeMainTestCase {
                 "Missing calleeNumber, call start and call end date/time/AM/PM."));
         assertThat(result.getExitCode(), equalTo(1));
     }
+
     @Test
     public void missingStartDatePlus() {
         MainMethodResult result = invokeMain("Brian Griffin",
@@ -353,7 +344,7 @@ public class Project3IT extends InvokeMainTestCase {
         file.delete();
     }
 
-    @Ignore
+
     @Test
     public void prettyTextFileTest(){
         MainMethodResult result = invokeMain("-pretty", "tlan2/prettyFileTestOnly.txt", "-textFile", "tlan2/textFile.txt",
@@ -370,7 +361,6 @@ public class Project3IT extends InvokeMainTestCase {
         textFile.delete();
     }
 
-    @Ignore
     @Test
     public void textFilePrettyOptionTest(){
         MainMethodResult result = invokeMain("-textFile", "tlan2/textFile.txt", "-pretty", "tlan2/prettyFileTestOnly.txt",

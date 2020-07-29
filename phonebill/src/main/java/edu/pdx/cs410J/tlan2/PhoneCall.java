@@ -21,12 +21,12 @@ import static java.util.regex.Pattern.compile;
 public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall> {
   private String callerNumber;
   private String calleeNumber;
-  private String startDate;
-  private String startTime;
-  private String startAMPM;
-  private String endDate;
-  private String endTime;
-  private String endAMPM;
+//  private String startDate;
+//  private String startTime;
+//  private String startAMPM;
+//  private String endDate;
+//  private String endTime;
+//  private String endAMPM;
   private Date startDateTime;
   private Date endDateTime;
 
@@ -73,41 +73,55 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
       throw new IllegalArgumentException(
               "\n\nInvalid phone number format. Correct format is nnn-nnn-nnn.");
     }
+      String sDate = startDate + " " + startTime + " " + startAMPM;
+      String eDate = endDate + " " + endTime + " " + endAMPM;
+      SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
 
     /**
      * @throw If an illegal argument exception occurred.
      */
-    if (isValidDate(startDate) && isValidTime(startTime) && isValidAMPM(startAMPM)) {//      this.startDate = startDate;
-      String myDate = startDate + " " + startTime + " " + startAMPM;
-      SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
-
+    if (isValidDate(startDate) && isValidTime(startTime) && isValidAMPM(startAMPM)) {
       try {
-        Date sDate = format.parse(myDate);
-        this.startDateTime = sDate;
+        Date startDateTime = format.parse(sDate);
+        this.startDateTime = startDateTime;
       } catch (ParseException ex) {
         System.err.println("\nInvalid start date and/or time format. " +
                 "Correct format: mm/dd/yyyy nn:nn am/pm.");
         System.exit(1);
       }
+    } else {
+        System.err.println("\n\nInvalid end date and/or time format. " +
+                "Correct format: mm/dd/yyyy nn:nn am/pm.");
+        System.exit(1);
     }
 
     /**
      * @throw If an illegal argument exception occurred.
      */
     if (isValidDate(endDate) && isValidTime(endTime) && isValidAMPM(endAMPM)) {
-      String myDate = endDate + " " + endTime + " " + endAMPM;
-      SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
-
       try {
-        Date eDate = format.parse(myDate);
-        this.endDateTime = eDate;
+        Date endDateTime = format.parse(eDate);
+        this.endDateTime = endDateTime;
       } catch (ParseException ex) {
         System.err.println("\n\nInvalid end date and/or time format. " +
                 "Correct format: mm/dd/yyyy nn:nn am/pm.");
         System.exit(1);
       }
-
+    } else {
+        System.err.println("\n\nInvalid end date and/or time format. " +
+                "Correct format: mm/dd/yyyy nn:nn am/pm.");
+        System.exit(1);
     }
+
+    // To check start and end date time
+//    long sdt = startDateTime.getTime();
+//    long edt = endDateTime.getTime();
+//    long diff = edt - sdt;
+//
+//      if(diff < 0){
+//          System.err.println("\n\nCall start time after call end time.\n");
+//          System.exit(1);
+//      }
 
   }
 
@@ -141,9 +155,6 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
     int f = DateFormat.SHORT;
     DateFormat df = DateFormat.getDateTimeInstance(f, f);
     String formattedDate = df.format(this.startDateTime);
-//      String formattedDate = DateFormat
-//              .getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT)
-//              .format(this.startDateTime);
     return formattedDate;
   }
 
