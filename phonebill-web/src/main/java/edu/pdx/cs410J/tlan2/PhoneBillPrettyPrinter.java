@@ -17,7 +17,7 @@ public class  PhoneBillPrettyPrinter implements PhoneBillDumper<PhoneBill> {
         this.writer.println(phoneBill.getCustomer());
 
         for(PhoneCall call: phoneBill.getPhoneCalls()){
-            this.writer.println("  " + call.getCaller());
+            this.writer.println("  " + call.getAllCallInfo());
         }
 
         this.writer.flush();

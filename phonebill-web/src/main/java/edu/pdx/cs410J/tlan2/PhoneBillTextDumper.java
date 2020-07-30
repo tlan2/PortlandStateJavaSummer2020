@@ -17,7 +17,7 @@ public class PhoneBillTextDumper implements PhoneBillDumper<PhoneBill> {
     public void dump(PhoneBill phoneBill) throws IOException {
         this.writer.println(phoneBill.getCustomer());
         for(PhoneCall call : phoneBill.getPhoneCalls()){
-            this.writer.println(call.getCaller());
+            this.writer.println(call.getAllCallInfo());
         }
     }
 }

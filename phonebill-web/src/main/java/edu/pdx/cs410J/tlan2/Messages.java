@@ -12,9 +12,9 @@ import java.util.regex.Pattern;
  */
 public class Messages
 {
-    public static String formatWordCount(int count )
+    public static String formatCustomerPhoneCalls(int count )
     {
-        return String.format( "Dictionary on server contains %d words", count );
+        return String.format( "Phone bill on server contains %d phone calls", count );
     }
 
     public static String formatDictionaryEntry(String word, String definition )
@@ -27,13 +27,13 @@ public class Messages
         return String.format("The required parameter \"%s\" is missing", parameterName);
     }
 
-    public static String definedWordAs(String word, String definition )
+    public static String customerNumberIs(String customer, String caller )
     {
-        return String.format( "Defined %s as %s", word, definition );
+        return String.format( "Defined %s as %s", customer, caller );
     }
 
-    public static String allDictionaryEntriesDeleted() {
-        return "All dictionary entries have been deleted";
+    public static String allPhoneBillsDeleted() {
+        return "All phone bills have been deleted";
     }
 
     public static Map.Entry<String, String> parseDictionaryEntry(String content) {
@@ -67,7 +67,7 @@ public class Messages
     }
 
     public static void formatDictionaryEntries(PrintWriter pw, Map<String, String> dictionary) {
-        pw.println(Messages.formatWordCount(dictionary.size()));
+        pw.println(Messages.formatCustomerPhoneCalls(dictionary.size()));
 
         for (Map.Entry<String, String> entry : dictionary.entrySet()) {
             pw.println(Messages.formatDictionaryEntry(entry.getKey(), entry.getValue()));

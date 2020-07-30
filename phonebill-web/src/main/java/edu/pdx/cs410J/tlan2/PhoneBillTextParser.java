@@ -5,6 +5,8 @@ import edu.pdx.cs410J.ParserException;
 import edu.pdx.cs410J.PhoneBillParser;
 
 import java.io.*;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -25,12 +27,32 @@ public class PhoneBillTextParser implements PhoneBillParser {
         try {
             String customer = br.readLine();
             PhoneBill bill = new PhoneBill(customer);
-            while (br.ready()) {
-                String caller = br.readLine();
-                if (caller == null){
-                    break;
+            ArrayList<String> callInfo = new ArrayList<String>();
+            Boolean completeCall = true;
+            String callString = "";
+            String[] callInfoStrings;
+
+            while ((callString = br.readLine()) != null) {
+
+//                System.out.println(callString);
+
+                callInfoStrings = callString.split(" ");
+
+                for(String info:callInfoStrings){
+//                    System.out.println(info);
+                    if (info.equals("null")){
+                        completeCall = false;
+                        break;
+                    }
+                    callInfo.add(info);
                 }
-                bill.addPhoneCall(new PhoneCall(caller));
+
+                if(completeCall){
+                    bill.addPhoneCall(new PhoneCall(callInfo.get(0), callInfo.get(1), callInfo.get(2), callInfo.get(3),
+                            callInfo.get(4), callInfo.get(5), callInfo.get(6),callInfo.get(7)));
+                } else {
+                    throw new ParserException("\nMissing phone call value.\n");
+                }
             }
 
             return bill;

@@ -48,72 +48,129 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
      */
 
     // ========== CONSTRUCTOR ===========================================
-    public PhoneCall(String caller){
-        this.callerNumber = caller;
-    }
+    public PhoneCall(String callerNumber){this.callerNumber = callerNumber;}
 
-    public PhoneCall(String callerNumber, String calleeNumber, String startDate,
-                     String startTime, String startAMPM, String endDate, String endTime,
-                     String endAMPM) {
+    public PhoneCall(String caller, String callee, String startDate, String startTime, String startAMPM, String endDate, String endTime, String endAMPM) {
 
         /**
          * @throw If an illegal argument exception occurred.
          */
-        if (isValidPhoneNumber(callerNumber)) {
-            this.callerNumber = callerNumber;
+        if (isValidPhoneNumber(caller)) {
+            this.callerNumber = caller;
         } else {
             throw new IllegalArgumentException(
-                    "\n\nInvalid phone number format. Correct format is nnn-nnn-nnn.");
+                    "\n\nInvalid caller phone number format.");
         }
 
         /**
          * @throw If an illegal argument exception occurred.
          */
-        if (isValidPhoneNumber(calleeNumber)) {
-            this.calleeNumber = calleeNumber;
+        if (isValidPhoneNumber(callee)) {
+            this.calleeNumber = callee;
         } else {
             throw new IllegalArgumentException(
-                    "\n\nInvalid phone number format. Correct format is nnn-nnn-nnn.");
+                    "\n\nInvalid callee phone number format.");
         }
 
         /**
          * @throw If an illegal argument exception occurred.
          */
-        if (isValidDate(startDate) && isValidTime(startTime) && isValidAMPM(startAMPM)) {//      this.startDate = startDate;
-            String myDate = startDate + " " + startTime + " " + startAMPM;
-            SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
-            Date sDate = null;
+        if (isValidDate(startDate)) {
+            this.startDate = startDate;
+        } else {
+            throw new IllegalArgumentException(
+                    "\n\nInvalid call start date format.");
+        }
 
+        /**
+         * @throw If an illegal argument exception occurred.
+         */
+        if (isValidDate(endDate)) {
+            this.endDate = endDate;
+        } else {
+            throw new IllegalArgumentException(
+                    "\n\nInvalid call end date format.");
+        }
+
+        /**
+         * @throw If an illegal argument exception occurred.
+         */
+        if (isValidTime(startTime)) {
+            this.startTime = startTime;
+        } else {
+            throw new IllegalArgumentException(
+                    "\n\nInvalid call start time format.");
+        }
+
+        /**
+         * @throw If an illegal argument exception occurred.
+         */
+        if (isValidTime(endTime)) {
+            this.endTime = endTime;
+        } else {
+            throw new IllegalArgumentException(
+                    "\n\nInvalid call end time format.");
+        }
+
+        /**
+         * @throw If an illegal argument exception occurred.
+         */
+        if (isValidAMPM(startAMPM)) {
+            this.startAMPM = startAMPM;
+        } else {
+            throw new IllegalArgumentException(
+                    "\n\nInvalid call start AM/PM designation.");
+        }
+
+        /**
+         * @throw If an illegal argument exception occurred.
+         */
+        if (isValidAMPM(endAMPM)) {
+            this.endAMPM = endAMPM;
+        } else {
+            throw new IllegalArgumentException(
+                    "\n\nInvalid call start AM/PM designation.");
+        }
+
+        String sDate = startDate + " " + startTime + " " + startAMPM;
+        String eDate = endDate + " " + endTime + " " + endAMPM;
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+
+        /**
+         * @throw If an illegal argument exception occurred.
+         */
+        if (isValidDate(startDate) && isValidTime(startTime) && isValidAMPM(startAMPM)) {
             try {
-                sDate = format.parse(myDate);
+                Date startDateTime = format.parse(sDate);
+                this.startDateTime = startDateTime;
             } catch (ParseException ex) {
                 System.err.println("\nInvalid start date and/or time format. " +
                         "Correct format: mm/dd/yyyy nn:nn am/pm.");
                 System.exit(1);
             }
-
-            this.startDateTime = sDate;
+        } else {
+            System.err.println("\n\nInvalid end date and/or time format. " +
+                    "Correct format: mm/dd/yyyy nn:nn am/pm.");
+            System.exit(1);
         }
 
         /**
          * @throw If an illegal argument exception occurred.
          */
         if (isValidDate(endDate) && isValidTime(endTime) && isValidAMPM(endAMPM)) {
-            String myDate = endDate + " " + endTime + " " + endAMPM;
-
-            SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
-            Date eDate = null;
-
             try {
-                eDate = format.parse(myDate);
+                Date endDateTime = format.parse(eDate);
+                this.endDateTime = endDateTime;
             } catch (ParseException ex) {
                 System.err.println("\n\nInvalid end date and/or time format. " +
                         "Correct format: mm/dd/yyyy nn:nn am/pm.");
                 System.exit(1);
             }
-            this.endDateTime = eDate;
+        } else {
+            System.err.println("\n\nInvalid end date and/or time format. " +
+                    "Correct format: mm/dd/yyyy nn:nn am/pm.");
+            System.exit(1);
         }
-
     }
 
     /**
@@ -143,9 +200,7 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
      */
     @Override
     public String getStartTimeString() {
-        int f = DateFormat.SHORT;
-        DateFormat df = DateFormat.getDateTimeInstance(f, f);
-        return df.format(this.startDateTime);
+        return this.startDate + " " + this.startTime + " " + this.startAMPM;
     }
 
     @Override
@@ -158,17 +213,16 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
      */
     @Override
     public String getEndTimeString() {
-        int f = DateFormat.SHORT;
-        DateFormat df = DateFormat.getDateTimeInstance(f, f);
-        return df.format(this.endDateTime);
+        return this.endDate + " " + this.endTime + " " + this.endAMPM;
     }
 
     /**
      * @return all the information of a call into text file/command line format.
      */
     public String getAllCallInfo() {
-        return this.getCaller() + " " + this.getCallee() +
-                " " + this.getStartTimeString() + " " + this.getEndTimeString();
+        return this.callerNumber + " " + this.calleeNumber +
+                " " + this.startDate + " " + this.startTime + " " + this.startAMPM +
+                " " + this.endDate + " " + this.endTime + " " + this.endAMPM;
     }
 
     public int compareTo(PhoneCall call2) {
@@ -210,7 +264,7 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
      */
 
     public boolean isValidDate(String date){
-        Pattern p = compile("\\d{1,2}/\\d{1,2}/\\d{4}");
+        Pattern p = compile("\\d{1,2}/\\d{1,2}/\\d{2,4}");
         return p.matcher(date).matches();
     }
 
@@ -234,4 +288,3 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
         return p.matcher(amPM).matches();
     }
 }
-

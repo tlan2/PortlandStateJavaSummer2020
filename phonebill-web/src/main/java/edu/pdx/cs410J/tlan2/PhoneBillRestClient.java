@@ -8,8 +8,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.Map;
 
-import static edu.pdx.cs410J.tlan2.PhoneBillURLParameters.CALLER_NUMBER_PARAMETER;
-import static edu.pdx.cs410J.tlan2.PhoneBillURLParameters.CUSTOMER_PARAMETER;
+import static edu.pdx.cs410J.tlan2.PhoneBillURLParameters.*;
 import static java.net.HttpURLConnection.HTTP_OK;
 
 /**
@@ -26,7 +25,7 @@ public class PhoneBillRestClient extends HttpRequestHelper
 
 
     /**
-     * Creates a client to the Phone Bil REST service running on the given host and port
+     * Creates a client to the Phone Bill REST service running on the given host and port
      * @param hostName The name of the host
      * @param port The port
      */
@@ -38,7 +37,7 @@ public class PhoneBillRestClient extends HttpRequestHelper
     /**
      * Returns all dictionary entries from the server
      */
-    public Map<String, String> getAllDictionaryEntries() throws IOException {
+    public Map<String, String> getAllPhoneBills() throws IOException {
       Response response = get(this.url, Map.of());
       return Messages.parseDictionary(response.getContent());
     }
@@ -46,22 +45,26 @@ public class PhoneBillRestClient extends HttpRequestHelper
     /**
      * Returns the phone bill for the given customer
      */
-    public PhoneBill getPhoneBill(String word) throws IOException, ParserException {
-      Response response = get(this.url, Map.of(CUSTOMER_PARAMETER, word));
+    public PhoneBill getPhoneBill(String customer) throws IOException, ParserException {
+      Response response = get(this.url, Map.of(CUSTOMER_PARAMETER, customer));
       throwExceptionIfNotOkayHttpStatus(response);
       String content = response.getContent();
       PhoneBillTextParser parser = new PhoneBillTextParser(new StringReader(content));
       return parser.parse();
     }
 
-    public void addPhoneCall(String customer, String caller) throws IOException {
-      Response response = postToMyURL(Map.of(CUSTOMER_PARAMETER, customer, CALLER_NUMBER_PARAMETER, caller));
+    public void addPhoneCall(String customer, PhoneCall call) throws IOException {
+//        String sDateTime = startDate + "%20" + startTime + "%20" + startAMPM;
+//        String eDateTime = endDate + "%20" + endTime + "%20" + endAMPM;
+      Response response = postToMyURL(Map.of(CUSTOMER_PARAMETER, customer, CALLER_NUMBER_PARAMETER, call.getCaller(),
+              CALLEE_NUMBER_PARAMETER, call.getCallee(), START_CALL_PARAMETER, call.getStartTimeString(),
+              END_CALL_PARAMETER, call.getEndTimeString()));
       throwExceptionIfNotOkayHttpStatus(response);
     }
 
     @VisibleForTesting
-    Response postToMyURL(Map<String, String> dictionaryEntries) throws IOException {
-      return post(this.url, dictionaryEntries);
+    Response postToMyURL(Map<String, String> phoneBillEntries) throws IOException {
+      return post(this.url, phoneBillEntries);
     }
 
     public void removeAllPhoneBills() throws IOException {

@@ -12,41 +12,49 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-import static edu.pdx.cs410J.tlan2.PhoneBillURLParameters.CALLER_NUMBER_PARAMETER;
-import static edu.pdx.cs410J.tlan2.PhoneBillURLParameters.CUSTOMER_PARAMETER;
+import static edu.pdx.cs410J.tlan2.PhoneBillURLParameters.*;
 
 /**
  * This servlet ultimately provides a REST API for working with an
- * <code>PhoneBill</code>.  However, in its current state, it is an example
- * of how to use HTTP and Java servlets to store simple dictionary of words
- * and their definitions.
+ * <code>PhoneBill</code>.
+ *
+ * CHANGE TEXT ABVOE!
  */
 public class PhoneBillServlet extends HttpServlet
 {
     private final Map<String, PhoneBill> phoneBills = new HashMap<>();
 
     /**
-     * Handles an HTTP GET request from a client by writing the definition of the
-     * word specified in the "word" HTTP parameter to the HTTP response.  If the
-     * "word" parameter is not specified, all of the entries in the dictionary
-     * are written to the HTTP response.
+     * Handles an HTTP GET request from a client by writing the caller number of the
+     * customer specified in the "customer" HTTP parameter to the HTTP response.  If the
+     * "customer" parameter is not specified, all of the phone calls are written to the
+     *  HTTP response.
      */
+
+    // Gets response from server to provide customer specific phone call info
     @Override
     protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
     {
         response.setContentType( "text/plain" );
 
         String customer = getParameter( CUSTOMER_PARAMETER, request );
+//        String start = getParameter( START_PARAMETER, request);
+//        String end = getParameter ( END_PARAMETER, request);
         if (customer == null) {
             missingRequiredParameter(response, CUSTOMER_PARAMETER);
+            return;
+//        } else if (start != null && end != null) {
+//            // Search code
+//
         } else {
             PhoneBill bill = getPhoneBill(customer);
             if (bill == null){
                 response.sendError(HttpServletResponse.SC_NOT_FOUND, Messages.noPhoneBillForCustomer(customer));
+            } else {
+                PhoneBillTextDumper dumper = new PhoneBillTextDumper(response.getWriter());
+                dumper.dump(bill);
+                response.setStatus(HttpServletResponse.SC_OK);
             }
-            PhoneBillTextDumper dumper = new PhoneBillTextDumper(response.getWriter());
-            dumper.dump(bill);
-            response.setStatus(HttpServletResponse.SC_OK);
         }
     }
 
@@ -54,6 +62,8 @@ public class PhoneBillServlet extends HttpServlet
      * Handles an HTTP POST request by storing the dictionary entry for the
      * "word" and "definition" request parameters.  It writes the dictionary
      * entry to the HTTP response.
+     *
+     * CHANGE TEXT ABOVE!!!!!!!!
      */
     @Override
     protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
@@ -67,23 +77,65 @@ public class PhoneBillServlet extends HttpServlet
         }
 
         String caller = getParameter(CALLER_NUMBER_PARAMETER, request);
-        if (caller == null) {
+
+        if (caller.equals(null)) {
             missingRequiredParameter(response, CALLER_NUMBER_PARAMETER);
             return;
         }
 
-        PhoneBill bill = new PhoneBill(customer);
-        bill.addPhoneCall(new PhoneCall(caller));
-        this.phoneBills.put(customer, bill);
+        String callee = getParameter(CALLEE_NUMBER_PARAMETER, request);
+        if (callee.equals(null)) {
+            missingRequiredParameter(response, CALLEE_NUMBER_PARAMETER);
+            return;
+        }
 
+        String startCallInfo = getParameter(START_CALL_PARAMETER, request);
+        if (startCallInfo.equals(null)) {
+            missingRequiredParameter(response, START_CALL_PARAMETER);
+            return;
+        }
+
+        String endCallInfo = getParameter(END_CALL_PARAMETER, request);
+        if (endCallInfo.equals(null)) {
+            missingRequiredParameter(response, END_CALL_PARAMETER);
+            return;
+        }
+
+        String[] startCall = startCallInfo.split(" ");
+        String[] endCall = endCallInfo.split(" ");
+
+//        for(int i=0; i < startCall.length; i++){
+//            System.out.println(startCall[i]);
+//            System.out.println(endCall[i]);
+//        }
+//        System.out.println("pbs-startCallInfo = " + startCallInfo);
+//        System.out.println("pbs-endCallInfo = " + endCallInfo);
+
+        if(this.phoneBills.containsKey(customer)){
+            // Customer with phone bill
+            PhoneBill bill = this.phoneBills.get(customer);
+            bill.addPhoneCall(new PhoneCall(caller, callee, startCall[0], startCall[1], startCall[2],
+                    endCall[0], endCall[1], endCall[2]));
+            this.phoneBills.put(customer, bill);
+
+        } else {
+            // New Customer
+            PhoneBill bill = new PhoneBill(customer);
+            bill.addPhoneCall(new PhoneCall(caller, callee, startCall[0], startCall[1], startCall[2],
+                    endCall[0], endCall[1], endCall[2]));
+            this.phoneBills.put(customer, bill);
+        }
 
         response.setStatus( HttpServletResponse.SC_OK);
+
     }
 
     /**
      * Handles an HTTP DELETE request by removing all dictionary entries.  This
      * behavior is exposed for testing purposes only.  It's probably not
      * something that you'd want a real application to expose.
+     *
+     * CHANGE TEXT ABOVE!!!!!!!!
      */
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -92,7 +144,7 @@ public class PhoneBillServlet extends HttpServlet
         this.phoneBills.clear();
 
         PrintWriter pw = response.getWriter();
-        pw.println(Messages.allDictionaryEntriesDeleted());
+        pw.println(Messages.allPhoneBillsDeleted());
         pw.flush();
 
         response.setStatus(HttpServletResponse.SC_OK);
