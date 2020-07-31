@@ -12,6 +12,11 @@ import java.util.regex.Pattern;
 
 import static java.util.regex.Pattern.compile;
 
+/**
+ * This class represents a <code>PhoneBillParser</code>.
+ * Contains a parse method that reads in an HTTP response and returns
+ * response in a PhoneBill object.
+ */
 public class PhoneBillTextParser implements PhoneBillParser {
 
     private final Reader reader;

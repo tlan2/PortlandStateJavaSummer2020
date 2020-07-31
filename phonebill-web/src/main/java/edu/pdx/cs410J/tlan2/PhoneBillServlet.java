@@ -42,12 +42,16 @@ public class PhoneBillServlet extends HttpServlet
         response.setContentType( "text/plain" );
 
         String customer = getParameter( CUSTOMER_PARAMETER, request );
+        String caller = getParameter(CALLER_NUMBER_PARAMETER, request);
+        String callee = getParameter(CALLER_NUMBER_PARAMETER, request);
         String start = getParameter( START_CALL_PARAMETER, request);
         String end = getParameter ( END_CALL_PARAMETER, request);
 
-//        System.out.println("servlet - customer = " + customer);
-//        System.out.println("servlet - start = " + start);
-//        System.out.println("servlet - end = " + end);
+//        System.out.println("servlet -doGet- customer = " + customer);
+//        System.out.println("servlet -doGet- caller = " + caller);
+//        System.out.println("servlet -doGet- callee = " + callee);
+//        System.out.println("servlet -doGet- start = " + start);
+//        System.out.println("servlet -doGet- end = " + end);
 
         if (customer == null) {
             missingRequiredParameter(response, CUSTOMER_PARAMETER);
@@ -110,33 +114,36 @@ public class PhoneBillServlet extends HttpServlet
     protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
     {
         response.setContentType( "text/plain" );
-
         String customer = getParameter(CUSTOMER_PARAMETER, request );
+//        System.out.println("servlet - doPost - customer = " + customer);
         if (customer == null) {
             missingRequiredParameter(response, CUSTOMER_PARAMETER);
             return;
         }
 
         String caller = getParameter(CALLER_NUMBER_PARAMETER, request);
-
+//        System.out.println("servlet - doPost() - caller = " + caller);
         if (caller == null) {
             missingRequiredParameter(response, CALLER_NUMBER_PARAMETER);
             return;
         }
 
         String callee = getParameter(CALLEE_NUMBER_PARAMETER, request);
+//        System.out.println("servlet - do callee = " + callee);
         if (callee == null) {
             missingRequiredParameter(response, CALLEE_NUMBER_PARAMETER);
             return;
         }
 
         String startCallInfo = getParameter(START_CALL_PARAMETER, request);
+//        System.out.println("servlet - startCallInfo = " + startCallInfo);
         if (startCallInfo == null) {
             missingRequiredParameter(response, START_CALL_PARAMETER);
             return;
         }
 
         String endCallInfo = getParameter(END_CALL_PARAMETER, request);
+//        System.out.println("servlet - endCallInfo = " + endCallInfo);
         if (endCallInfo == null) {
             missingRequiredParameter(response, END_CALL_PARAMETER);
             return;
@@ -145,17 +152,6 @@ public class PhoneBillServlet extends HttpServlet
         String[] startCall = startCallInfo.split("\\+");
         String[] endCall = endCallInfo.split("\\+");
 
-//        String[] startCall = startCallInfo.split(" ");
-//        String[] endCall = endCallInfo.split(" ");
-
-//        for(int i=0; i < startCall.length; i++){
-//            System.out.println(startCall[i]);
-//            System.out.println(endCall[i]);
-//        }
-//        System.out.println("pbs-startCallInfo = " + startCallInfo);
-//        System.out.println("pbs-endCallInfo = " + endCallInfo);
-
-//        System.out.println("servlet - containskey? = " + this.phoneBills.containsKey(customer));
         if(this.phoneBills.containsKey(customer)){
             // Customer with phone bill
             PhoneBill bill = this.phoneBills.get(customer);
@@ -176,11 +172,8 @@ public class PhoneBillServlet extends HttpServlet
     }
 
     /**
-     * Handles an HTTP DELETE request by removing all dictionary entries.  This
-     * behavior is exposed for testing purposes only.  It's probably not
-     * something that you'd want a real application to expose.
-     *
-     * CHANGE TEXT ABOVE!!!!!!!!
+     * Handles an HTTP DELETE request by removing all PhoneBill entries.  This
+     * behavior is exposed for testing purposes only.
      */
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -224,10 +217,21 @@ public class PhoneBillServlet extends HttpServlet
       }
     }
 
+    /**
+     *
+     * @param customer The name of the customer in String type.
+     *
+     * @return the PhoneBill of the given customer.
+     */
     public PhoneBill getPhoneBill(String customer) {
         return this.phoneBills.get(customer);
     }
 
+    /**
+     * Returns modified bill to its mapping in the HashSet.
+     *
+     * @param bill to be returned to HashSet.
+     */
     @VisibleForTesting
     void addPhoneBill(PhoneBill bill) {
         this.phoneBills.put(bill.getCustomer(), bill);

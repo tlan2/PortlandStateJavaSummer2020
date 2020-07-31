@@ -66,6 +66,17 @@ public class PhoneBillRestClient extends HttpRequestHelper
         throwExceptionIfNotOkayHttpStatus(response);
     }
 
+//    public void addPhoneCallToSearch(String customer, PhoneCall call) throws IOException {
+//        String sDateTime = call.getStartTimeString().replace(" ", "+");
+//        System.out.println("restClient- callToSearch - sDateTime = " + sDateTime);
+//        String eDateTime = call.getEndTimeString().replace(" ", "+");
+//        System.out.println("restClient- callToSearch - eDateTime = " + eDateTime);
+//        Response response = postToMyURL(Map.of(CUSTOMER_PARAMETER, customer,
+//                START_CALL_PARAMETER, sDateTime, END_CALL_PARAMETER, eDateTime));
+//
+//        throwExceptionIfNotOkayHttpStatus(response);
+//    }
+
     @VisibleForTesting
     Response postToMyURL(Map<String, String> phoneBillEntries) throws IOException {
       return post(this.url, phoneBillEntries);

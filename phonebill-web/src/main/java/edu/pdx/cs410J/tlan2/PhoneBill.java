@@ -22,16 +22,17 @@ public class PhoneBill extends AbstractPhoneBill<PhoneCall>  {
      * Creates a new empty <code>PhoneBill</code>
      */
     public PhoneBill(){
+        /**
+         *  @param customer
+         *  The person whose phone bill we're modeling.
+         *  @param phoneCalls
+         *  A collection of all the phone calls placed by the customer.
+         */
         this.customer = new String();
         this.phoneCalls = new ArrayList<>();
     }
     /**
      * Creates a new <code>PhoneBill</code>
-     *
-     * @param customer
-     * The person whose phone bill we're modeling.
-     * @param phoneCalls
-     * A collection of all the phone calls placed by the customer.
      */
 
     public PhoneBill(String customer) {

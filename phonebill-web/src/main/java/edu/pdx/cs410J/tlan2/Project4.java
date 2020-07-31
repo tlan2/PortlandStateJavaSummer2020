@@ -72,11 +72,9 @@ public class Project4 {
             int port;
             try {
                 port = Integer.parseInt(portString);
-
             } catch (NumberFormatException ex) {
                 usage("Port \"" + portString + "\" must be an integer");
-                return;
-            }
+                return; }
 
             PhoneBillRestClient client = new PhoneBillRestClient(hostName, port);
 
@@ -90,7 +88,6 @@ public class Project4 {
             try {
                 PhoneBill clientBill = client.getPhoneBill(customer); //get mapped phonebill and parses it
                 SortedSet<PhoneCall> sortedCalls = clientBill.sortedPhoneCalls();
-//                System.out.println("proj4 - sortedCalls.size() = " + sortedCalls.size());
                 PhoneBill prettyPrintBill = new PhoneBill(customer);
 
                 for (PhoneCall call : sortedCalls) {
@@ -226,6 +223,8 @@ public class Project4 {
             } else if (endAMPM == null){
                 usage("\nMissing call end time AM/PM designation.\n");
             } else {
+
+                //======== ADD PHONE CALL ======
                 PhoneCall newCall = new PhoneCall(caller, callee, startDate, startTime, startAMPM,
                         endDate, endTime, endAMPM);
                 if(print){
@@ -243,6 +242,10 @@ public class Project4 {
         System.exit(0);
     }
 
+
+    /**
+     * Prints the README text or the program description to the console.
+     */
     private static void printReadMe() {
         System.out.println("Tom Lancaster - Project 4" +
                 "\nThis program is a RESTful application of our phone bill application." +
@@ -252,7 +255,7 @@ public class Project4 {
     }
 
     /**
-     *
+     * Prints the command line interface to help guide the user on how the program works
      */
     private static void printCLI() {
         System.out.println("\nusage: java edu.pdx.cs410J.<login-id>.Project4 [options] <args>" +
@@ -271,6 +274,11 @@ public class Project4 {
 
     }
 
+    /**
+     * Converts a string date to the Date type.
+     *
+     * @return date in the Date type form.
+     */
     public static Date stringToDateConverter(String dateString) {
         Date date = new Date();
         try {

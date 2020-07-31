@@ -20,19 +20,8 @@ import static java.util.regex.Pattern.compile;
  */
 
 public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall> {
-    private String callerNumber;
-    private String calleeNumber;
-    private String startDate;
-    private String startTime;
-    private String startAMPM;
-    private String endDate;
-    private String endTime;
-    private String endAMPM;
-    private Date startDateTime;
-    private Date endDateTime;
-
     /**
-     * Creates a new <code>Phone</code>
+     * Creates a new <code>PhoneCall</code>
      *
      * @param callerNumber  The person making the phone call's
      *                      phone number.
@@ -47,9 +36,27 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
      * @param startDateTime The start date and time in Date object format.
      * @param endDateTime   The end date and time in Date object format.
      */
+    private String callerNumber;
+    private String calleeNumber;
+    private String startDate;
+    private String startTime;
+    private String startAMPM;
+    private String endDate;
+    private String endTime;
+    private String endAMPM;
+    private Date startDateTime;
+    private Date endDateTime;
+
+    /**
+     *  Creates a new <code>PhoneCall</code>
+     * @param callerNumber the caller's phone number in String object type.
+     */
+    public PhoneCall(String callerNumber){this.callerNumber = callerNumber;}
+
+
 
     // ========== CONSTRUCTOR ===========================================
-    public PhoneCall(String callerNumber){this.callerNumber = callerNumber;}
+
 
     public PhoneCall(String caller, String callee, String startDate, String startTime, String startAMPM, String endDate, String endTime, String endAMPM) {
 
@@ -191,6 +198,10 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
         return this.calleeNumber;
     }
 
+    /**
+     *
+     * @return the call start time in Date type object.
+     */
     @Override
     public Date getStartTime() {
         return this.startDateTime;
@@ -205,6 +216,10 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
         return this.startDate + " " + this.startTime + " " + this.startAMPM;
     }
 
+    /**
+     *
+     * @return the call end time in Date type object.
+     */
     @Override
     public Date getEndTime() {
         return this.endDateTime;
@@ -227,6 +242,11 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
                 " " + this.endDate + " " + this.endTime + " " + this.endAMPM;
     }
 
+    /**
+     *
+     * @param call2 a phone call to be compared to a given call and placed in proper order
+     *
+     */
     public int compareTo(PhoneCall call2) {
         long callTime1 = this.getStartTime().getTime();
         long callTime2 = call2.getStartTime().getTime();
