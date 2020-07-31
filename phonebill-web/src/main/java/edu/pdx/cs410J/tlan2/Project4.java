@@ -7,6 +7,10 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * The main class that parses the command line and communicates with the
@@ -31,26 +35,91 @@ public class Project4 {
         String endTime = null;
         String endAMPM = null;
         Boolean print = false;
-        Boolean addCall = true;
+        Boolean isSearch = false;
 
         if(args.length == 0){
             usage( MISSING_ARGS );
         }
 
+        for (String arg:args){
+            if(arg.equals("-search")){
+                isSearch = true;
+            }
+        }
 
-       if(args[0].equals("-search")){
-           System.out.println("-search option");
-           //try catch
-           customer = args[1];
-           startDate = args[2];
-           startTime = args[3];
-           startAMPM = args[4];
-           endDate = args[5];
-           endTime = args[6];
-           endAMPM = args[7];
+        if(isSearch && args.length == 11) {
+            System.out.println("-search option");
 
-           //search code
-       }
+            for (String arg : args) {
+                if (arg == null) {
+                    usage("Missing \"-search\" option arguments.");
+                }
+            }
+            //try catch
+            hostName = args[1];
+            portString = args[3];
+            customer = args[5];
+            startDate = args[6];
+            startTime = args[7];
+            startAMPM = args[8];
+            endDate = args[9];
+            endTime = args[10];
+            endAMPM = args[11];
+
+            int port;
+            try {
+                port = Integer.parseInt(portString);
+
+            } catch (NumberFormatException ex) {
+                usage("Port \"" + portString + "\" must be an integer");
+                return;
+            }
+
+            PhoneBillRestClient client = new PhoneBillRestClient(hostName, port);
+
+            String startDateTimeString = startDate + " " + startTime + " " + startAMPM;
+            String endDateTimeString = endDate + " " + endTime + " " + endAMPM;
+
+            Date minDate = stringToDateConverter(startDateTimeString);
+            Date maxDate = stringToDateConverter(endDateTimeString);
+
+            //search code
+            try {
+                PhoneBill clientBill = client.getPhoneBill(customer); //get mapped phonebill and parses it
+                SortedSet<PhoneCall> sortedCalls = clientBill.sortedPhoneCalls();
+                PhoneBill prettyPrintBill = new PhoneBill(customer);
+
+                for (PhoneCall call : sortedCalls) {
+                    Date beginDate = call.getStartTime();
+
+                    if (beginDate.after(minDate) && beginDate.before(maxDate)) {
+                        prettyPrintBill.addPhoneCall(call);
+                        client.addPhoneCall(customer, call);
+                    }
+                }
+
+                PrintWriter pw = new PrintWriter(System.out, true);
+                PhoneBillPrettyPrinter pretty = new PhoneBillPrettyPrinter(pw);
+                pretty.dump(prettyPrintBill);
+
+                System.exit(0);
+
+            } catch (ParserException e) {
+                System.err.println("\nCould not parse response!\n");
+                System.exit(1);
+            } catch (PhoneBillRestClient.PhoneBillRestException ex) {
+                switch (ex.getHttpStatusCode()) {
+                    case HttpURLConnection.HTTP_NOT_FOUND:
+                        System.err.print("\nNo phone bill for customer " + customer + "\n");
+                        System.exit(1);
+                        return;
+                    default:
+                }
+            } catch (IOException ex) {
+                error("While contacting server: " + ex);
+                return;
+            }
+        }
 
         for (String arg : args) {
             if(arg.equals("-README")){
@@ -58,7 +127,8 @@ public class Project4 {
                 System.exit(0);
             } else if(arg.equals("-print")){
                 print = true;
-            } else if (hostName == null) {
+            }
+            else if (hostName == null) {
                 hostName = arg;
             } else if ( portString == null) {
                 portString = arg;
@@ -92,7 +162,7 @@ public class Project4 {
         int port;
         try {
             port = Integer.parseInt( portString );
-            
+
         } catch (NumberFormatException ex) {
             usage("Port \"" + portString + "\" must be an integer");
             return;
@@ -107,7 +177,7 @@ public class Project4 {
             } else if (caller == null) {
                 // Pretty Print result
                 try {
-                    PhoneBill bill = client.getPhoneBill(customer);
+                    PhoneBill bill = client.getPhoneBill(customer); //get mapped phonebill and parses it
                     PrintWriter pw = new PrintWriter(System.out, true);
                     PhoneBillPrettyPrinter pretty = new PhoneBillPrettyPrinter(pw);
                     pretty.dump(bill);
@@ -133,7 +203,7 @@ public class Project4 {
             } else if (startTime == null){
                 usage("\nMissing call start time.\n");
             } else if (startAMPM == null){
-               usage("\nMissing call start time AM/PM designation.\n");
+                usage("\nMissing call start time AM/PM designation.\n");
             } else if (endDate == null){
                 usage("\nMissing call end date.\n");
             } else if (endTime == null){
@@ -184,6 +254,21 @@ public class Project4 {
                 "\n\t-README\t\t\t\tPrints a README for this project and exits");
 
     }
+
+    private static Date stringToDateConverter(String dateString) {
+        Date date = new Date();
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+            date = format.parse(dateString);
+        } catch (ParseException ex) {
+            System.err.println("\nInvalid start date and/or time format. " +
+                    "Correct format: mm/dd/yyyy nn:nn am/pm.");
+            System.exit(1);
+        }
+
+        return date;
+    }
+
 
     /**
      * Makes sure that the give response has the expected HTTP status code

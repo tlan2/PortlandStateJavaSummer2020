@@ -111,6 +111,7 @@ public class PhoneBillServlet extends HttpServlet
 //        System.out.println("pbs-startCallInfo = " + startCallInfo);
 //        System.out.println("pbs-endCallInfo = " + endCallInfo);
 
+//        System.out.println("servlet - containskey? = " + this.phoneBills.containsKey(customer));
         if(this.phoneBills.containsKey(customer)){
             // Customer with phone bill
             PhoneBill bill = this.phoneBills.get(customer);

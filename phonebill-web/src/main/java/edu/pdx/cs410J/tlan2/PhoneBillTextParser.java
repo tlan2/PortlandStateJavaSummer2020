@@ -27,19 +27,16 @@ public class PhoneBillTextParser implements PhoneBillParser {
         try {
             String customer = br.readLine();
             PhoneBill bill = new PhoneBill(customer);
-            ArrayList<String> callInfo = new ArrayList<String>();
             Boolean completeCall = true;
             String callString = "";
             String[] callInfoStrings;
 
             while ((callString = br.readLine()) != null) {
-
-//                System.out.println(callString);
+                ArrayList<String> callInfo = new ArrayList<String>();
 
                 callInfoStrings = callString.split(" ");
 
                 for(String info:callInfoStrings){
-//                    System.out.println(info);
                     if (info.equals("null")){
                         completeCall = false;
                         break;

@@ -3,6 +3,7 @@ package edu.pdx.cs410J.tlan2;
 import edu.pdx.cs410J.AbstractPhoneCall;
 
 import java.text.DateFormat;
+import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
@@ -200,6 +201,7 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
      */
     @Override
     public String getStartTimeString() {
+
         return this.startDate + " " + this.startTime + " " + this.startAMPM;
     }
 
@@ -264,7 +266,7 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
      */
 
     public boolean isValidDate(String date){
-        Pattern p = compile("\\d{1,2}/\\d{1,2}/\\d{2,4}");
+        Pattern p = compile("\\d{1,2}/\\d{1,2}/\\d{4}");
         return p.matcher(date).matches();
     }
 

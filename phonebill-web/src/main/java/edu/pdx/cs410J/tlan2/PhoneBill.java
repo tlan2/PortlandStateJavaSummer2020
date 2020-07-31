@@ -76,12 +76,15 @@ public class PhoneBill extends AbstractPhoneBill<PhoneCall>  {
         return this.phoneCalls;
     }
 
-    public SortedSet<PhoneCall> sortPhoneCalls() {
-        Collection<PhoneCall> calls = this.getPhoneCalls();
-        SortedSet<PhoneCall> set = new TreeSet<PhoneCall>();
 
+    public SortedSet<PhoneCall> sortedPhoneCalls() {
+        Collection<PhoneCall> calls = this.getPhoneCalls();
+        SortedSet<PhoneCall> set = new TreeSet<>();
+
+        int i = 1;
         for (PhoneCall c:calls){
             set.add(c);
+            i++;
         }
 
         return set;
