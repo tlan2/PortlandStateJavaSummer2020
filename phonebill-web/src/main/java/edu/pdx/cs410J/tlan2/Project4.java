@@ -106,6 +106,11 @@ public class Project4 {
                     }
                 }
 
+                if (prettyPrintBill.sortedPhoneCalls().size() == 0){
+                    System.out.println("\nNo phone calls found between" + searchStartDateString + " and " + searchEndDateString);
+                    System.exit(0);
+                }
+
                 PrintWriter pw = new PrintWriter(System.out, true);
                 PhoneBillPrettyPrinter pretty = new PhoneBillPrettyPrinter(pw);
                 pretty.dump(prettyPrintBill);

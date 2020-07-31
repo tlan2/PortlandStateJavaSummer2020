@@ -41,7 +41,7 @@ public class Project4IT extends InvokeMainTestCase {
 
     @Test
     public void test2PrintsCommandLineInterface() {
-        String customer = "Customer";
+        String customer = "testCustomer";
         MainMethodResult result = invokeMain( Project4.class, HOSTNAME, PORT, customer);
         assertThat(result.getTextWrittenToStandardOut(), containsString("-host hostname"));
     }
@@ -55,7 +55,7 @@ public class Project4IT extends InvokeMainTestCase {
 
     @Test
     public void test4UnknownPhoneBillIssueUnknownPhoneBillError() throws Throwable {
-        String customer = "Customer";
+        String customer = "testCustomer";
         MainMethodResult result = invokeMain(Project4.class, HOSTNAME, PORT, customer);
         assertThat(result.getTextWrittenToStandardError(), containsString("No phone bill for customer " + customer));
         assertThat(result.getExitCode(), equalTo(1));
@@ -205,14 +205,14 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test9MissingCustomerName() {
+    public void test40MissingCustomerName() {
         MainMethodResult result = invokeMain( Project4.class, HOSTNAME, PORT);
         assertThat(result.getTextWrittenToStandardError(), containsString("Missing customer name."));
         assertThat(result.getExitCode(),equalTo(1));
     }
 
     @Test
-    public void test10MissingCalleeNumber() {
+    public void test41MissingCalleeNumber() {
         String customer = "Customer";
         String caller = "234-567-8901";
         MainMethodResult result = invokeMain( Project4.class, HOSTNAME, PORT, customer,caller);
@@ -221,7 +221,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test11MissingCallStartDate() {
+    public void test42MissingCallStartDate() {
         String customer = "Customer";
         String caller = "234-567-8901";
         String callee = "123-456-7890";
@@ -231,7 +231,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test12MissingCallStartTime() {
+    public void test43MissingCallStartTime() {
         String customer = "Customer";
         String caller = "234-567-8901";
         String callee = "123-456-7890";
@@ -242,7 +242,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test13MissingCallStartAMPM() {
+    public void test44MissingCallStartAMPM() {
         String customer = "Customer";
         String caller = "234-567-8901";
         String callee = "123-456-7890";
@@ -255,7 +255,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test14MissingCallEndDate() {
+    public void test45MissingCallEndDate() {
         String customer = "Customer";
         String caller = "234-567-8901";
         String callee = "123-456-7890";
@@ -269,7 +269,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test15MissingCallEndTime() {
+    public void test46MissingCallEndTime() {
         String customer = "Customer";
         String caller = "234-567-8901";
         String callee = "123-456-7890";
@@ -284,7 +284,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test16MissingCallEndAMPM() {
+    public void test47MissingCallEndAMPM() {
         String customer = "Customer";
         String caller = "234-567-8901";
         String callee = "123-456-7890";

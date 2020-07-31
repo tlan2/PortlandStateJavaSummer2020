@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
@@ -43,11 +44,17 @@ public class PhoneBillServlet extends HttpServlet
         String customer = getParameter( CUSTOMER_PARAMETER, request );
         String start = getParameter( START_CALL_PARAMETER, request);
         String end = getParameter ( END_CALL_PARAMETER, request);
+
+        System.out.println("servlet - customer = " + customer);
+        System.out.println("servlet - start = " + start);
+        System.out.println("servlet - end = " + end);
+
         if (customer == null) {
             missingRequiredParameter(response, CUSTOMER_PARAMETER);
             return;
 
         } else if(start == null && end == null) {
+            System.out.println("servlet - customer only.");
             PhoneBill bill = getPhoneBill(customer);
             if (bill == null){
                 response.sendError(HttpServletResponse.SC_NOT_FOUND, Messages.noPhoneBillForCustomer(customer));
@@ -57,6 +64,7 @@ public class PhoneBillServlet extends HttpServlet
                 response.setStatus(HttpServletResponse.SC_OK);
             }
         } else {
+            System.out.println("servlet - search.");
             PhoneBill billToSearch = getPhoneBill(customer);
 
             Date minDate = stringToDateConverter(start);
@@ -78,8 +86,15 @@ public class PhoneBillServlet extends HttpServlet
                         inRangeCalls.addPhoneCall(call);
                     }
                 }
+
+                if(inRangeCalls.sortedPhoneCalls().size() == 0){
+                    PrintWriter writer = response.getWriter();
+                    writer.println("\nNo phone calls found between " + start + " and " + end);
+                    response.setStatus(HttpServletResponse.SC_OK);
+                }
+
                 PhoneBillTextDumper dumper = new PhoneBillTextDumper(response.getWriter());
-                dumper.dump(billToSearch);
+                dumper.dump(inRangeCalls);
                 response.setStatus(HttpServletResponse.SC_OK);
             }
         }
