@@ -86,10 +86,10 @@ public class Project4IT extends InvokeMainTestCase {
         String customer = "testCustomer";
         String caller2 = "111-111-1111";
         String callee2 = "222-222-2222";
-        String startDate2 = "1/15/2020";
+        String startDate2 = "1/15/2004";
         String startTime2 = "1:00";
         String startAMPM2 = "PM";
-        String endDate2 = "1/15/2020";
+        String endDate2 = "1/15/2004";
         String endTime2 = "2:00";
         String endAMPM2 = "pm";
 
@@ -117,10 +117,10 @@ public class Project4IT extends InvokeMainTestCase {
 
         String caller2 = "111-111-1111";
         String callee2 = "222-222-2222";
-        String startDate2 = "1/15/2020";
+        String startDate2 = "1/15/2004";
         String startTime2 = "1:00";
         String startAMPM2 = "PM";
-        String endDate2 = "1/15/2020";
+        String endDate2 = "1/15/2004";
         String endTime2 = "2:00";
         String endAMPM2 = "pm";
 
@@ -137,14 +137,82 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test8MissingCustomerName() {
+    public void test8AddCallsAndSearch() {
+//        String customer = "testCustomer";
+//        String caller = "234-567-8901";
+//        String[] callee = new String[]{"333-333-3333", "444-444-4444","555-555-5555",
+//        "777-777-7777", "888-888-8888", "999-999-9999", "101-101-1010"};
+//        String[] startDate = new String[]{"3/3/2004", "4/4/2004","5/5/2004","7/7/2004","8/8/2004","9/9/2004","10/10/2004"};
+//        String[] startTime = new String[]{"3:00", "4:00", "5:00", "7:00", "8:00", "9:00", "10:00"};
+//        String[] startAMPM = new String[]{"pm","am","pm","am","pm","am","pm"};
+//        String[] endDate = new String[]{"3/3/2004", "4/4/2004","5/5/2004","7/7/2004","8/8/2004","9/9/2004","10/10/2004"};
+//        String[] endTime = new String[]{"4:00","5:00", "7:00", "8:00", "9:00", "10:00", "11:00"};
+//        String[] endAMPM = new String[]{"pm","am","pm","am","pm","am","pm"};
+//        int numberOfCalls = 7;
+
+        String customer = "testCustomer";
+        String caller = "234-567-8901";
+        String callee = "123-456-7890";
+        String startDate = "01/02/2004";
+        String startTime = "11:45";
+        String startAMPM = "AM";
+        String endDate = "01/02/2004";
+        String endTime = "12:00";
+        String endAMPM = "pm";
+
+        String caller2 = "111-111-1111";
+        String callee2 = "222-222-2222";
+        String startDate2 = "1/15/2004";
+        String startTime2 = "1:00";
+        String startAMPM2 = "PM";
+        String endDate2 = "1/15/2004";
+        String endTime2 = "2:00";
+        String endAMPM2 = "pm";
+
+        String searchStartDate = "1/1/2004";
+        String searchStartTime = "12:00";
+        String searchStartAMPM = "AM";
+        String searchEndDate = "1/14/2004";
+        String searchEndTime = "11:59";
+        String searchEndAMPM = "PM";
+
+//        // Add 6 calls
+//        for (int i=0; i < numberOfCalls; i++){
+//           invokeMain(Project4.class, "-hostname", HOSTNAME, "-port", PORT, customer,
+//                    caller, callee[i], startDate[i], startTime[i], startAMPM[i], endDate[i], endTime[i], endAMPM[i]);
+//        }
+
+        MainMethodResult result = invokeMain(Project4.class, "-hostname", HOSTNAME, "-port", PORT, "-search",
+                customer, searchStartDate, searchStartTime, searchStartAMPM, searchEndDate, searchEndTime, searchEndAMPM);
+
+        assertThat(result.getExitCode(), equalTo(0));
+        String pretty = result.getTextWrittenToStandardOut();
+        assertThat(pretty, containsString(customer));
+
+        assertThat(pretty, containsString("  " + caller + " " + callee + " " +
+                startDate + " " + startTime + " " + startAMPM + " " + endDate + " " + endTime +
+                " " + endAMPM));
+
+//        assertThat(pretty, containsString("  " + caller2 + " " + callee2 + " " +
+//                startDate2 + " " + startTime2 + " " + startAMPM2 + " " + endDate2 + " " + endTime2 +
+//                " " + endAMPM2));
+
+//        for(int j=2; j < 5; j++){
+//            assertThat(pretty, containsString("  " + caller + " " + callee[j] + " " +
+//                    startDate[j] + " " + startTime[j] + " " + startAMPM[j] + " " + endDate[j] + " " +
+//                    endTime[j] + " " + endAMPM[j]));
+//        }
+    }
+
+    @Test
+    public void test9MissingCustomerName() {
         MainMethodResult result = invokeMain( Project4.class, HOSTNAME, PORT);
         assertThat(result.getTextWrittenToStandardError(), containsString("Missing customer name."));
         assertThat(result.getExitCode(),equalTo(1));
     }
 
     @Test
-    public void test9MissingCalleeNumber() {
+    public void test10MissingCalleeNumber() {
         String customer = "Customer";
         String caller = "234-567-8901";
         MainMethodResult result = invokeMain( Project4.class, HOSTNAME, PORT, customer,caller);
@@ -153,7 +221,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test10MissingCallStartDate() {
+    public void test11MissingCallStartDate() {
         String customer = "Customer";
         String caller = "234-567-8901";
         String callee = "123-456-7890";
@@ -163,7 +231,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test11MissingCallStartTime() {
+    public void test12MissingCallStartTime() {
         String customer = "Customer";
         String caller = "234-567-8901";
         String callee = "123-456-7890";
@@ -174,7 +242,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test12MissingCallStartAMPM() {
+    public void test13MissingCallStartAMPM() {
         String customer = "Customer";
         String caller = "234-567-8901";
         String callee = "123-456-7890";
@@ -187,7 +255,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test13MissingCallEndDate() {
+    public void test14MissingCallEndDate() {
         String customer = "Customer";
         String caller = "234-567-8901";
         String callee = "123-456-7890";
@@ -201,7 +269,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test14MissingCallEndTime() {
+    public void test15MissingCallEndTime() {
         String customer = "Customer";
         String caller = "234-567-8901";
         String callee = "123-456-7890";
@@ -216,7 +284,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test15MissingCallEndAMPM() {
+    public void test16MissingCallEndAMPM() {
         String customer = "Customer";
         String caller = "234-567-8901";
         String callee = "123-456-7890";

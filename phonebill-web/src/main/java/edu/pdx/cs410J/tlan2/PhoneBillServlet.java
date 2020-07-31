@@ -9,10 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.SortedSet;
 
 import static edu.pdx.cs410J.tlan2.PhoneBillURLParameters.*;
+import static edu.pdx.cs410J.tlan2.Project4.stringToDateConverter;
 
 /**
  * This servlet ultimately provides a REST API for working with an
@@ -38,20 +41,45 @@ public class PhoneBillServlet extends HttpServlet
         response.setContentType( "text/plain" );
 
         String customer = getParameter( CUSTOMER_PARAMETER, request );
-//        String start = getParameter( START_PARAMETER, request);
-//        String end = getParameter ( END_PARAMETER, request);
+        String start = getParameter( START_CALL_PARAMETER, request);
+        String end = getParameter ( END_CALL_PARAMETER, request);
         if (customer == null) {
             missingRequiredParameter(response, CUSTOMER_PARAMETER);
             return;
 
-//
-        } else {
+        } else if(start == null && end == null) {
             PhoneBill bill = getPhoneBill(customer);
             if (bill == null){
                 response.sendError(HttpServletResponse.SC_NOT_FOUND, Messages.noPhoneBillForCustomer(customer));
             } else {
                 PhoneBillTextDumper dumper = new PhoneBillTextDumper(response.getWriter());
                 dumper.dump(bill);
+                response.setStatus(HttpServletResponse.SC_OK);
+            }
+        } else {
+            PhoneBill billToSearch = getPhoneBill(customer);
+
+            Date minDate = stringToDateConverter(start);
+            Date maxDate = stringToDateConverter(end);
+
+            System.out.println("servlet-minDate = " + minDate);
+            System.out.println("servlet-maxDate = " + maxDate);
+
+            if (billToSearch == null){
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, Messages.noPhoneBillForCustomer(customer));
+            } else {
+                SortedSet<PhoneCall> sortedCalls = billToSearch.sortedPhoneCalls();
+                PhoneBill inRangeCalls = new PhoneBill(customer);
+
+                for (PhoneCall call : sortedCalls) {
+                    Date beginDate = call.getStartTime();
+
+                    if (beginDate.after(minDate) && beginDate.before(maxDate)) {
+                        inRangeCalls.addPhoneCall(call);
+                    }
+                }
+                PhoneBillTextDumper dumper = new PhoneBillTextDumper(response.getWriter());
+                dumper.dump(billToSearch);
                 response.setStatus(HttpServletResponse.SC_OK);
             }
         }

@@ -47,7 +47,10 @@ public class Project4 {
             }
         }
 
-        if(isSearch && args.length == 11) {
+        System.out.println("proj4 - isSearch = " + isSearch);
+        System.out.println("proj4 - args.length = " + args.length);
+
+        if(isSearch && args.length == 12) {
             System.out.println("-search option");
 
             for (String arg : args) {
@@ -77,22 +80,27 @@ public class Project4 {
 
             PhoneBillRestClient client = new PhoneBillRestClient(hostName, port);
 
-            String startDateTimeString = startDate + " " + startTime + " " + startAMPM;
-            String endDateTimeString = endDate + " " + endTime + " " + endAMPM;
+            String searchStartDateString = startDate + " " + startTime + " " + startAMPM;
+            String searchEndDateString = endDate + " " + endTime + " " + endAMPM;
 
-            Date minDate = stringToDateConverter(startDateTimeString);
-            Date maxDate = stringToDateConverter(endDateTimeString);
+            Date minDate = stringToDateConverter(searchStartDateString);
+            Date maxDate = stringToDateConverter(searchEndDateString);
 
             //search code
             try {
                 PhoneBill clientBill = client.getPhoneBill(customer); //get mapped phonebill and parses it
                 SortedSet<PhoneCall> sortedCalls = clientBill.sortedPhoneCalls();
+                System.out.println("proj4 - sortedCalls.size() = " + sortedCalls.size());
                 PhoneBill prettyPrintBill = new PhoneBill(customer);
 
                 for (PhoneCall call : sortedCalls) {
                     Date beginDate = call.getStartTime();
 
+                    System.out.println("proj4 - beginDate.after(minDate) = " + beginDate.after(minDate));
+                    System.out.println("proj4 - beginDate.before(maxDate) = " + beginDate.before(maxDate));
+
                     if (beginDate.after(minDate) && beginDate.before(maxDate)) {
+                        System.out.println("proj4 - calls in range = " + call.getAllCallInfo());
                         prettyPrintBill.addPhoneCall(call);
                         client.addPhoneCall(customer, call);
                     }
@@ -127,6 +135,8 @@ public class Project4 {
                 System.exit(0);
             } else if(arg.equals("-print")){
                 print = true;
+            } else if(arg.equals("-host") || arg.equals("-port")){
+                continue;
             }
             else if (hostName == null) {
                 hostName = arg;
@@ -256,7 +266,7 @@ public class Project4 {
 
     }
 
-    private static Date stringToDateConverter(String dateString) {
+    public static Date stringToDateConverter(String dateString) {
         Date date = new Date();
         try {
             SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
