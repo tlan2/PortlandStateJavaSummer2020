@@ -48,7 +48,7 @@ public class PhoneBillRestClientIT {
 
   }
 
-  @Ignore
+//  @Ignore
   @Test
   public void test2AddPhoneCall() throws IOException, ParserException {
     PhoneBillRestClient client = newPhoneBillRestClient();

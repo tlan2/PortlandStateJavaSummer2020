@@ -43,8 +43,7 @@ public class PhoneBillServlet extends HttpServlet
         if (customer == null) {
             missingRequiredParameter(response, CUSTOMER_PARAMETER);
             return;
-//        } else if (start != null && end != null) {
-//            // Search code
+
 //
         } else {
             PhoneBill bill = getPhoneBill(customer);
@@ -59,11 +58,10 @@ public class PhoneBillServlet extends HttpServlet
     }
 
     /**
-     * Handles an HTTP POST request by storing the dictionary entry for the
-     * "word" and "definition" request parameters.  It writes the dictionary
-     * entry to the HTTP response.
+     * Handles an HTTP POST request by storing the phone call entry for the
+     * customer, caller, calleer, startDate, and endDate request parameters.
+     * It writes the phone call entry to the HTTP response.
      *
-     * CHANGE TEXT ABOVE!!!!!!!!
      */
     @Override
     protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
@@ -78,31 +76,34 @@ public class PhoneBillServlet extends HttpServlet
 
         String caller = getParameter(CALLER_NUMBER_PARAMETER, request);
 
-        if (caller.equals(null)) {
+        if (caller == null) {
             missingRequiredParameter(response, CALLER_NUMBER_PARAMETER);
             return;
         }
 
         String callee = getParameter(CALLEE_NUMBER_PARAMETER, request);
-        if (callee.equals(null)) {
+        if (callee == null) {
             missingRequiredParameter(response, CALLEE_NUMBER_PARAMETER);
             return;
         }
 
         String startCallInfo = getParameter(START_CALL_PARAMETER, request);
-        if (startCallInfo.equals(null)) {
+        if (startCallInfo == null) {
             missingRequiredParameter(response, START_CALL_PARAMETER);
             return;
         }
 
         String endCallInfo = getParameter(END_CALL_PARAMETER, request);
-        if (endCallInfo.equals(null)) {
+        if (endCallInfo == null) {
             missingRequiredParameter(response, END_CALL_PARAMETER);
             return;
         }
 
-        String[] startCall = startCallInfo.split(" ");
-        String[] endCall = endCallInfo.split(" ");
+        String[] startCall = startCallInfo.split("\\+");
+        String[] endCall = endCallInfo.split("\\+");
+
+//        String[] startCall = startCallInfo.split(" ");
+//        String[] endCall = endCallInfo.split(" ");
 
 //        for(int i=0; i < startCall.length; i++){
 //            System.out.println(startCall[i]);

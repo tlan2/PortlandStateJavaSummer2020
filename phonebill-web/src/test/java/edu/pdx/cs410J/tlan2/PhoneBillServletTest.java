@@ -58,8 +58,8 @@ public class PhoneBillServletTest {
     String customer = "Customer";
     String callerPhoneNumber = "503-123-4567";
     String calleePhoneNumber = "456-789-0123";
-    String startCallInfo = "1/1/2020 1:00 AM";
-    String endCallInfo = "1/1/2020 2:00 AM";
+    String startCallInfo = "1/1/2020+1:00+AM";
+    String endCallInfo = "1/1/2020+2:00+AM";
 
     HttpServletRequest request = mock(HttpServletRequest.class);
     when(request.getParameter(CUSTOMER_PARAMETER)).thenReturn(customer);
@@ -76,7 +76,7 @@ public class PhoneBillServletTest {
 
     servlet.doPost(request, response);
 
-    verify(pw, times(0)).println(Mockito.any(String.class) );
+    verify(pw, times(0)).println(Mockito.any(String.class));
     verify(response).setStatus(HttpServletResponse.SC_OK);
 
     PhoneBill phoneBill = servlet.getPhoneBill(customer);

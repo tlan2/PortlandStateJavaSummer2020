@@ -25,6 +25,7 @@ public class Project4IT extends InvokeMainTestCase {
     private static final String HOSTNAME = "localhost";
     private static final String PORT = System.getProperty("http.port", "8080");
 
+//    @Ignore
     @Test
     public void test0RemoveAllMappings() throws IOException {
       PhoneBillRestClient client = new PhoneBillRestClient(HOSTNAME, Integer.parseInt(PORT));
@@ -41,13 +42,19 @@ public class Project4IT extends InvokeMainTestCase {
     @Test
     public void test2PrintsCommandLineInterface() {
         String customer = "Customer";
-        String caller = "123-456-7890";
         MainMethodResult result = invokeMain( Project4.class, HOSTNAME, PORT, customer);
         assertThat(result.getTextWrittenToStandardOut(), containsString("-host hostname"));
     }
 
     @Test
-    public void test3UnknownPhoneBillIssueUnknownPhoneBillError() throws Throwable {
+    public void test3PrintReadMe() {
+        MainMethodResult result = invokeMain( Project4.class,"-README");
+        assertThat(result.getTextWrittenToStandardOut(), containsString("Project 4"));
+        assertThat(result.getExitCode(), equalTo(0));
+    }
+
+    @Test
+    public void test4UnknownPhoneBillIssueUnknownPhoneBillError() throws Throwable {
         String customer = "Customer";
         MainMethodResult result = invokeMain(Project4.class, HOSTNAME, PORT, customer);
         assertThat(result.getTextWrittenToStandardError(), containsString("No phone bill for customer " + customer));
@@ -55,7 +62,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test4AddPhoneCall() {
+    public void test5AddPhoneCall() {
         String customer = "testCustomer";
         String caller = "234-567-8901";
         String callee = "123-456-7890";
@@ -75,7 +82,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test5AddAnotherPhoneCall() {
+    public void test6PrintAndAddPhoneCall() {
         String customer = "testCustomer";
         String caller2 = "111-111-1111";
         String callee2 = "222-222-2222";
@@ -86,16 +93,18 @@ public class Project4IT extends InvokeMainTestCase {
         String endTime2 = "2:00";
         String endAMPM2 = "pm";
 
-        MainMethodResult result = invokeMain(Project4.class, HOSTNAME, PORT, customer, caller2,
+        MainMethodResult result = invokeMain(Project4.class, HOSTNAME, PORT, "-print", customer, caller2,
                 callee2, startDate2, startTime2, startAMPM2, endDate2, endTime2,
                 endAMPM2);
         String out = result.getTextWrittenToStandardOut();
         assertThat(out, containsString("Phone call added to customer testCustomer"));
+        assertThat(out, containsString("Phone call from " + caller2 + " to " + callee2 + " from " +
+                startDate2 + " " + startTime2 + " " + startAMPM2 + " to " + endDate2 + " " + endTime2 + " " + endAMPM2));
         assertThat(result.getExitCode(), equalTo(0));
     }
 
     @Test
-    public void test6PhoneBillIsPrettyPrinted() {
+    public void test7PhoneBillIsPrettyPrinted() {
         String customer = "testCustomer";
         String caller = "234-567-8901";
         String callee = "123-456-7890";
@@ -125,13 +134,6 @@ public class Project4IT extends InvokeMainTestCase {
         assertThat(pretty, containsString("  " + caller2 + " " + callee2 + " " +
                 startDate2 + " " + startTime2 + " " + startAMPM2 + " " + endDate2 + " " + endTime2 +
                 " " + endAMPM2));
-    }
-
-    @Test
-    public void test7PrintReadMe() {
-        MainMethodResult result = invokeMain( Project4.class,"-README");
-        assertThat(result.getTextWrittenToStandardOut(), containsString("Project 4"));
-        assertThat(result.getExitCode(), equalTo(0));
     }
 
     @Test

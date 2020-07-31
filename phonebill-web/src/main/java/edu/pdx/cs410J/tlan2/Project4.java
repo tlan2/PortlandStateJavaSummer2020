@@ -216,6 +216,7 @@ public class Project4 {
                 if(print){
                     System.out.println("\n" + newCall.toString() + "\n");
                 }
+                System.out.println("proj4 - callInfo = " + newCall.getAllCallInfo() );
                 client.addPhoneCall(customer, newCall);
                 System.out.println("\nPhone call added to customer " + customer);
 //                message = Messages.customerNumberIs(customer, caller);

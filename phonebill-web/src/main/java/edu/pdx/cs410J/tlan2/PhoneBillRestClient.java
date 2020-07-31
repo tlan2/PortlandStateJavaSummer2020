@@ -59,14 +59,20 @@ public class PhoneBillRestClient extends HttpRequestHelper
         System.out.println("restClient- sDateTime = " + sDateTime);
         String eDateTime = call.getEndTimeString().replace(" ", "+");
         System.out.println("restClient- eDateTime = " + eDateTime);
-//        Response response = postToMyURL(Map.of(CUSTOMER_PARAMETER, customer, CALLER_NUMBER_PARAMETER, call.getCaller(),
-//              CALLEE_NUMBER_PARAMETER, call.getCallee(), START_CALL_PARAMETER, sDateTime,
-//              END_CALL_PARAMETER, eDateTime));
         Response response = postToMyURL(Map.of(CUSTOMER_PARAMETER, customer, CALLER_NUMBER_PARAMETER, call.getCaller(),
-                CALLEE_NUMBER_PARAMETER, call.getCallee(), START_CALL_PARAMETER, call.getStartTimeString(),
-                END_CALL_PARAMETER, call.getEndTimeString()));
-      throwExceptionIfNotOkayHttpStatus(response);
+                CALLEE_NUMBER_PARAMETER, call.getCallee(), START_CALL_PARAMETER, sDateTime,
+                END_CALL_PARAMETER, eDateTime));
+//        Response response = postToMyURL(Map.of(CUSTOMER_PARAMETER, customer, CALLER_NUMBER_PARAMETER, call.getCaller(),
+//                CALLEE_NUMBER_PARAMETER, call.getCallee(), START_CALL_PARAMETER, call.getStartTimeString(),
+//                END_CALL_PARAMETER, call.getEndTimeString()));
+        throwExceptionIfNotOkayHttpStatus(response);
     }
+
+//        Response response = postToMyURL(Map.of(CUSTOMER_PARAMETER, customer, CALLER_NUMBER_PARAMETER, call.getCaller(),
+//                CALLEE_NUMBER_PARAMETER, call.getCallee(), START_CALL_PARAMETER, call.getStartTimeString(),
+//                END_CALL_PARAMETER, call.getEndTimeString()));
+//      throwExceptionIfNotOkayHttpStatus(response);
+//    }
 
     @VisibleForTesting
     Response postToMyURL(Map<String, String> phoneBillEntries) throws IOException {
