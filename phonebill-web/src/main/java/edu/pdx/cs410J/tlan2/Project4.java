@@ -47,11 +47,11 @@ public class Project4 {
             }
         }
 
-        System.out.println("proj4 - isSearch = " + isSearch);
-        System.out.println("proj4 - args.length = " + args.length);
+//        System.out.println("proj4 - isSearch = " + isSearch);
+//        System.out.println("proj4 - args.length = " + args.length);
 
         if(isSearch && args.length == 12) {
-            System.out.println("-search option");
+//            System.out.println("-search option");
 
             for (String arg : args) {
                 if (arg == null) {
@@ -90,17 +90,17 @@ public class Project4 {
             try {
                 PhoneBill clientBill = client.getPhoneBill(customer); //get mapped phonebill and parses it
                 SortedSet<PhoneCall> sortedCalls = clientBill.sortedPhoneCalls();
-                System.out.println("proj4 - sortedCalls.size() = " + sortedCalls.size());
+//                System.out.println("proj4 - sortedCalls.size() = " + sortedCalls.size());
                 PhoneBill prettyPrintBill = new PhoneBill(customer);
 
                 for (PhoneCall call : sortedCalls) {
                     Date beginDate = call.getStartTime();
 
-                    System.out.println("proj4 - beginDate.after(minDate) = " + beginDate.after(minDate));
-                    System.out.println("proj4 - beginDate.before(maxDate) = " + beginDate.before(maxDate));
+//                    System.out.println("proj4 - beginDate.after(minDate) = " + beginDate.after(minDate));
+//                    System.out.println("proj4 - beginDate.before(maxDate) = " + beginDate.before(maxDate));
 
                     if (beginDate.after(minDate) && beginDate.before(maxDate)) {
-                        System.out.println("proj4 - calls in range = " + call.getAllCallInfo());
+//                        System.out.println("proj4 - calls in range = " + call.getAllCallInfo());
                         prettyPrintBill.addPhoneCall(call);
                         client.addPhoneCall(customer, call);
                     }
@@ -231,7 +231,7 @@ public class Project4 {
                 if(print){
                     System.out.println("\n" + newCall.toString() + "\n");
                 }
-                System.out.println("proj4 - callInfo = " + newCall.getAllCallInfo() );
+//                System.out.println("proj4 - callInfo = " + newCall.getAllCallInfo() );
                 client.addPhoneCall(customer, newCall);
                 System.out.println("\nPhone call added to customer " + customer);
 //                message = Messages.customerNumberIs(customer, caller);

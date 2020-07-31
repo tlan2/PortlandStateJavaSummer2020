@@ -49,30 +49,22 @@ public class PhoneBillRestClient extends HttpRequestHelper
       Response response = get(this.url, Map.of(CUSTOMER_PARAMETER, customer));
       throwExceptionIfNotOkayHttpStatus(response);
       String content = response.getContent();
-      System.out.println("restClient-content = " + content);
+//      System.out.println("restClient-content = " + content);
       PhoneBillTextParser parser = new PhoneBillTextParser(new StringReader(content));
       return parser.parse();
     }
 
     public void addPhoneCall(String customer, PhoneCall call) throws IOException {
         String sDateTime = call.getStartTimeString().replace(" ", "+");
-        System.out.println("restClient- sDateTime = " + sDateTime);
+//        System.out.println("restClient- sDateTime = " + sDateTime);
         String eDateTime = call.getEndTimeString().replace(" ", "+");
-        System.out.println("restClient- eDateTime = " + eDateTime);
+//        System.out.println("restClient- eDateTime = " + eDateTime);
         Response response = postToMyURL(Map.of(CUSTOMER_PARAMETER, customer, CALLER_NUMBER_PARAMETER, call.getCaller(),
                 CALLEE_NUMBER_PARAMETER, call.getCallee(), START_CALL_PARAMETER, sDateTime,
                 END_CALL_PARAMETER, eDateTime));
-//        Response response = postToMyURL(Map.of(CUSTOMER_PARAMETER, customer, CALLER_NUMBER_PARAMETER, call.getCaller(),
-//                CALLEE_NUMBER_PARAMETER, call.getCallee(), START_CALL_PARAMETER, call.getStartTimeString(),
-//                END_CALL_PARAMETER, call.getEndTimeString()));
+
         throwExceptionIfNotOkayHttpStatus(response);
     }
-
-//        Response response = postToMyURL(Map.of(CUSTOMER_PARAMETER, customer, CALLER_NUMBER_PARAMETER, call.getCaller(),
-//                CALLEE_NUMBER_PARAMETER, call.getCallee(), START_CALL_PARAMETER, call.getStartTimeString(),
-//                END_CALL_PARAMETER, call.getEndTimeString()));
-//      throwExceptionIfNotOkayHttpStatus(response);
-//    }
 
     @VisibleForTesting
     Response postToMyURL(Map<String, String> phoneBillEntries) throws IOException {

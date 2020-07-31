@@ -77,6 +77,9 @@ public class PhoneBill extends AbstractPhoneBill<PhoneCall>  {
     }
 
 
+    /**
+     * @return  all phone calls IN ORDER by date related to the customer on the phone bill.
+     */
     public SortedSet<PhoneCall> sortedPhoneCalls() {
         Collection<PhoneCall> calls = this.getPhoneCalls();
         SortedSet<PhoneCall> set = new TreeSet<>();
