@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 public class CalculatorActivity extends AppCompatActivity {
 
-    private double sum;
+    private Operation sum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +29,7 @@ public class CalculatorActivity extends AppCompatActivity {
                 double left = Double.parseDouble(leftOperand.getText().toString());
                 double right = Double.parseDouble(rightOperand.getText().toString());
 
-                sum = left + right;
+                sum = new Operation(left + right);
 
                 TextView result = findViewById(R.id.result);
                 result.setText(String.valueOf(sum));
