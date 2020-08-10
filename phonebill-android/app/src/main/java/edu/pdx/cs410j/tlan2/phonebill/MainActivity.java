@@ -2,21 +2,12 @@ package edu.pdx.cs410j.tlan2.phonebill;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import android.util.Log;
-import android.view.View;
-
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,9 +35,15 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode,resultCode, data); // like get or fetch
 
         if (requestCode == CALCULATOR_RESULT && resultCode == RESULT_OK && data != null){
-            if(data != null && data.hasExtra("Sum")){
-                Operation result = (Operation) data.getSerializableExtra("Sum");
-                Toast.makeText(this, "Result was " + result, Toast.LENGTH_LONG).show();
+            if(data != null){
+                if (data.hasExtra("Sum")) {
+                    Operation result = (Operation) data.getSerializableExtra("Sum");
+                    Toast.makeText(this, "Result was " + result, Toast.LENGTH_LONG).show();
+                }
+                if (data.hasExtra("PhoneCall")){
+                    PhoneCall result = (PhoneCall) data.getSerializableExtra("PhoneCall");
+                    Toast.makeText(this, "PhoneCall was " + result, Toast.LENGTH_LONG).show();
+                }
             }
 
         }
