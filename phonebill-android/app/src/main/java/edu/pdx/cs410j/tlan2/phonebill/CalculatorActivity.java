@@ -42,12 +42,12 @@ public class CalculatorActivity extends AppCompatActivity {
                 Intent intent = new Intent(CalculatorActivity.this, MainActivity.class);
                 intent.putExtra("Sum", sum);
 
-                PhoneCall call = new PhoneCall();
-                intent.putExtra("PhoneCall", new PhoneCall());
+//                PhoneCall call = new PhoneCall();
+//                intent.putExtra("PhoneCall", new PhoneCall());
 
-                PhoneBill bill = new PhoneBill();
-                bill.addPhoneCall(call);
-                intent.putExtra("PhoneBill", bill);
+//                PhoneBill bill = new PhoneBill("CalculatorCustomer");
+//                bill.addPhoneCall(call);
+//                intent.putExtra("PhoneBill", bill);
 
                 setResult(RESULT_OK, intent);
                 finish();

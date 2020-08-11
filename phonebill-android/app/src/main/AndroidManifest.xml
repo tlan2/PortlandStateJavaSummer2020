@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CalculatorActivity"></activity>
+        <activity android:name=".PrintPhoneBill"></activity>
+        <activity android:name=".CreateNewPhoneCall" />
+        <activity android:name=".HelpMenu" />
+        <activity android:name=".ReadMe" />
+        <activity android:name=".CalculatorActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
