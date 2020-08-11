@@ -24,7 +24,19 @@ public class MainActivity extends AppCompatActivity {
 //        configureCreatePhoneBill();
         configureCreatePhoneCall();
         configurePrintPhoneBill();
+        configureSearchPhoneBill();
         configureHelpMenu();
+    }
+
+    private void configureSearchPhoneBill() {
+        Button createPhoneCall = (Button) findViewById(R.id.searchPhoneBill);
+        createPhoneCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, PrintPhoneBill.class);
+                startActivityForResult(intent, PRINT_PHONE_BILL_RESULT);
+            }
+        });
     }
 
     private void configurePrintPhoneBill() {

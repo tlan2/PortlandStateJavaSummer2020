@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PrintPhoneBill"></activity>
+        <activity android:name=".SearchPhoneBill"></activity>
+        <activity android:name=".PrintPhoneBill" />
         <activity android:name=".CreateNewPhoneCall" />
         <activity android:name=".HelpMenu" />
         <activity android:name=".ReadMe" />
