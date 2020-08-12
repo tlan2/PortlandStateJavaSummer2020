@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateNewPhoneCall">
+    tools:context=".CreateNewPhoneCallActivity">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -66,6 +66,14 @@
             android:autofillHints="" />
 
         <EditText
+            android:id="@+id/startAMPM"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="AM/PM"
+            android:inputType="textPersonName" />
+
+        <EditText
             android:id="@+id/endDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -82,6 +90,14 @@
             android:hint="@string/call_end_time"
             android:inputType="time"
             android:autofillHints="" />
+
+        <EditText
+            android:id="@+id/endAMPM"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="AM/PM"
+            android:inputType="textPersonName" />
 
         <Button
             android:id="@+id/submitNewCall"

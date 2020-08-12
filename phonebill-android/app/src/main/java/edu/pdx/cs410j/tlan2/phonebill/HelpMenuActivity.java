@@ -7,7 +7,7 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class HelpMenu extends AppCompatActivity {
+public class HelpMenuActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +23,7 @@ public class HelpMenu extends AppCompatActivity {
         aboutApp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(HelpMenu.this, ReadMe.class));
+                startActivity(new Intent(HelpMenuActivity.this, ReadMeActivity.class));
             }
         });
     }

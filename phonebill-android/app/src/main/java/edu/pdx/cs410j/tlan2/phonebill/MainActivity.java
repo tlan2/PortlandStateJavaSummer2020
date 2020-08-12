@@ -21,11 +21,34 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        configureCreatePhoneBill();
-        configureCreatePhoneCall();
+        Button createPhoneCall = (Button) findViewById(R.id.openCreatePhoneCallActivity);
+        createPhoneCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, CreateNewPhoneCallActivity.class);
+                startActivityForResult(intent, NEW_PHONE_CALL_RESULT);;
+            }
+        });
+
+//        configureCreatePhoneCall();
         configurePrintPhoneBill();
         configureSearchPhoneBill();
         configureHelpMenu();
+    }
+
+//    private void configureCreatePhoneCall() {
+//
+//    }
+
+    private void configurePrintPhoneBill() {
+        Button createPhoneCall = (Button) findViewById(R.id.printPhoneBill);
+        createPhoneCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, PrintPhoneBillActivity.class);
+                startActivityForResult(intent, PRINT_PHONE_BILL_RESULT);
+            }
+        });
     }
 
     private void configureSearchPhoneBill() {
@@ -33,30 +56,8 @@ public class MainActivity extends AppCompatActivity {
         createPhoneCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, PrintPhoneBill.class);
+                Intent intent = new Intent(MainActivity.this, PrintPhoneBillActivity.class);
                 startActivityForResult(intent, PRINT_PHONE_BILL_RESULT);
-            }
-        });
-    }
-
-    private void configurePrintPhoneBill() {
-        Button createPhoneCall = (Button) findViewById(R.id.printPhoneBill);
-        createPhoneCall.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, PrintPhoneBill.class);
-                startActivityForResult(intent, PRINT_PHONE_BILL_RESULT);
-            }
-        });
-    }
-
-    private void configureCreatePhoneCall() {
-        Button createPhoneCall = (Button) findViewById(R.id.createPhoneCall);
-        createPhoneCall.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, CreateNewPhoneCall.class);
-                startActivityForResult(intent, NEW_PHONE_CALL_RESULT);;
             }
         });
     }
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
        helpMenu.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               startActivity(new Intent(MainActivity.this, HelpMenu.class));
+               startActivity(new Intent(MainActivity.this, HelpMenuActivity.class));
            }
        });
     }
@@ -77,11 +78,13 @@ public class MainActivity extends AppCompatActivity {
 
         if(requestCode == NEW_PHONE_CALL_RESULT && resultCode == RESULT_OK){
             if (data != null){
-                if (data.hasExtra("PhoneBill")){
-                    PhoneBill bill = (PhoneBill) data.getSerializableExtra("PhoneBill");
-                    Toast.makeText(this, "New Phone Bill created for " + bill.getCustomer(), Toast.LENGTH_LONG).show();
-                    bills.addPhoneBill(bill);
-//                    Toast.makeText(this, "There are " + bills.size() + " Phone Bills.", Toast.LENGTH_LONG).show();
+                if (data.hasExtra("Name")){
+                    String name = data.getStringExtra("Name");
+                    Toast.makeText(this, "Name was " + name, Toast.LENGTH_LONG).show();
+                }
+                if (data.hasExtra("PhoneCall")){
+                    PhoneCall call = (PhoneCall) data.getSerializableExtra("PhoneCall");
+                    Toast.makeText(this, "New Phone Call Added: " + call.getAllCallInfo(), Toast.LENGTH_LONG).show();
                 }
             }
         }

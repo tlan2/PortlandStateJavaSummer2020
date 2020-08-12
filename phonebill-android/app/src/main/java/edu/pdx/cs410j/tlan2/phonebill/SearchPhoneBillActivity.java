@@ -6,19 +6,18 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class ReadMe extends AppCompatActivity {
+public class SearchPhoneBillActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_read_me);
-
-        configureBackToHelpMenu();
+        setContentView(R.layout.activity_search_phone_bill);
+        configureBackToMainMenu();
     }
 
-    private void configureBackToHelpMenu() {
-        Button backToHelpMenu = (Button) findViewById(R.id.backToHelpMenu);
-        backToHelpMenu.setOnClickListener(new View.OnClickListener() {
+    private void configureBackToMainMenu() {
+        Button backToMainMenu = (Button) findViewById(R.id.backSearchPhoneBill);
+        backToMainMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();

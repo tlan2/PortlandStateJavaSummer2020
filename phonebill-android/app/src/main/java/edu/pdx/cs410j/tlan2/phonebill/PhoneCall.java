@@ -1,27 +1,53 @@
 package edu.pdx.cs410j.tlan2.phonebill;
 
-public class PhoneCall extends AbstractPhoneCall {
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall> {
     private String callerNumber;
     private String calleeNumber;
-    private String startDateTime;
-    private String endDateTime;
+    private String startDate;
+    private String startTime;
+    private String startAMPM;
+    private String endDate;
+    private String endTime;
+    private String endAMPM;
+    private Date startDateTime;
+    private Date endDateTime;
 
-//    public PhoneCall(String callerNumber, String calleeNumber, String startDate,
-//                     String startTime, String startAMPM, String endDate, String endTime,
-//                     String endAMPM){
-
-public PhoneCall(String callerNumber, String calleeNumber, String startDate,
-                 String startTime, String endDate, String endTime){
+    public PhoneCall(String callerNumber, String calleeNumber, String startDate,
+                     String startTime, String startAMPM, String endDate, String endTime,
+                     String endAMPM){
 
         this.callerNumber = callerNumber;
         this.calleeNumber = calleeNumber;
-//        String sDate = startDate + " " + startTime + " " + startAMPM;
-//        String eDate = endDate + " " + endTime + " " + endAMPM;
-        String sDate = startDate + " " + startTime;
-        String eDate = endDate + " " + endTime;
-        this.startDateTime = sDate;
-        this.endDateTime = eDate;
+        this.startDate = startDate;
+        this.startTime = startTime;
+        this.startAMPM = startAMPM;
+        this.endDate = endDate;
+        this.endTime = endTime;
+        this.endAMPM = endAMPM;
+
+        String sDate = startDate + " " + startTime + " " + startAMPM;
+        String eDate = endDate + " " + endTime + " " + endAMPM;
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+
+        try {
+            Date startDateTime = format.parse(sDate);
+            this.startDateTime = startDateTime;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            Date endDateTime = format.parse(eDate);
+            this.endDateTime = endDateTime;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
+
     @Override
     public String getCaller() {
         return this.callerNumber;
@@ -33,12 +59,22 @@ public PhoneCall(String callerNumber, String calleeNumber, String startDate,
     }
 
     @Override
-    public String getStartTimeString() {
-        return this.startDateTime;
+    public Date getStartTime() { return this.startDateTime; }
+
+    @Override
+    public Date getEndTime() {
+        return this.endDateTime;
     }
 
     @Override
-    public String getEndTimeString() { return this.endDateTime; }
+    public String getStartTimeString() {
+        return this.startDate + " " + this.startTime + " " + this.startAMPM;
+    }
+
+    @Override
+    public String getEndTimeString() {
+        return this.endDate + " " + this.endTime + " " + this.endAMPM;
+    }
 
     public String getAllCallInfo() {
         return this.getCaller() + " " + this.getCallee() +

@@ -6,17 +6,17 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class SearchPhoneBill extends AppCompatActivity {
+public class PrintPhoneBillActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_phone_bill);
+        setContentView(R.layout.activity_print_phone_bill);
         configureBackToMainMenu();
     }
 
     private void configureBackToMainMenu() {
-        Button backToMainMenu = (Button) findViewById(R.id.backSearchPhoneBill);
+        Button backToMainMenu = (Button) findViewById(R.id.backPrintPhoneBill);
         backToMainMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
