@@ -9,6 +9,12 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Collection;
+
 public class MainActivity extends AppCompatActivity {
 
     public static final int NEW_PHONE_CALL_RESULT = 43;
@@ -68,6 +74,20 @@ public class MainActivity extends AppCompatActivity {
        });
     }
 
+    private void saveResults(String name, PhoneBill bill) throws IOException {
+        File dir = getDataDir();
+        String fileName = name + ".txt";
+        File file = new File(dir, fileName);
+        try (PrintWriter pw = new PrintWriter(new FileWriter(file), true)) {
+            pw.println(bill.getCustomer());
+            Collection<PhoneCall> calls = bill.getPhoneCalls();
+            for (PhoneCall call:calls) {
+                pw.println(call.getAllCallInfo());
+            }
+            pw.flush();
+        }
+    }
+
 
 
     @Override
@@ -83,13 +103,14 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(this, "New Phone Call Added: " + call.toString(), Toast.LENGTH_LONG).show();
 
                     PhoneBill bill = phoneBills.findPhoneBill(name);
+                    bill.addPhoneCall(call);
 
-//                    BillDumper bd = new BillDumper(name);
-//                    try {
-//                        bd.dump(bill);
-//                    } catch (IOException e) {
-//                        Toast.makeText(this, "While writing file " + e.getMessage(), Toast.LENGTH_LONG).show();
-//                    }
+                    try {
+                        saveResults(name, bill);
+                    } catch (IOException e) {
+                        Toast.makeText(this, "While writing file " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+
                 }
             }
         }

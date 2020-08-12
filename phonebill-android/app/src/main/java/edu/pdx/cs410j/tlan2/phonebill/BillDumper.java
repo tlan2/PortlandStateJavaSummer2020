@@ -13,7 +13,8 @@ public class BillDumper implements PhoneBillDumper<PhoneBill> {
     @Override
     public void dump(PhoneBill bill) throws IOException{
         SortedSet<PhoneCall> phoneCalls = bill.sortPhoneCalls();
-
+//        File dir = getDataDir();
+//        File file = new File(dir, "results.txt");
         FileWriter writer = new FileWriter(this.fileName);
         writer.write(bill.getCustomer());
         writer.write("\n");
