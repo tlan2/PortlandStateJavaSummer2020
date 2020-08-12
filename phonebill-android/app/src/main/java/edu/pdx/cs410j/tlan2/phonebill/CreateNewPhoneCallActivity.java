@@ -45,7 +45,6 @@ public class CreateNewPhoneCallActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // Pull Out Values as Strings
                 enterCall();
-
             }
         });
 
@@ -130,15 +129,15 @@ public class CreateNewPhoneCallActivity extends AppCompatActivity {
     }
 
     private void initialize() {
-        name = nameInput.getText().toString();
-        callerNumber = callerNumberInput.getText().toString();
-        calleeNumber = calleeNumberInput.getText().toString();
-        startDate = startDateInput.getText().toString();
-        startTime = startTimeInput.getText().toString();
-        startAMPM = startAMPMInput.getText().toString();
-        endDate = endDateInput.getText().toString();
-        endTime = endTimeInput.getText().toString();
-        endAMPM = endAMPMInput.getText().toString();
+        name = nameInput.getText().toString().trim();
+        callerNumber = callerNumberInput.getText().toString().trim();
+        calleeNumber = calleeNumberInput.getText().toString().trim();
+        startDate = startDateInput.getText().toString().trim();
+        startTime = startTimeInput.getText().toString().trim();
+        startAMPM = startAMPMInput.getText().toString().trim();
+        endDate = endDateInput.getText().toString().trim();
+        endTime = endTimeInput.getText().toString().trim();
+        endAMPM = endAMPMInput.getText().toString().trim();
     }
 
     private void configureBackToMainMenu() {

@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int NEW_PHONE_CALL_RESULT = 43;
     public static final int PRINT_PHONE_BILL_RESULT = 43;
 
-    private PhoneBillArrayList bills = new PhoneBillArrayList();
+    private PhoneBillArrayList phoneBills = new PhoneBillArrayList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +35,6 @@ public class MainActivity extends AppCompatActivity {
         configureSearchPhoneBill();
         configureHelpMenu();
     }
-
-//    private void configureCreatePhoneCall() {
-//
-//    }
 
     private void configurePrintPhoneBill() {
         Button createPhoneCall = (Button) findViewById(R.id.printPhoneBill);
@@ -72,19 +68,28 @@ public class MainActivity extends AppCompatActivity {
        });
     }
 
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == NEW_PHONE_CALL_RESULT && resultCode == RESULT_OK){
             if (data != null){
-                if (data.hasExtra("Name")){
+                if (data.hasExtra("Name") && data.hasExtra("PhoneCall")){
                     String name = data.getStringExtra("Name");
-                    Toast.makeText(this, "Name was " + name, Toast.LENGTH_LONG).show();
-                }
-                if (data.hasExtra("PhoneCall")){
+                    Toast.makeText(this, "Name was " + name, Toast.LENGTH_LONG).show(); //*
                     PhoneCall call = (PhoneCall) data.getSerializableExtra("PhoneCall");
-                    Toast.makeText(this, "New Phone Call Added: " + call.getAllCallInfo(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "New Phone Call Added: " + call.toString(), Toast.LENGTH_LONG).show();
+
+                    PhoneBill bill = phoneBills.findPhoneBill(name);
+
+//                    BillDumper bd = new BillDumper(name);
+//                    try {
+//                        bd.dump(bill);
+//                    } catch (IOException e) {
+//                        Toast.makeText(this, "While writing file " + e.getMessage(), Toast.LENGTH_LONG).show();
+//                    }
                 }
             }
         }

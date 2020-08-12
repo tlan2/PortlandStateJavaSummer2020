@@ -1,24 +1,29 @@
 package edu.pdx.cs410j.tlan2.phonebill;
 
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 
 public class PhoneBillArrayList {
-    private ArrayList<PhoneBill> bills = new ArrayList<>();
+    private HashMap<String,PhoneBill> map;
 
-    public ArrayList<PhoneBill> getBills() {
-        return this.bills;
+    public PhoneBillArrayList() {
+        map = new HashMap<>();
     }
 
-    public void addPhoneBill(PhoneBill bill) {
-        this.bills.add(bill);
+
+    public Collection<PhoneBill> getBills() {
+        return this.map.values();
     }
 
-    public PhoneBill findPhoneBill(String name){
-        for(PhoneBill bill:bills){
-            if(name.equals(bill.getCustomer())){
-                return bill;
-            }
+    public void addPhoneBill(String name, PhoneBill bill) {
+        this.map.put(name,bill);
+    }
+
+    public PhoneBill findPhoneBill(String name) {
+        if (map.get(name) == null) {
+            return new PhoneBill(name);
+        } else {
+            return map.get(name);
         }
-        return null;
     }
 }
