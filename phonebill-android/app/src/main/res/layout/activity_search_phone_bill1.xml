@@ -4,62 +4,59 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SearchPhoneBillActivity">
+    tools:context=".SearchPhoneBillActivity1">
 
     <LinearLayout
-        android:layout_width="376dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
-        android:gravity="center"
+        android:gravity="top"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.542"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.751">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/searchPhoneBillHeader"
-            android:layout_width="match_parent"
+            android:id="@+id/searchGreeting"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Search Phone Bill" />
+            android:text="Enter Customer and Search Date Range:"
+            tools:layout_editor_absoluteX="153dp"
+            tools:layout_editor_absoluteY="53dp" />
 
         <EditText
-            android:id="@+id/searchNameInput"
+            android:id="@+id/searchName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/customer_name"
-            android:inputType="textPersonName"
-            android:autofillHints="" />
+            android:hint="Customer Name"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/searchStartDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/call_start_date"
-            android:inputType="date"
-            android:autofillHints="" />
+            android:hint="Search Start Date"
+            android:inputType="date" />
 
         <EditText
             android:id="@+id/searchStartTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/call_start_time"
-            android:inputType="time"
-            android:autofillHints="" />
+            android:hint="Search Start Time"
+            android:inputType="time" />
 
         <EditText
             android:id="@+id/searchStartAMPM"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="AM/PM"
+            android:hint="Search AM/PM"
             android:inputType="textPersonName" />
 
         <EditText
@@ -67,46 +64,43 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/call_end_date"
-            android:inputType="date"
-            android:autofillHints="" />
+            android:hint="Search End Date"
+            android:inputType="date" />
 
         <EditText
             android:id="@+id/searchEndTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/call_end_time"
-            android:inputType="time"
-            android:autofillHints="" />
+            android:hint="Search End Time"
+            android:inputType="time" />
 
         <EditText
-            android:id="@+id/searchEndAMPM"
+            android:id="@+id/searchAMPM"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="AM/PM"
+            android:hint="Search AM/PM"
             android:inputType="textPersonName" />
 
         <Button
             android:id="@+id/searchBillButton"
-            android:layout_width="210dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Search Phone Bill" />
 
-        <ListView
-            android:layout_width="353dp"
-            android:layout_height="246dp" />
-
         <Button
-            android:id="@+id/backSearchPhoneBill"
-            android:layout_width="210dp"
+            android:id="@+id/backSearch1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Back To Main Menu"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:text="Back to Main Menu" />
+
+        <ListView
+            android:id="@+id/searchResults"
+            android:layout_width="388dp"
+            android:layout_height="289dp" />
+
 
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

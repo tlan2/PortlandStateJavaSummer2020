@@ -12,7 +12,7 @@
         android:orientation="vertical"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="122dp">
+        android:layout_marginTop="50dp">
 
         <TextView
             android:id="@+id/textView3"
@@ -70,8 +70,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="AM/PM"
-            android:inputType="textPersonName" />
+            android:hint="@string/am_pm"
+            android:inputType="textPersonName"
+            android:autofillHints="" />
 
         <EditText
             android:id="@+id/endDate"
@@ -96,8 +97,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="AM/PM"
-            android:inputType="textPersonName" />
+            android:hint="@string/am_pm"
+            android:inputType="textPersonName"
+            android:autofillHints="" />
 
         <Button
             android:id="@+id/submitNewCall"
@@ -109,7 +111,7 @@
             android:id="@+id/backNewPhoneCall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Back To Main Menu" />
+            android:text="@string/back_to_main_menu" />
 
     </LinearLayout>
 

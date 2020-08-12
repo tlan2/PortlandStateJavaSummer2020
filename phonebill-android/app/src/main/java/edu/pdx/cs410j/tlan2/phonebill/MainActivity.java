@@ -9,7 +9,9 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,15 +20,33 @@ import java.util.Collection;
 public class MainActivity extends AppCompatActivity {
 
     public static final int NEW_PHONE_CALL_RESULT = 43;
-    public static final int PRINT_PHONE_BILL_RESULT = 43;
-
-    private PhoneBillArrayList phoneBills = new PhoneBillArrayList();
+    public static final int PRINT_PHONE_BILL_RESULT = 44;
+    private static final int SEARCH_PHONE_BILL_RESULT = 45;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        configureCreatePhoneCall();
+        configurePrintPhoneBill();
+        configureSearchPhoneBill();
+        configureHelpMenu();
+    }
+
+    private void configureSearchPhoneBill() {
+        Button search = (Button) findViewById(R.id.searchButton);
+        search.setEnabled(false);
+//        search.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(MainActivity.this, SearchPhoneBillActivity1.class);
+//                startActivityForResult(intent, SEARCH_PHONE_BILL_RESULT);
+//            }
+//        });
+    }
+
+    private void configureCreatePhoneCall() {
         Button createPhoneCall = (Button) findViewById(R.id.openCreatePhoneCallActivity);
         createPhoneCall.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,27 +55,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent, NEW_PHONE_CALL_RESULT);;
             }
         });
-
-//        configureCreatePhoneCall();
-        configurePrintPhoneBill();
-        configureSearchPhoneBill();
-        configureHelpMenu();
     }
 
     private void configurePrintPhoneBill() {
-        Button createPhoneCall = (Button) findViewById(R.id.printPhoneBill);
-        createPhoneCall.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, PrintPhoneBillActivity.class);
-                startActivityForResult(intent, PRINT_PHONE_BILL_RESULT);
-            }
-        });
-    }
-
-    private void configureSearchPhoneBill() {
-        Button createPhoneCall = (Button) findViewById(R.id.searchPhoneBill);
-        createPhoneCall.setOnClickListener(new View.OnClickListener() {
+        Button printPhoneBill = (Button) findViewById(R.id.printPhoneBill);
+        printPhoneBill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, PrintPhoneBillActivity.class);
@@ -74,15 +78,15 @@ public class MainActivity extends AppCompatActivity {
        });
     }
 
-    private void saveResults(String name, PhoneBill bill) throws IOException {
+    private void saveResults(String name, PhoneBill bill, PhoneCall call) throws IOException {
         File dir = getDataDir();
         String fileName = name + ".txt";
         File file = new File(dir, fileName);
         try (PrintWriter pw = new PrintWriter(new FileWriter(file), true)) {
             pw.println(bill.getCustomer());
             Collection<PhoneCall> calls = bill.getPhoneCalls();
-            for (PhoneCall call:calls) {
-                pw.println(call.getAllCallInfo());
+            for (PhoneCall c : calls) {
+                pw.println(c.getAllCallInfo());
             }
             pw.flush();
         }
@@ -98,15 +102,14 @@ public class MainActivity extends AppCompatActivity {
             if (data != null){
                 if (data.hasExtra("Name") && data.hasExtra("PhoneCall")){
                     String name = data.getStringExtra("Name");
-                    Toast.makeText(this, "Name was " + name, Toast.LENGTH_LONG).show(); //*
                     PhoneCall call = (PhoneCall) data.getSerializableExtra("PhoneCall");
                     Toast.makeText(this, "New Phone Call Added: " + call.toString(), Toast.LENGTH_LONG).show();
 
-                    PhoneBill bill = phoneBills.findPhoneBill(name);
+                    PhoneBill bill = readFile(name);
                     bill.addPhoneCall(call);
-
+                    
                     try {
-                        saveResults(name, bill);
+                        saveResults(name, bill, call);
                     } catch (IOException e) {
                         Toast.makeText(this, "While writing file " + e.getMessage(), Toast.LENGTH_LONG).show();
                     }
@@ -114,5 +117,33 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    private PhoneBill readFile(String name) {
+        File dir = getDataDir();
+        String fileName = name + ".txt";
+        File file = new File(dir, fileName);
+        boolean onFile = file.exists(); //file.length() != 0
+        if (onFile) {
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(file));
+                String line;
+                String customerOnFile = br.readLine();
+                PhoneBill bill = new PhoneBill(customerOnFile);
+                while ((line = br.readLine()) != null) {
+                    String callInfo = line;
+                    String[] data = callInfo.split("\\s+");
+                    PhoneCall call = new PhoneCall(data[0], data[1], data[2], data[3],
+                            data[4], data[5], data[6], data[7]);
+                    bill.addPhoneCall(call);
+                }
+                return bill;
+            } catch (IOException e) {
+                Toast.makeText(this, "While reading file " + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        } else {
+            return new PhoneBill(name);
+        }
+        return null;
     }
 }

@@ -16,4 +16,16 @@
     <string name="call_end_time">Call End Time</string>
     <string name="add_new_call_below">Add New Call Below:</string>
     <string name="help_menu">Help Menu</string>
+    <string name="back_help_menu">Back To Main Menu</string>
+    <string name="about_app_readme">About App (README)</string>
+    <string name="call_it_in">Call It In!</string>
+    <string name="print_phone_bill">Print Phone Bill</string>
+    <string name="search_phone_bill">Search Phone Bill</string>
+    <string name="find_customer_bill_to_print">Find Customer Bill to Print</string>
+    <string name="print_name_input">Customer Name</string>
+    <string name="print_bill_button_text">Print Bill</string>
+    <string name="back_print_bill">Back To Main Menu</string>
+    <string name="back_to_help_menu">Back to Help Menu</string>
+    <string name="am_pm">AM/PM</string>
+    <string name="back_to_main_menu">Back To Main Menu</string>
 </resources>

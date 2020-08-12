@@ -6,13 +6,77 @@
     android:layout_height="match_parent"
     tools:context=".PrintPhoneBillActivity">
 
-    <Button
-        android:id="@+id/backPrintPhoneBill"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Back To Main Menu"
+    <LinearLayout
+        android:layout_width="367dp"
+        android:layout_height="fill_parent"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:gravity="top"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <TextView
+            android:id="@+id/findCustomerBill"
+            android:layout_width="204dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="44dp"
+            android:layout_gravity="center"
+            android:text="@string/find_customer_bill_to_print"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/printName"
+            android:layout_width="271dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/print_name_input"
+            android:inputType="textPersonName"
+            android:layout_gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/findCustomerBill"
+            android:autofillHints="" />
+
+        <Button
+            android:id="@+id/printBill"
+            android:layout_width="318dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:text="@string/print_bill_button_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/printName" />
+
+        <Button
+            android:id="@+id/backPrintPhoneBill"
+            android:layout_width="318dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/back_print_bill"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ListView
+            android:id="@+id/results"
+            android:layout_width="match_parent"
+            android:layout_height="507dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="2dp"
+            app:layout_constraintBottom_toTopOf="@+id/backPrintPhoneBill"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/printBill">
+
+        </ListView>
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

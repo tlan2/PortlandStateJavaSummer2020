@@ -129,7 +129,7 @@ public class CreateNewPhoneCallActivity extends AppCompatActivity {
     }
 
     private void initialize() {
-        name = nameInput.getText().toString().trim();
+        name = nameInput.getText().toString().trim().toLowerCase();
         callerNumber = callerNumberInput.getText().toString().trim();
         calleeNumber = calleeNumberInput.getText().toString().trim();
         startDate = startDateInput.getText().toString().trim();
