@@ -80,8 +80,11 @@ public class PhoneBill extends AbstractPhoneBill<PhoneCall>  {
         Collection<PhoneCall> calls = this.getPhoneCalls();
         SortedSet<PhoneCall> set = new TreeSet<PhoneCall>();
 
+        int i = 1;
         for (PhoneCall c:calls){
             set.add(c);
+            System.out.println("PhoneBill - sortedCalls - call #" + i);
+            i++;
         }
 
         return set;

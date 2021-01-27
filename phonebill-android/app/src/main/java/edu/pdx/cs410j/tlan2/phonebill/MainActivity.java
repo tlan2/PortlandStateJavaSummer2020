@@ -36,14 +36,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void configureSearchPhoneBill() {
         Button search = (Button) findViewById(R.id.searchButton);
-        search.setEnabled(false);
-//        search.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(MainActivity.this, SearchPhoneBillActivity1.class);
-//                startActivityForResult(intent, SEARCH_PHONE_BILL_RESULT);
-//            }
-//        });
+//        search.setEnabled(false);
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, SearchPhoneBillActivity1.class);
+                startActivityForResult(intent, SEARCH_PHONE_BILL_RESULT);
+            }
+        });
     }
 
     private void configureCreatePhoneCall() {

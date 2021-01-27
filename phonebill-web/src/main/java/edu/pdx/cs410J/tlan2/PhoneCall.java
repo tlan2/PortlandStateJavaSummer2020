@@ -19,7 +19,7 @@ import static java.util.regex.Pattern.compile;
  * passed through including phone number, date, and time format.
  */
 
-public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall> {
+    public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall> {
     /**
      * Creates a new <code>PhoneCall</code>
      *

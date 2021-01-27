@@ -1,4 +1,14 @@
-[![Build Status](https://travis-ci.org/YourGitHubId/PortlandStateJavaSummer2020.svg?branch=master)](https://travis-ci.org/YourGitHubId/PortlandStateJavaSummer2020)
+# Phone Bill Application
+
+
+I developed this phone bill application in my Summer 2020 *Advanced Programming with Java* masters course taught by [David Whitlock](https://github.com/DavidWhitlock/) that began as a simple program and eventually became an HTTP servlet and a fully functional Android app using Test Driven Development. I used the build automation tools Maven for the Java command line app and Gradle for the Android app.
+
+# Images
+![main_screen](images/android_phoneapp.png "Main Screen")
+![add_phonecall](images/android_phoneapp_add.png "Add Phone Call")
+![print_phonebill](images/android_printbill.png "Print Phone Bill")
+
+<!-- [![Build Status](https://travis-ci.org/YourGitHubId/PortlandStateJavaSummer2020.svg?branch=master)](https://travis-ci.org/YourGitHubId/PortlandStateJavaSummer2020)
 
 # Getting Started with Advanced Programming with Java
 
@@ -317,4 +327,4 @@ repository in GitHub, make your changes in a branch of that
 repository, and [create a pull
 request](https://help.github.com/en/articles/creating-a-pull-request-from-a-fork)
 against this repository.  We can then have a discussion about your
-changes via GitHub.
+changes via GitHub. -->

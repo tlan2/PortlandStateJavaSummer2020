@@ -10,14 +10,9 @@ import java.util.SortedSet;
 /**
  * This class represents a <code>TextDumper</code>.
  * Contains a dump method that takes a PhoneBill object and "dumps"
- * the contents into a customer's text file.
+ * the contents
  */
 public class TextDumper implements PhoneBillDumper<PhoneBill> {
-
-    String path = "C:\\Users\\thoma\\Documents" +
-            "\\6. Summer 2020\\1. Advanced Java" +
-            "\\PortlandStateJavaSummer2020\\phonebill\\src" +
-            "\\test\\java\\edu\\pdx\\cs410J\\tlan2\\testFiles\\";
 
     private String fileName;
 

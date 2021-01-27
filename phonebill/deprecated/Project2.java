@@ -132,7 +132,8 @@ public class Project2 {
                 newBill = tp.parse();
             } catch (ParserException ex)
             {
-                ex.printStackTrace();
+                System.err.println("While parsing existing file....");
+                System.exit(1);
             }
 
             String customerOnFile = newBill.getCustomer();
@@ -152,7 +153,8 @@ public class Project2 {
                 td.dump(newBill);
             } catch (IOException ex)
             {
-                ex.printStackTrace();
+                System.err.println("While dumping bill contents to file....");
+                System.exit(1);
             }
         } else
         {
@@ -163,7 +165,8 @@ public class Project2 {
                 file.createNewFile();
             } catch (IOException ex)
             {
-                ex.printStackTrace();
+                System.err.println("While creating a new file.....");
+                System.exit(1);
             }
             newBill.addCustomer(args[3]);
             newBill.addPhoneCall(newCall);
@@ -173,7 +176,8 @@ public class Project2 {
                 td.dump(newBill);
             } catch (IOException ex)
             {
-                ex.printStackTrace();
+                System.err.println("while dumping bill to file.....");
+                System.exit(1);
             }
         }
         System.exit(0);
@@ -202,7 +206,8 @@ public class Project2 {
                 newBill = tp.parse();
             } catch (ParserException ex)
             {
-                ex.printStackTrace();
+                System.err.println("While parsing file.....");
+                System.exit(1);
             }
 
             String customerOnFile = newBill.getCustomer();
@@ -222,7 +227,8 @@ public class Project2 {
                 td.dump(newBill);
             } catch (IOException ex)
             {
-                ex.printStackTrace();
+                System.err.println("While dumping bill contents to file....");
+                System.exit(1);
             }
         } else
         {
@@ -234,7 +240,8 @@ public class Project2 {
                 file.createNewFile();
             } catch (IOException ex)
             {
-                ex.printStackTrace();
+                System.err.println("While creating a new file....");
+                System.exit(1);
             }
 
             newBill.addCustomer(args[3]);
@@ -245,7 +252,7 @@ public class Project2 {
                 td.dump(newBill);
             } catch (IOException ex)
             {
-                ex.printStackTrace();
+                System.e
             }
         }
         System.exit(0);
