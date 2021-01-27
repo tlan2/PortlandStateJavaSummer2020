@@ -4,9 +4,9 @@
 I developed this phone bill application in my Summer 2020 *Advanced Programming with Java* masters course taught by [David Whitlock](https://github.com/DavidWhitlock/) that began as a simple program and eventually became an HTTP servlet and a fully functional Android app using Test Driven Development. I used the build automation tools Maven for the Java command line app and Gradle for the Android app.
 
 # Images
-![main_screen](images/android_phoneapp.png "Main Screen")
-![add_phonecall](images/android_phoneapp_add.png "Add Phone Call")
-![print_phonebill](images/android_printbill.png "Print Phone Bill")
+![main_screen](images/android_phoneapp500x240.png "Main Screen")
+![add_phonecall](images/android_phoneapp_add500x244.png "Add Phone Call")
+![print_phonebill](images/android_printbill500x242.png "Print Phone Bill")
 
 <!-- [![Build Status](https://travis-ci.org/YourGitHubId/PortlandStateJavaSummer2020.svg?branch=master)](https://travis-ci.org/YourGitHubId/PortlandStateJavaSummer2020)
 
